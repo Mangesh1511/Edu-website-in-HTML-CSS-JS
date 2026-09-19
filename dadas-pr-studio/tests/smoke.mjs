@@ -47,7 +47,13 @@ await page.waitForFunction(()=>{
 },{timeout:25000});
 if(await page.locator('.mcard').count()!==1)throw new Error('Selected video card did not appear');
 
-await page.waitForFunction(()=>/Analysis complete/.test(document.querySelector('#analysisStatus')?.textContent||''),{timeout:25000});
+await page.waitForFunction(()=>{
+  const t=document.querySelector('#analysisStatus')?.textContent||'';
+  return /Media ready · quality ranked · story analysis complete/.test(t);
+},{timeout:180000});
+
+if(await page.locator('button[onclick="analyze()"]').count())throw new Error('Quality rank button should be hidden');
+if(await page.locator('button[onclick="runLocalAI()"]').count())throw new Error('Story analysis button should be hidden');
 
 await page.waitForFunction(()=>window.LocalAI && window.LocalAI.version,{timeout:20000});
 const unicodeScore=await page.evaluate(()=>window.LocalAI.relevance('पाणी काम कार्यक्रम','पाणी काम कार्यक्रम ठिकाण'));
@@ -55,14 +61,6 @@ if(unicodeScore<=0)throw new Error('Unicode work relevance scoring failed');
 
 await page.click('.focusbtn');
 if(!(await page.locator('.focusbtn').getAttribute('class')).includes('on'))throw new Error('Primary subject marking failed');
-
-await page.click('button[onclick="runLocalAI()"]');
-await page.waitForFunction(()=>{
-  const t=document.querySelector('#analysisStatus')?.textContent||'';
-  return /Media intelligence scan complete|AI scan error/.test(t);
-},{timeout:150000});
-const aiStatus=await page.locator('#analysisStatus').textContent();
-if(!/Media intelligence scan complete/.test(aiStatus||''))throw new Error('Local AI model scan failed: '+aiStatus);
 
 await page.click('button.style:nth-child(4)');
 if(!(await page.locator('button.style:nth-child(4)').getAttribute('class')).includes('sel'))throw new Error('Style selection failed');
