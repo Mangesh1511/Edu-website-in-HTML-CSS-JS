@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR v4.9</title>
+<title>Dada's PR v5.0</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<header class="brandbar"><h1>Dada's PR</h1><span>v4.9</span></header>
+<header class="brandbar"><h1>Dada's PR</h1><span>v5.0</span></header>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -45,10 +45,10 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div class="proctl"><b>Texture</b><select id="textureMode"><option value="cinema">Cinema</option><option value="clean">Clean</option><option value="film">Film</option></select></div>
 <div class="proctl"><b>Text density</b><select id="textDensity"><option value="balanced">Balanced</option><option value="minimal">Minimal</option><option value="rich">Rich</option></select></div>
 <div class="proctl"><b>Media coverage</b><select id="coverageMode"><option value="auto">Auto · use as much as fits</option><option value="allvideo">Use all videos</option><option value="best">Best only</option></select></div>
-<div class="proctl"><b>Soundtrack</b><div class="pro-note">Auto · matched from topic, OCR and event context</div></div>
+<div class="proctl"><b>Soundtrack</b><div class="pro-note">Maharashtra/India only · auto topic match</div></div>
 </div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
 <label>Song / BGM / poem recording (optional — upload audio you can use)<input id="music" type="file" accept="audio/*"></label>
-<div id="musicPlan" class="status">🎵 Auto soundtrack uses Maharashtra/India-oriented percussion and melodic textures matched to the topic. Uploaded audio uses a stronger matching excerpt and ducks under speech.</div>
+<div id="musicPlan" class="status">🎵 Built-in soundtrack: Maharashtra/India only — taal-based dholki/tabla/dhol-tasha, manjira, tanpura, bansuri and tutari/shehnai textures. No Western rhythm section.</div>
 <div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
 <button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
@@ -232,15 +232,16 @@ function soundtrackText(){
 }
 function inferMusicProfile(){
  const t=soundtrackText(),hit=a=>a.some(k=>t.includes(k));
+ const bhup=[1,9/8,5/4,3/2,5/3,2],kafi=[1,9/8,6/5,4/3,3/2,5/3,9/5,2],durga=[1,9/8,4/3,3/2,5/3,2],desh=[1,9/8,5/4,4/3,3/2,5/3,15/8,2];
  const profiles={
-  reflective:{id:'reflective',label:'Soft bansuri-style reflection',bpm:72,energy:.42,root:146.83,scale:[1,1.125,1.5,1.6875],drums:.22,folk:'soft'},
-  poetry:{id:'poetry',label:'Poetry / spoken-word underscore',bpm:76,energy:.46,root:130.81,scale:[1,1.2,1.5,1.8],drums:.26,folk:'soft'},
-  festive:{id:'festive',label:'Dhol–tasha festival energy',bpm:122,energy:1,root:146.83,scale:[1,1.125,1.5,1.8],drums:1,folk:'tasha'},
-  rural:{id:'rural',label:'Maharashtra folk field rhythm',bpm:98,energy:.82,root:130.81,scale:[1,1.25,1.5,1.875],drums:.86,folk:'dholki'},
-  work:{id:'work',label:'Development reel percussion',bpm:108,energy:.94,root:146.83,scale:[1,1.333,1.5,2],drums:.94,folk:'dholki'},
-  speech:{id:'speech',label:'Restrained tabla-style underscore',bpm:86,energy:.58,root:130.81,scale:[1,1.25,1.5,1.667],drums:.44,folk:'tabla'},
-  service:{id:'service',label:'Warm public-service instrumental',bpm:92,energy:.70,root:130.81,scale:[1,1.2,1.5,1.8],drums:.66,folk:'tabla'},
-  documentary:{id:'documentary',label:'Indian documentary rhythm',bpm:96,energy:.76,root:146.83,scale:[1,1.25,1.5,1.75],drums:.74,folk:'tabla'}
+  reflective:{id:'reflective',label:'Tanpura + bansuri reflection',bpm:68,energy:.34,root:146.83,scale:bhup,folk:'none'},
+  poetry:{id:'poetry',label:'Poetry · tanpura + bansuri',bpm:72,energy:.38,root:130.81,scale:kafi,folk:'none'},
+  festive:{id:'festive',label:'Maharashtra dhol–tasha',bpm:124,energy:1,root:146.83,scale:durga,folk:'tasha'},
+  rural:{id:'rural',label:'Dholki folk · Maharashtra',bpm:96,energy:.82,root:130.81,scale:kafi,folk:'dholki'},
+  work:{id:'work',label:'Dholki + tutari field-work',bpm:104,energy:.88,root:146.83,scale:desh,folk:'dholki'},
+  speech:{id:'speech',label:'Soft tabla underscore',bpm:84,energy:.44,root:130.81,scale:bhup,folk:'tabla'},
+  service:{id:'service',label:'Tabla + bansuri service bed',bpm:88,energy:.58,root:130.81,scale:desh,folk:'tabla'},
+  documentary:{id:'documentary',label:'Indian documentary · tabla/bansuri',bpm:92,energy:.66,root:146.83,scale:desh,folk:'tabla'}
  };
  if(hit(['कविता','poem','poetry','शायरी','shayari','अभंग','ओवी','गझल','ghazal','spoken word']))return profiles.poetry;
  if(hit(['श्रद्धांजली','निधन','स्मरण','tribute','memorial','condolence']))return profiles.reflective;
@@ -260,26 +261,11 @@ function noiseBuffer(ac,seconds=.13){
  for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
  return b
 }
-function kick(ac,out,t,amount=1){
- const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(130,t);o.frequency.exponentialRampToValueAtTime(48,t+.14);
- g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.24*amount,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+.19);o.connect(g).connect(out);o.start(t);o.stop(t+.21)
-}
-function snare(ac,out,t,amount=1){
- const s=ac.createBufferSource(),hp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=noiseBuffer(ac,.16);hp.type='highpass';hp.frequency.value=850;
- g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.12*amount,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+.15);s.connect(hp).connect(g).connect(out);s.start(t);s.stop(t+.17)
-}
-function hat(ac,out,t,amount=1){
- const s=ac.createBufferSource(),hp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=noiseBuffer(ac,.06);hp.type='highpass';hp.frequency.value=4200;
- g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.045*amount,t+.003);g.gain.exponentialRampToValueAtTime(.001,t+.055);s.connect(hp).connect(g).connect(out);s.start(t);s.stop(t+.065)
-}
-function bass(ac,out,t,freq,amount=1,dur=.35){
- const o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain();o.type='sawtooth';o.frequency.value=freq;f.type='lowpass';f.frequency.value=260;
- g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.075*amount,t+.025);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(f).connect(g).connect(out);o.start(t);o.stop(t+dur+.03)
-}
-function tone(ac,out,t,freq,amount=1,dur=.32){
- const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=freq;
- g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.035*amount,t+.018);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(out);o.start(t);o.stop(t+dur+.03)
-}
+
+
+
+
+
 function tablaHit(ac,out,t,amount=1,low=false){
  const o=ac.createOscillator(),g=ac.createGain(),bp=ac.createBiquadFilter();o.type='sine';o.frequency.setValueAtTime(low?180:310,t);o.frequency.exponentialRampToValueAtTime(low?95:190,t+.10);bp.type='bandpass';bp.frequency.value=low?190:520;bp.Q.value=1.4;
  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime((low?.13:.095)*amount,t+.004);g.gain.exponentialRampToValueAtTime(.001,t+.13);o.connect(bp).connect(g).connect(out);o.start(t);o.stop(t+.15)
@@ -298,57 +284,65 @@ function fluteNote(ac,out,t,freq,amount=.6,dur=.55){
  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.026*amount,t+.06);g.gain.setValueAtTime(.022*amount,t+Math.max(.08,dur-.12));g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(lp).connect(g).connect(out);o.start(t);v.start(t);o.stop(t+dur+.03);v.stop(t+dur+.03)
 }
 
+
 function tanpuraDrone(ac,out,t,root,total,amount=.7){
- const voices=[];
- const freqs=[root/2,root/2*1.5,root/2*2,root/2*2.25];
+ const voices=[],freqs=[root/2,root/2*1.5,root,root*1.5];
  for(let i=0;i<freqs.length;i++){
   const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();
-  o.type='sine';o.frequency.value=freqs[i];lp.type='lowpass';lp.frequency.value=900;
-  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime((.010+i*.002)*amount,t+.35);
-  g.gain.setValueAtTime((.010+i*.002)*amount,t+Math.max(.5,total-.6));g.gain.exponentialRampToValueAtTime(.001,t+total);
+  o.type='sine';o.frequency.value=freqs[i];lp.type='lowpass';lp.frequency.value=760;
+  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime((.008+i*.0018)*amount,t+.55);
+  g.gain.setValueAtTime((.008+i*.0018)*amount,t+Math.max(.7,total-.7));g.gain.exponentialRampToValueAtTime(.001,t+total);
   o.connect(lp).connect(g).connect(out);o.start(t);o.stop(t+total+.05);voices.push(o)
  }
  return voices
 }
 function tutariNote(ac,out,t,freq,amount=.7,dur=.42){
- const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),bp=ac.createBiquadFilter();
- o.type='sawtooth';o2.type='square';o.frequency.value=freq;o2.frequency.value=freq*2.01;bp.type='bandpass';bp.frequency.value=1100;bp.Q.value=1.1;
- g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.024*amount,t+.035);g.gain.exponentialRampToValueAtTime(.001,t+dur);
- o.connect(bp);o2.connect(bp);bp.connect(g).connect(out);o.start(t);o2.start(t);o.stop(t+dur+.03);o2.stop(t+dur+.03)
+ const o=ac.createOscillator(),g=ac.createGain(),bp=ac.createBiquadFilter(),v=ac.createOscillator(),vg=ac.createGain();
+ o.type='sawtooth';o.frequency.value=freq;v.type='sine';v.frequency.value=5.4;vg.gain.value=freq*.004;v.connect(vg).connect(o.frequency);
+ bp.type='bandpass';bp.frequency.value=1050;bp.Q.value=1.35;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.020*amount,t+.035);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+ o.connect(bp).connect(g).connect(out);o.start(t);v.start(t);o.stop(t+dur+.03);v.stop(t+dur+.03)
+}
+function tashaHit(ac,out,t,amount=1){
+ const n=ac.createBufferSource(),bp=ac.createBiquadFilter(),g=ac.createGain();
+ n.buffer=noiseBuffer(ac,.115);bp.type='bandpass';bp.frequency.value=1450;bp.Q.value=1.15;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.11*amount,t+.004);g.gain.exponentialRampToValueAtTime(.001,t+.11);
+ n.connect(bp).connect(g).connect(out);n.start(t);n.stop(t+.12)
 }
 function startTopicBed(ac,dest,total,profile){
- const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.44;master.connect(comp).connect(dest);
- comp.threshold.value=-18;comp.knee.value=12;comp.ratio.value=3.2;comp.attack.value=.004;comp.release.value=.16;
+ const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.46;master.connect(comp).connect(dest);
+ comp.threshold.value=-18;comp.knee.value=12;comp.ratio.value=3;comp.attack.value=.004;comp.release.value=.17;
  const now=ac.currentTime+.05,beat=60/profile.bpm,notes=profile.scale.map(x=>profile.root*x),voices=[];
- tanpuraDrone(ac,master,now,profile.root,total+.15,profile.id==='speech'?.45:.72).forEach(v=>voices.push(v));
- const beats=Math.ceil(total/beat)+2;
+ tanpuraDrone(ac,master,now,profile.root,total+.2,profile.id==='speech'?.34:.72).forEach(v=>voices.push(v));
+ const beats=Math.ceil(total/beat)+3;
+
  for(let i=0;i<beats;i++){
-  const t=now+i*beat,bar=i%8,strong=bar===0||bar===4;
+  const t=now+i*beat,step=i%8,strong=step===0||step===4;
 
   if(profile.folk==='tasha'){
-   dholHit(ac,master,t,strong?1:.78,bar%2===1);
-   if(bar%2===0)dholHit(ac,master,t+beat*.48,.68,true);
-   snare(ac,master,t+beat*.72,.55);
-   manjira(ac,master,t+beat*.5,strong?.82:.58);
-   if(strong)tutariNote(ac,master,t+beat*.08,notes[(i>>2)%notes.length]*1.5,.82,Math.min(.46,beat*.8))
+   // 8-beat Maharashtra procession-style dhol/tasha phrase.
+   if([0,2,4,6].includes(step))dholHit(ac,master,t,strong?1:.80,false);
+   if([1,3,5,7].includes(step))tashaHit(ac,master,t,.78);
+   if([2,6].includes(step))dholHit(ac,master,t+beat*.48,.62,true);
+   if([0,4].includes(step))manjira(ac,master,t+beat*.5,.62);
+   if(strong)tutariNote(ac,master,t+beat*.08,notes[(i>>2)%notes.length]*1.5,.82,Math.min(.50,beat*.85));
   }else if(profile.folk==='dholki'){
-   dholHit(ac,master,t,strong?.88:.68,bar%2===1);
-   tablaHit(ac,master,t+beat*.5,bar%2===0?.65:.48,false);
-   if(bar===0||bar===4)manjira(ac,master,t+beat*.74,.42);
-   if(bar===0||bar===4)fluteNote(ac,master,t+beat*.08,notes[(i>>2)%notes.length],.72,Math.min(.72,beat*1.25))
+   // Keherwa-like 8-beat folk flow: dha ge na ti | na ka dhi na.
+   const low=[0,4,6].includes(step),accent=[0,4].includes(step);
+   dholHit(ac,master,t,accent?.82:.60,!low);
+   if([1,3,5,7].includes(step))tablaHit(ac,master,t+beat*.46,.48,false);
+   if([0,4].includes(step))manjira(ac,master,t+beat*.72,.30);
+   if(strong)fluteNote(ac,master,t+beat*.10,notes[(i>>2)%notes.length],.62,Math.min(.80,beat*1.35));
+   if(profile.id==='work'&&strong)tutariNote(ac,master,t+beat*.12,notes[(i>>2)%notes.length]*1.5,.34,Math.min(.30,beat*.52));
   }else if(profile.folk==='tabla'){
-   tablaHit(ac,master,t,strong?.82:.58,strong);
-   tablaHit(ac,master,t+beat*.5,.46,false);
-   if(profile.id==='service'&&(bar===0||bar===4))fluteNote(ac,master,t+beat*.10,notes[(i>>2)%notes.length],.62,Math.min(.75,beat*1.35));
-   if(profile.id==='speech'&&strong)tutariNote(ac,master,t+beat*.10,notes[(i>>2)%notes.length],.34,Math.min(.30,beat*.55))
+   // Soft 8-beat tabla cycle, intentionally sparse under dialogue.
+   if([0,2,4,6].includes(step))tablaHit(ac,master,t,strong?.66:.46,step===0||step===4);
+   if([1,5].includes(step))tablaHit(ac,master,t+beat*.52,.34,false);
+   if(profile.id==='service'&&strong)fluteNote(ac,master,t+beat*.12,notes[(i>>2)%notes.length],.50,Math.min(.82,beat*1.42));
+   if(profile.id==='documentary'&&strong)fluteNote(ac,master,t+beat*.12,notes[(i>>2)%notes.length],.44,Math.min(.70,beat*1.18));
   }else{
-   tablaHit(ac,master,t,strong?.42:.28,strong)
-  }
-
-  if(profile.id==='poetry'||profile.id==='reflective'){
-   if(strong)fluteNote(ac,master,t+beat*.12,notes[(i>>2)%notes.length],.62,Math.min(1.0,beat*1.8))
-  }else if(profile.id==='documentary'){
-   if(strong)fluteNote(ac,master,t+beat*.1,notes[(i>>2)%notes.length],.58,Math.min(.72,beat*1.2))
+   // Poetry / reflective: no beat section. Only drone + bansuri phrases.
+   if(strong)fluteNote(ac,master,t+beat*.10,notes[(i>>2)%notes.length],profile.id==='reflective'?.50:.56,Math.min(1.15,beat*1.95));
   }
  }
  return {gain:master,profile,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
@@ -512,7 +506,7 @@ async function renderReel(){
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v49-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v50-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -521,6 +515,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=49').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=50').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=49"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=50"></script></body></html>
