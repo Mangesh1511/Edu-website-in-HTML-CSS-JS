@@ -1,5 +1,5 @@
-const CACHE='dadas-pr-zero-v41-20260919';
-const SHELL=['./','./index.html','./manifest.webmanifest','./icon.svg'];
+const CACHE='dadas-pr-zero-v42-20260919';
+const SHELL=['./','./index.html','./manifest.webmanifest','./icon.svg','./ai-engine.js'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
@@ -39,10 +39,14 @@ self.addEventListener('fetch',event=>{
   const request=event.request;
   if(request.method!=='GET')return;
   const url=new URL(request.url);
-  if(url.origin!==self.location.origin)return;
-  if(request.mode==='navigate' || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/dadas-pr-studio/')){
-    event.respondWith(networkFirst(request));
-  }else{
+  const aiAsset=url.hostname==='cdn.jsdelivr.net'||url.hostname==='storage.googleapis.com';
+  if(url.origin===self.location.origin){
+    if(request.mode==='navigate' || url.pathname.endsWith('/index.html') || url.pathname.endsWith('/dadas-pr-studio/')){
+      event.respondWith(networkFirst(request));
+    }else{
+      event.respondWith(staleWhileRevalidate(request));
+    }
+  }else if(aiAsset){
     event.respondWith(staleWhileRevalidate(request));
   }
 });
