@@ -6,11 +6,11 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR Studio v4.5</title>
+<title>Dada's PR v4.6</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
-.shell{max-width:940px;margin:auto;padding:14px 12px 105px}.hero{background:radial-gradient(circle at 86% 8%,#c99a5260,transparent 28%),linear-gradient(135deg,#0b0b0c,#31231d 60%,#724120);color:white;border-radius:26px;padding:22px;box-shadow:0 22px 50px #0002}.hero h1{margin:5px 0;font-size:29px;line-height:1.05}.hero p{margin:0;color:#ded4cb}.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:900;color:#e0b978}.card{background:#fffffff4;border:1px solid #0000000d;border-radius:23px;padding:17px;margin-top:13px;box-shadow:0 13px 36px #2c251e10}.badge{display:inline-block;padding:6px 9px;border-radius:999px;background:#ecfdf3;color:#166534;font-size:11px;font-weight:900}.muted{color:var(--muted)}.tiny{font-size:12px}
+.shell{max-width:940px;margin:auto;padding:14px 12px 105px}.brandbar{display:flex;align-items:baseline;justify-content:space-between;padding:8px 2px 2px;margin-bottom:3px}.brandbar h1{margin:0;font-size:26px;line-height:1;font-weight:950;letter-spacing:-.03em}.brandbar span{font-size:12px;color:var(--muted);font-weight:800}.eyebrow{font-size:11px;letter-spacing:.14em;font-weight:900;color:#8b6a3a}.card{background:#fffffff4;border:1px solid #0000000d;border-radius:23px;padding:17px;margin-top:13px;box-shadow:0 13px 36px #2c251e10}.badge{display:inline-block;padding:6px 9px;border-radius:999px;background:#ecfdf3;color:#166534;font-size:11px;font-weight:900}.muted{color:var(--muted)}.tiny{font-size:12px}
 input,textarea,select,button{font:inherit}input,textarea,select{width:100%;padding:12px 13px;border:1px solid #dcd6cd;border-radius:13px;background:#fff;margin-top:5px}textarea{resize:vertical}label{display:block;margin-top:10px;font-weight:720}
 button{border:0;border-radius:13px;padding:12px 14px;background:#191919;color:white;font-weight:850;cursor:pointer}.primary{width:100%;margin-top:12px;background:linear-gradient(135deg,#151515,#4a2a1d)}.secondary{background:white;color:#171717;border:1px solid #d9d3ca;margin:6px 6px 0 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.styles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.style{padding:0;overflow:hidden;text-align:left;background:#fff;color:#111;border:1px solid #ddd7ce}.style.sel{box-shadow:0 0 0 2px #161616}.sw{height:66px;display:block;position:relative}.sw:after{content:"Aa";position:absolute;left:11px;bottom:8px;font-size:23px;font-weight:900}.cinematic{background:linear-gradient(135deg,#080808,#372820 68%,#a87c45);color:#fff}.documentary{background:linear-gradient(135deg,#f0eadc,#bdcabf);color:#24362d}.newsroom{background:linear-gradient(135deg,#05172e,#173f69);color:#e3b65b}.heritage{background:linear-gradient(135deg,#51171d,#8a2d22 65%,#d68b34);color:#fff4df}.minimal{background:linear-gradient(135deg,#fafaf7,#e3e3de);color:#111}.style b,.style small{display:block;padding:0 9px}.style b{padding-top:8px}.style small{padding-top:2px;padding-bottom:9px;color:#777}
@@ -27,18 +27,13 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<section class="hero"><div class="eyebrow">DADA'S PR · ADVANCED EDITOR · v4.5</div><h1>Smart reels, videos and visual stories.</h1><p>Auto Director · subject/work sequencing · beat-aware cuts · audio ducking · motion design · editorial graphics.</p></section>
+<header class="brandbar"><h1>Dada's PR</h1><span>v4.6</span></header>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
 ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Documentary','grounded · human')}${sb('newsroom','Newsroom','sharp · factual')}${sb('heritage','Heritage','Maharashtra · refined')}${sb('minimal','Minimal','clean · modern')}</div>
 <div id="preview" class="preview"><div class="copy"><div class="rule"></div><h2 id="pt">तुमचा विषय</h2><p id="pm">ठिकाण · दिनांक</p></div></div></div>
 <div class="card"><span class="badge">DADA FOCUS · MEDIA INTELLIGENCE</span><h2>Photos / Videos</h2>
-<div class="aipanel">
- <div class="grid2"><label>Primary subject<input id="primaryPerson" value="Sanjay Dudhgaonkar Patil" placeholder="Name used only for text matching"></label><label>मराठी नाव / text variant<input id="primaryPersonMr" value="संजय दुधगावकर पाटील" placeholder="Optional"></label></div>
- <p class="muted tiny">Use the primary-subject markers together with face presence, OCR and work relevance to shape the edit.</p>
- <div class="airow"><span class="badge">Face scan</span><span class="badge">Marathi/Hindi/English OCR</span><span class="badge">Work relevance</span><span class="badge">Focal crop</span></div>
-</div>
 <input id="mediaInput" type="file" accept="image/*,video/*,.mp4,.m4v,.mov,.webm,.3gp,.jpg,.jpeg,.png,.webp,.heic,.heif" multiple>
 <p id="mediaHint" class="muted tiny">No media selected yet. Select up to 24 photos/videos.</p>
 <div id="media" class="media"></div><div id="analysisStatus" class="status" hidden></div>
@@ -161,8 +156,9 @@ async function analyze(showMessage=true){
  for(let i=0;i<usable.length;i++){st.textContent=`Analyzing ${i+1}/${usable.length}…`;try{usable[i].score=usable[i].type==='image'?await si(usable[i]):await sv(usable[i])}catch{usable[i].score=45}}
  rankByEditorial();draw();st.className='status ok';st.textContent=`Analysis complete. ${usable.length} usable item(s); strongest shots ranked first.`
 }
-function primaryNames(){return [v('primaryPerson'),v('primaryPersonMr')].filter(Boolean)}
-function workContext(){return [v('primaryPerson'),v('primaryPersonMr'),v('topic'),v('place'),v('facts'),v('outcome')].filter(Boolean).join(' ')}
+const PRIMARY_SUBJECT_NAMES=['Sanjay Dudhgaonkar Patil','संजय दुधगावकर पाटील'];
+function primaryNames(){return PRIMARY_SUBJECT_NAMES}
+function workContext(){return [...PRIMARY_SUBJECT_NAMES,v('topic'),v('place'),v('facts'),v('outcome')].filter(Boolean).join(' ')}
 function toggleFocus(i){if(!items[i])return;items[i].focus=!items[i].focus;rankByEditorial();draw()}
 function cyclePriority(i){if(!items[i])return;items[i].priority=((items[i].priority??1)+1)%4;rankByEditorial();draw()}
 function rankByEditorial(){items.sort((a,b)=>(b.ready?1:0)-(a.ready?1:0)||(b.priority??1)-(a.priority??1)||(b.focus?1:0)-(a.focus?1:0)||(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0))}
@@ -481,7 +477,7 @@ async function renderReel(){
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v45-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v46-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -490,6 +486,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=45').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=46').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=45"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=46"></script></body></html>
