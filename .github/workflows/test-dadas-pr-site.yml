@@ -18,6 +18,10 @@ jobs:
           node-version: '22'
       - name: Install browser test library
         run: npm install --no-save playwright-core
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
       - name: Create real H.264 test video
         run: |
           mkdir -p dadas-pr-studio/tests
