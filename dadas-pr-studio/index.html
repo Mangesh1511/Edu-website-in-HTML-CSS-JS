@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR v4.7</title>
+<title>Dada's PR v4.8</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<header class="brandbar"><h1>Dada's PR</h1><span>v4.7</span></header>
+<header class="brandbar"><h1>Dada's PR</h1><span>v4.8</span></header>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -45,9 +45,9 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div class="proctl"><b>Texture</b><select id="textureMode"><option value="cinema">Cinema</option><option value="clean">Clean</option><option value="film">Film</option></select></div>
 <div class="proctl"><b>Text density</b><select id="textDensity"><option value="balanced">Balanced</option><option value="minimal">Minimal</option><option value="rich">Rich</option></select></div>
 <div class="proctl"><b>Media coverage</b><select id="coverageMode"><option value="auto">Auto · use as much as fits</option><option value="allvideo">Use all videos</option><option value="best">Best only</option></select></div>
-<div class="proctl"><b>Soundtrack</b><select id="musicMood" onchange="previewMusicPlan()"><option value="auto">Auto · Maharashtra/India</option><option value="work">Development / field work</option><option value="rural">Folk / rural</option><option value="festive">Festival · dhol-tasha energy</option><option value="speech">Speech / meeting</option><option value="service">Public service</option><option value="reflective">Reflective</option></select></div>
+<div class="proctl"><b>Soundtrack</b><div class="pro-note">Auto · matched from topic, OCR and event context</div></div>
 </div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
-<label>Music (optional — upload audio you have rights to)<input id="music" type="file" accept="audio/*"></label>
+<label>Song / BGM / poem recording (optional — upload audio you can use)<input id="music" type="file" accept="audio/*"></label>
 <div id="musicPlan" class="status">🎵 Auto soundtrack will match the topic and use a rhythmic original bed. Uploaded music uses a stronger matching excerpt instead of always starting at 0:00.</div>
 <div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
 <button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
@@ -231,9 +231,10 @@ function soundtrackText(){
  return [v('topic'),v('facts'),v('outcome'),v('place'),...items.map(x=>x.ocr||'')].join(' ').toLocaleLowerCase()
 }
 function inferMusicProfile(){
- const forced=v('musicMood')||'auto',t=soundtrackText(),hit=a=>a.some(k=>t.includes(k));
+ const t=soundtrackText(),hit=a=>a.some(k=>t.includes(k));
  const profiles={
   reflective:{id:'reflective',label:'Soft bansuri-style reflection',bpm:72,energy:.42,root:146.83,scale:[1,1.125,1.5,1.6875],drums:.22,folk:'soft'},
+  poetry:{id:'poetry',label:'Poetry / spoken-word underscore',bpm:76,energy:.46,root:130.81,scale:[1,1.2,1.5,1.8],drums:.26,folk:'soft'},
   festive:{id:'festive',label:'Dhol–tasha festival energy',bpm:122,energy:1,root:146.83,scale:[1,1.125,1.5,1.8],drums:1,folk:'tasha'},
   rural:{id:'rural',label:'Maharashtra folk field rhythm',bpm:98,energy:.82,root:130.81,scale:[1,1.25,1.5,1.875],drums:.86,folk:'dholki'},
   work:{id:'work',label:'Development reel percussion',bpm:108,energy:.94,root:146.83,scale:[1,1.333,1.5,2],drums:.94,folk:'dholki'},
@@ -241,7 +242,7 @@ function inferMusicProfile(){
   service:{id:'service',label:'Warm public-service instrumental',bpm:92,energy:.70,root:130.81,scale:[1,1.2,1.5,1.8],drums:.66,folk:'tabla'},
   documentary:{id:'documentary',label:'Indian documentary rhythm',bpm:96,energy:.76,root:146.83,scale:[1,1.25,1.5,1.75],drums:.74,folk:'tabla'}
  };
- if(forced!=='auto'&&profiles[forced])return profiles[forced];
+ if(hit(['कविता','poem','poetry','शायरी','shayari','अभंग','ओवी','गझल','ghazal','spoken word']))return profiles.poetry;
  if(hit(['श्रद्धांजली','निधन','स्मरण','tribute','memorial','condolence']))return profiles.reflective;
  if(hit(['गणेश','उत्सव','जत्रा','यात्रा','festival','celebration','मिरवणूक','सांस्कृतिक','cultural','पूजा','आरती']))return profiles.festive;
  if(hit(['शेत','शेती','शेतकरी','farmer','agriculture','पीक','कृषी','गाव','rural','ग्राम']))return profiles.rural;
@@ -252,7 +253,7 @@ function inferMusicProfile(){
 }
 function previewMusicPlan(){
  const e=document.getElementById('musicPlan');if(!e)return;const p=inferMusicProfile();
- e.textContent=musicFile?'🎵 Uploaded music · smart excerpt + dialogue ducking · '+p.label:'🎵 Original Indian instrumental · '+p.label+' · '+p.bpm+' BPM'
+ e.textContent=musicFile?'🎵 Uploaded audio · strongest matching excerpt + dialogue ducking · '+p.label:'🎵 Auto topic-match · '+p.label+' · '+p.bpm+' BPM'
 }
 function noiseBuffer(ac,seconds=.13){
  const n=Math.max(1,Math.floor(ac.sampleRate*seconds)),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
@@ -482,7 +483,7 @@ async function renderReel(){
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v47-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v48-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -491,6 +492,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=47').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=48').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=47"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=48"></script></body></html>
