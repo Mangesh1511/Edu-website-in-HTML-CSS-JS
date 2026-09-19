@@ -73,7 +73,7 @@ function detectFileType(f){
 function waitEvent(el,event,timeout=8000){
  return new Promise((resolve,reject)=>{
   let done=false;const finish=(ok,val)=>{if(done)return;done=true;clearTimeout(timer);el.removeEventListener(event,onOk);el.removeEventListener('error',onErr);ok?resolve(val):reject(val)};
-  const onOk=()=>finish(true),onErr=()=>finish(false,new Error('Media could not be decoded by Chrome'));
+  const onOk=()=>finish(true),onErr=()=>finish(false,new Error('Media could not be decoded on this device'));
   el.addEventListener(event,onOk,{once:true});el.addEventListener('error',onErr,{once:true});
   const timer=setTimeout(()=>finish(false,new Error('Media loading timed out')),timeout)
  })
@@ -117,7 +117,7 @@ async function load(e){
  items=accepted.map(f=>({f,url:URL.createObjectURL(f),type:detectFileType(f),score:50,dur:0,ready:false,error:'',thumb:'',focus:false,faces:0,ocr:'',relevance:0,focal:null,aiScanned:false}));
  draw();
  const hint=document.getElementById('mediaHint'),st=document.getElementById('analysisStatus');st.hidden=false;st.className='status';
- st.textContent=`Selected ${items.length} file(s). Checking Chrome compatibility…`;
+ st.textContent=`Selected ${items.length} file(s). Checking media compatibility…`;
  await Promise.all(items.map(async item=>{
   try{
    if(item.type==='video')await inspectVideo(item);
@@ -127,9 +127,9 @@ async function load(e){
  }));
  draw();
  const usable=items.filter(x=>x.ready&&!x.error).length,failed=items.length-usable;
- if(hint)hint.textContent=`${usable} usable media selected${failed?` · ${failed} file(s) could not be decoded by Chrome`:''}.`;
+ if(hint)hint.textContent=`${usable} usable media selected${failed?` · ${failed} file(s) could not be decoded`:''}.`;
  st.className=usable?'status ok':'status';
- st.textContent=usable?`Media loaded: ${usable}/${items.length}. Running local quality analysis…`:'Chrome could not decode the selected media. Try an MP4 (H.264) or another phone video.';
+ st.textContent=usable?`Media loaded: ${usable}/${items.length}. Running quality analysis…`:'The selected media could not be decoded. Try an MP4 (H.264) or another phone video.';
  if(usable)await analyze(false)
 }
 function resetMedia(){
@@ -153,7 +153,7 @@ function draw(){
 }
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 async function analyze(showMessage=true){
- const usable=items.filter(x=>x.ready&&!x.error);if(!usable.length){const st=document.getElementById('analysisStatus');if(st){st.hidden=false;st.className='status';st.textContent='No Chrome-compatible media is loaded.'}return}
+ const usable=items.filter(x=>x.ready&&!x.error);if(!usable.length){const st=document.getElementById('analysisStatus');if(st){st.hidden=false;st.className='status';st.textContent='No compatible media is loaded.'}return}
  const st=document.getElementById('analysisStatus');st.hidden=false;st.className='status';
  for(let i=0;i<usable.length;i++){st.textContent=`Analyzing ${i+1}/${usable.length}…`;try{usable[i].score=usable[i].type==='image'?await si(usable[i]):await sv(usable[i])}catch{usable[i].score=45}}
  rankByEditorial();draw();st.className='status ok';st.textContent=`Analysis complete. ${usable.length} usable item(s); strongest shots ranked first.`
@@ -393,7 +393,7 @@ async function renderReel(){
   }
   if(!els.length){rs.textContent='Media could not be prepared for rendering.';try{await ac.close()}catch{};return}
   const durations=buildTimeline(els.length,requested,profile.bpm,pace),bounds=[];let acc=0;for(const d of durations){bounds.push({s:acc,e:acc+d});acc+=d}
-  const total=acc,tr=pace==='dynamic'?.28:.45,cfg=createRecorder(stream,portrait?6500000:7600000);if(!cfg){rs.textContent='Chrome could not start video recorder.';return}
+  const total=acc,tr=pace==='dynamic'?.28:.45,cfg=createRecorder(stream,portrait?6500000:7600000);if(!cfg){rs.textContent='Video recorder could not start on this device.';return}
   const rec=cfg.rec,mime=cfg.mime,chunks=[];let recorderError=null,active=-1,nextPrepared=-1;
   rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};const done=new Promise(r=>rec.onstop=r);rec.start(600);const start=performance.now();
   async function activate(i){
