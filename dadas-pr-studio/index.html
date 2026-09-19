@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR Studio ZERO v4.2</title>
+<title>Dada's PR Studio ZERO v4.3</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">₹0 · WEBSITE</span><h1>Dada\'s PR Studio ZERO</h1><p class="muted">Chrome-ready · no paid API</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<section class="hero"><div class="eyebrow">DADA'S PR · ZERO COST EDITORIAL ENGINE · v4.2</div><h1>Chrome मध्येच smart reel तयार करा.</h1><p>Local media ranking · animated photos · real video compositing · editorial overlays · optional music · no server bill.</p></section>
+<section class="hero"><div class="eyebrow">DADA'S PR · ZERO COST EDITORIAL ENGINE · v4.3</div><h1>Chrome मध्येच smart reel तयार करा.</h1><p>Local media ranking · animated photos · real video compositing · editorial overlays · optional music · no server bill.</p></section>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -44,12 +44,15 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div id="media" class="media"></div><div id="analysisStatus" class="status" hidden></div>
 <button class="secondary" onclick="analyze()">⚡ Quality rank</button><button class="secondary" onclick="runLocalAI()">🧠 Run Dada Focus AI scan</button><button class="secondary" onclick="resetMedia()">↺ Reset media</button></div>
 <div class="card"><span class="badge">REAL LOCAL RENDER</span><h2>Reel / Video</h2><div class="grid2"><div><label>Format</label><div class="chips"><label class="chip"><input type="radio" name="ratio" value="9:16" checked><span>📱 Reel 9:16</span></label><label class="chip"><input type="radio" name="ratio" value="16:9"><span>🎬 Video 16:9</span></label></div></div><div><label>Length</label><div class="chips"><label class="chip"><input type="radio" name="dur" value="15"><span>15 sec</span></label><label class="chip"><input type="radio" name="dur" value="30" checked><span>30 sec</span></label><label class="chip"><input type="radio" name="dur" value="45"><span>45 sec</span></label></div></div></div>
-<label>Background music (optional; use audio you have rights to)<input id="music" type="file" accept="audio/*"></label><button class="primary" onclick="renderReel()">🎬 Generate Reel on this phone</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
+<label>Music (optional — upload audio you have rights to)<input id="music" type="file" accept="audio/*"></label>
+<div id="musicPlan" class="status">🎵 Auto soundtrack will match the topic and use a rhythmic original bed. Uploaded music uses a stronger matching excerpt instead of always starting at 0:00.</div>
+<div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
+<button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
 <section id="calendar" class="page"><div class="card"><span class="badge">2026 MAHARASHTRA</span><h2>सण आणि स्मरणदिन</h2><select id="mf" onchange="calendar()"><option value="">संपूर्ण वर्ष</option>${Array.from({length:12},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${new Date(2026,i,1).toLocaleString('mr-IN',{month:'long'})}</option>`).join('')}</select></div><div id="fg" class="festival-grid"></div></section>
 <section id="about" class="page"><div class="card"><span class="badge">₹0</span><h2>Why this stays free</h2><p class="muted">Video rendering happens locally inside Chrome. There is no paid AI API, cloud renderer or subscription. Longer reels use your phone's CPU/GPU, so keep Chrome open until rendering finishes.</p><button id="installBtn" class="primary" style="display:none">📲 Add app to Home Screen</button></div></section>
 </main><nav class="tabs"><button class="active" onclick="tab('studio',this)">🎬<br>Studio</button><button onclick="tab('designs',this)">◆<br>Designs</button><button onclick="tab('calendar',this)">📅<br>Calendar</button><button onclick="tab('about',this)">ⓘ<br>About</button></nav>`;
-document.getElementById('mediaInput').addEventListener('change',load);document.getElementById('music').addEventListener('change',e=>musicFile=e.target.files[0]||null);calendar();upd();hookInstall();updateCompatibility()}
+document.getElementById('mediaInput').addEventListener('change',load);document.getElementById('music').addEventListener('change',e=>{musicFile=e.target.files[0]||null;previewMusicPlan()});calendar();upd();hookInstall();updateCompatibility();previewMusicPlan()}
 function sb(s,n,d){return `<button class="style ${s==='cinematic'?'sel':''}" onclick="setStyle('${s}',this)"><span class="sw ${s}"></span><b>${n}</b><small>${d}</small></button>`}
 function tab(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
 function v(id){return(document.getElementById(id)?.value||'').trim()}function ch(n){return document.querySelector(`input[name="${n}"]:checked`)?.value}
@@ -201,9 +204,9 @@ function overlay(c,w,h,sec,total){
  const p=pal(),topic=v('topic')||'माहिती',meta=[v('place'),v('date')].filter(Boolean).join('  •  '),facts=v('facts'),outcome=v('outcome');
  const g=c.createLinearGradient(0,h*.35,0,h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(245,243,236,.9)':'rgba(0,0,0,.82)');c.fillStyle=g;c.fillRect(0,h*.28,w,h*.72);
  c.fillStyle=p.p;rr(c,w*.045,h*.035,w*.33,h*.04,h*.02);c.fillStyle=p.t;c.font='800 '+(w*.019)+'px sans-serif';c.fillText("DADA'S PR · माहिती",w*.066,h*.061);
- if(sec<3.1){
+ if(sec<1.85){
   c.fillStyle=p.a;c.fillRect(w*.065,h*.66,w*.16,h*.006);c.fillStyle=p.t;c.font='900 '+(w*.062)+'px sans-serif';let y=wt(c,topic,w*.065,h*.72,w*.86,w*.071,3);c.fillStyle=p.s;c.font='600 '+(w*.027)+'px sans-serif';if(meta)c.fillText(meta,w*.065,Math.min(h*.91,y+h*.02))
- }else if(facts&&(sec%9)>5.2&&(sec%9)<8.1){
+ }else if(facts&&(sec%8)>4.8&&(sec%8)<6.35){
   c.fillStyle=p.p;rr(c,w*.05,h*.735,w*.88,h*.16,w*.02);c.fillStyle=p.a;c.fillRect(w*.05,h*.735,w*.012,h*.16);c.fillStyle=p.t;c.font='700 '+(w*.026)+'px sans-serif';wt(c,facts.slice(0,180),w*.085,h*.785,w*.79,w*.037,3)
  }else if(meta&&(sec%7)<2){
   c.fillStyle=p.p;rr(c,w*.05,h*.84,w*.73,h*.085,w*.018);c.fillStyle=p.a;c.fillRect(w*.05,h*.84,w*.011,h*.085);c.fillStyle=p.t;c.font='800 '+(w*.03)+'px sans-serif';c.fillText(v('place')||v('date'),w*.085,h*.878);if(v('place')&&v('date')){c.fillStyle=p.s;c.font='500 '+(w*.021)+'px sans-serif';c.fillText(v('date'),w*.085,h*.905)}
@@ -213,16 +216,114 @@ function overlay(c,w,h,sec,total){
  }
 }
 async function el(item){if(item.type==='image'){const im=new Image();im.src=item.url;if(im.decode)await im.decode();else await waitEvent(im,'load',8000);return im}const x=document.createElement('video');x.src=item.url;x.playsInline=true;x.preload='auto';x.muted=false;x.volume=1;x.loop=true;await Promise.race([waitEvent(x,'canplay',10000),waitEvent(x,'loadeddata',10000)]);return x}
-function startProceduralBed(ac,dest,total){
- const master=ac.createGain();master.gain.value=.15;master.connect(dest);
- const palettes={cinematic:[146.83,196,220,293.66],documentary:[130.81,174.61,196,261.63],newsroom:[164.81,220,246.94,329.63],heritage:[146.83,196,246.94,293.66],minimal:[130.81,164.81,196,261.63]};
- const notes=palettes[style]||palettes.cinematic,now=ac.currentTime+.08,voices=[];
- for(let i=0;i<Math.ceil(total/1.35)+1;i++){
-  const t=now+i*1.35,osc=ac.createOscillator(),gain=ac.createGain();osc.type=(i%3===0?'sine':'triangle');osc.frequency.value=notes[i%notes.length]*(i%4===3?2:1);
-  gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.045,t+.16);gain.gain.exponentialRampToValueAtTime(.0001,t+1.15);osc.connect(gain).connect(master);osc.start(t);osc.stop(t+1.2);voices.push(osc)
+
+function soundtrackText(){
+ return [v('topic'),v('facts'),v('outcome'),v('place'),...items.map(x=>x.ocr||'')].join(' ').toLocaleLowerCase()
+}
+function inferMusicProfile(){
+ const t=soundtrackText(),hit=a=>a.some(k=>t.includes(k));
+ if(hit(['श्रद्धांजली','निधन','स्मरण','tribute','memorial','condolence']))return{id:'reflective',label:'Reflective / memorial',bpm:72,energy:.42,root:146.83,scale:[1,1.2,1.5,1.8],drums:.28};
+ if(hit(['गणेश','उत्सव','जत्रा','यात्रा','festival','celebration','मिरवणूक','सांस्कृतिक','cultural','पूजा','आरती']))return{id:'festive',label:'Festive Maharashtra',bpm:118,energy:.96,root:146.83,scale:[1,1.125,1.5,1.8],drums:1};
+ if(hit(['शेत','शेती','शेतकरी','farmer','agriculture','पीक','कृषी','गाव','rural']))return{id:'rural',label:'Rural / people',bpm:96,energy:.76,root:130.81,scale:[1,1.25,1.5,1.875],drums:.82};
+ if(hit(['रस्ता','road','पूल','bridge','पाणी','pipeline','drainage','गटार','काम','विकास','development','infrastructure','बांधकाम','construction','उद्घाटन','inspection','पाहणी']))return{id:'work',label:'Development / field work',bpm:104,energy:.88,root:146.83,scale:[1,1.333,1.5,2],drums:.9};
+ if(hit(['सभा','बैठक','meeting','भाषण','speech','संवाद','interview','पत्रकार','media','conference']))return{id:'speech',label:'Speech / meeting',bpm:84,energy:.55,root:130.81,scale:[1,1.25,1.5,1.667],drums:.42};
+ if(hit(['आरोग्य','health','hospital','शिक्षण','education','school','शाळा','सेवा','camp','रुग्ण']))return{id:'service',label:'Public service',bpm:90,energy:.66,root:130.81,scale:[1,1.2,1.5,1.8],drums:.62};
+ return{id:'documentary',label:'Documentary / field update',bpm:94,energy:.72,root:146.83,scale:[1,1.25,1.5,1.75],drums:.7}
+}
+function previewMusicPlan(){
+ const e=document.getElementById('musicPlan');if(!e)return;const p=inferMusicProfile();
+ e.textContent=musicFile?'🎵 Uploaded music · smart excerpt + dialogue ducking · '+p.label:'🎵 Auto soundtrack · '+p.label+' · '+p.bpm+' BPM · drums + bass + texture'
+}
+function noiseBuffer(ac,seconds=.13){
+ const n=Math.max(1,Math.floor(ac.sampleRate*seconds)),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
+ for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
+ return b
+}
+function kick(ac,out,t,amount=1){
+ const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.setValueAtTime(130,t);o.frequency.exponentialRampToValueAtTime(48,t+.14);
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.24*amount,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+.19);o.connect(g).connect(out);o.start(t);o.stop(t+.21)
+}
+function snare(ac,out,t,amount=1){
+ const s=ac.createBufferSource(),hp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=noiseBuffer(ac,.16);hp.type='highpass';hp.frequency.value=850;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.12*amount,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+.15);s.connect(hp).connect(g).connect(out);s.start(t);s.stop(t+.17)
+}
+function hat(ac,out,t,amount=1){
+ const s=ac.createBufferSource(),hp=ac.createBiquadFilter(),g=ac.createGain();s.buffer=noiseBuffer(ac,.06);hp.type='highpass';hp.frequency.value=4200;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.045*amount,t+.003);g.gain.exponentialRampToValueAtTime(.001,t+.055);s.connect(hp).connect(g).connect(out);s.start(t);s.stop(t+.065)
+}
+function bass(ac,out,t,freq,amount=1,dur=.35){
+ const o=ac.createOscillator(),f=ac.createBiquadFilter(),g=ac.createGain();o.type='sawtooth';o.frequency.value=freq;f.type='lowpass';f.frequency.value=260;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.075*amount,t+.025);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(f).connect(g).connect(out);o.start(t);o.stop(t+dur+.03)
+}
+function tone(ac,out,t,freq,amount=1,dur=.32){
+ const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=freq;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.035*amount,t+.018);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(out);o.start(t);o.stop(t+dur+.03)
+}
+function startTopicBed(ac,dest,total,profile){
+ const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.34;master.connect(comp).connect(dest);
+ comp.threshold.value=-16;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.006;comp.release.value=.18;
+ const now=ac.currentTime+.06,beat=60/profile.bpm,notes=profile.scale.map(x=>profile.root*x),voices=[];
+ const pad=ac.createOscillator(),pf=ac.createBiquadFilter(),pg=ac.createGain();pad.type='sawtooth';pad.frequency.value=profile.root/2;pf.type='lowpass';pf.frequency.value=540;pg.gain.value=.018+.018*profile.energy;
+ pad.connect(pf).connect(pg).connect(master);pad.start(now);pad.stop(now+total+.4);voices.push(pad);
+ const beats=Math.ceil(total/beat)+2;
+ for(let i=0;i<beats;i++){
+  const t=now+i*beat;
+  if(i%4===0)kick(ac,master,t,.8*profile.drums);
+  if(i%4===2)kick(ac,master,t,.55*profile.drums);
+  if(i%4===1||i%4===3)snare(ac,master,t,.68*profile.drums);
+  if(profile.drums>.45){hat(ac,master,t,.7*profile.drums);hat(ac,master,t+beat*.5,.45*profile.drums)}
+  if(profile.id==='festive'&&i%2===0){snare(ac,master,t+beat*.48,.45);snare(ac,master,t+beat*.72,.32)}
+  bass(ac,master,t,notes[(i>>1)%notes.length]/2,.8*profile.energy,Math.min(.38,beat*.72));
+  if(i%2===0)tone(ac,master,t,notes[(i/2)%notes.length|0],profile.energy,Math.min(.28,beat*.55))
  }
- const pad=ac.createOscillator(),pg=ac.createGain();pad.type='sine';pad.frequency.value=notes[0]/2;pg.gain.value=.018;pad.connect(pg).connect(master);pad.start(now);pad.stop(now+total+.2);voices.push(pad);
- return {gain:master,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
+ return {gain:master,profile,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
+}
+async function chooseMusicOffset(file,targetSeconds,profile,ac){
+ try{
+  const buf=await ac.decodeAudioData((await file.arrayBuffer()).slice(0)),duration=buf.duration||0;if(duration<=targetSeconds+3)return 0;
+  const data=buf.getChannelData(0),sr=buf.sampleRate,win=Math.max(1,Math.floor(sr*2.2)),step=Math.max(1,Math.floor(sr*1.2)),scores=[],maxStart=Math.max(0,duration-targetSeconds-1);
+  for(let s=Math.floor(sr*1.5);s+win<data.length&&s/sr<maxStart;s+=step){
+   let sum=0,peak=0,z=0,last=data[s];
+   for(let i=s;i<s+win;i+=10){const a=Math.abs(data[i]);sum+=a*a;peak=Math.max(peak,a);if((data[i]>=0)!=(last>=0))z++;last=data[i]}
+   const rms=Math.sqrt(sum/Math.ceil(win/10)),motion=z/Math.ceil(win/10);if(peak<.995)scores.push({t:s/sr,e:rms*.78+motion*.22})
+  }
+  if(!scores.length)return Math.min(2,maxStart);scores.sort((a,b)=>a.e-b.e);
+  const q=profile.id==='reflective'?.42:profile.id==='speech'?.5:profile.id==='festive'?.88:profile.id==='work'?.8:.7;
+  return Math.min(maxStart,scores[Math.min(scores.length-1,Math.floor((scores.length-1)*q))].t)
+ }catch{return 0}
+}
+function buildStoryOrder(usable){
+ const subject=usable.filter(x=>x.focus).sort((a,b)=>(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
+ const work=usable.filter(x=>!x.focus).sort((a,b)=>(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
+ if(!subject.length)return [...usable].sort((a,b)=>(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
+ const out=[];let si=0,wi=0;out.push(subject[si++]);
+ while(si<subject.length||wi<work.length){if(wi<work.length)out.push(work[wi++]);if(si<subject.length)out.push(subject[si++])}
+ return out
+}
+function buildTimeline(count,total,bpm,pace){
+ const beat=60/bpm,target=pace==='dynamic'?beat*4:beat*6,min=pace==='dynamic'?1.55:2.35,max=pace==='dynamic'?3.1:4.2,arr=[];
+ let remain=total;
+ for(let i=0;i<count;i++){
+  const left=count-i,raw=i===0?Math.min(max,target*.78):(i===count-1?Math.min(max,target*1.1):target*(i%3===0?.85:i%3===1?1.08:.96));
+  const d=i===count-1?remain:Math.max(min,Math.min(max,Math.round(raw/beat)*beat,remain-min*(left-1)));arr.push(d);remain-=d
+ }
+ if(remain>0)arr[arr.length-1]+=remain;
+ return arr
+}
+function colorFilter(){
+ if(style==='cinematic')return 'contrast(1.10) saturate(1.08) brightness(.98)';
+ if(style==='documentary')return 'contrast(1.04) saturate(.94) brightness(1.02)';
+ if(style==='newsroom')return 'contrast(1.12) saturate(.98) brightness(1.01)';
+ if(style==='heritage')return 'contrast(1.08) saturate(1.12) sepia(.06)';
+ return 'contrast(1.03) saturate(.96) brightness(1.02)'
+}
+function drawEditorialShot(q,item,el,w,h,phase,index,alpha=1,transition=0){
+ q.save();q.filter=colorFilter();q.globalAlpha=alpha;
+ const still=item.type==='image',baseZoom=still?1.035:1.005,zoom=baseZoom+(still?.075:.018)*phase;
+ const dir=index%2===0?1:-1,pan=(phase-.5)*w*.035*dir;
+ if(transition===1)q.translate((1-alpha)*w*.11*dir,0);
+ else if(transition===2)q.scale(1+(1-alpha)*.035,1+(1-alpha)*.035);
+ cover(q,el,w,h,zoom,pan,1,item.focus?item.focal:null);q.restore()
 }
 function audioLevel(analyser){
  if(!analyser)return 0;const data=new Uint8Array(analyser.fftSize);analyser.getByteTimeDomainData(data);let sum=0;for(const v of data){const x=(v-128)/128;sum+=x*x}return Math.sqrt(sum/data.length)
@@ -236,52 +337,63 @@ async function renderReel(){
  const rs=document.getElementById('rs');rs.hidden=false;rs.className='status';document.getElementById('output').innerHTML='';document.getElementById('bar').style.width='0%';
  try{
   const usable=items.filter(x=>x.ready&&!x.error);
-  if(!usable.length){rs.textContent='No usable photo/video is loaded. Select media above and wait until it says “Media loaded”.';return}
-  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='This browser cannot render video locally. Update Chrome and try again.';return}
-  const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
+  if(!usable.length){rs.textContent='No usable photo/video is loaded. Select media above first.';return}
+  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='Update Chrome to use local reel rendering.';return}
+  const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),pace=ch('pace')||'dynamic',canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
   let wake=null;try{wake=await navigator.wakeLock?.request('screen')}catch{}
   const ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();const dest=ac.createMediaStreamDestination(),stream=canvas.captureStream(30);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
-  let music=null,musicGain=null,procedural=null;
+  const profile=inferMusicProfile();let music=null,musicGain=null,procedural=null,musicOffset=0;
   if(musicFile){
-   music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';const src=ac.createMediaElementSource(music);musicGain=ac.createGain();musicGain.gain.value=.14;src.connect(musicGain).connect(dest);await music.play().catch(()=>{})
-  }else{
-   procedural=startProceduralBed(ac,dest,requested);musicGain=procedural.gain
-  }
-  const ordered=[...usable].sort((a,b)=>(b.focus?1:0)-(a.focus?1:0)||(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
-  const maxCount=Math.min(ordered.length,Math.max(3,Math.ceil(requested/3.2))),chosen=ordered.slice(0,maxCount),els=[];
-  rs.textContent='Loading '+chosen.length+' selected highlight(s)…';
+   musicOffset=await chooseMusicOffset(musicFile,requested,profile,ac);music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';
+   const src=ac.createMediaElementSource(music),comp=ac.createDynamicsCompressor();musicGain=ac.createGain();musicGain.gain.value=.26;src.connect(comp).connect(musicGain).connect(dest);
+   try{await new Promise((r,j)=>{music.onloadedmetadata=r;music.onerror=j});music.currentTime=Math.min(musicOffset,Math.max(0,(music.duration||0)-1))}catch{}
+   await music.play().catch(()=>{})
+  }else{procedural=startTopicBed(ac,dest,requested,profile);musicGain=procedural.gain}
+  const ordered=buildStoryOrder(usable),maxCount=Math.min(ordered.length,pace==='dynamic'?Math.max(5,Math.ceil(requested/2.5)):Math.max(4,Math.ceil(requested/3.5))),chosen=ordered.slice(0,maxCount),els=[];
+  rs.textContent='Preparing '+chosen.length+' story shots · '+profile.label+' soundtrack…';
   for(const it of chosen){
    try{
-    const media=await el(it),entry={it:it,e:media,analyser:null};
+    const media=await el(it),entry={it,e:media,analyser:null,gain:null};
     if(it.type==='video'){
-     try{const src=ac.createMediaElementSource(media),an=ac.createAnalyser(),gain=ac.createGain();an.fftSize=256;gain.gain.value=.9;src.connect(an);an.connect(gain).connect(dest);entry.analyser=an}catch{}
+     try{const src=ac.createMediaElementSource(media),an=ac.createAnalyser(),gain=ac.createGain();an.fftSize=512;gain.gain.value=1;src.connect(an);an.connect(gain).connect(dest);entry.analyser=an;entry.gain=gain}catch{}
     }
     els.push(entry)
    }catch{it.error='Could not prepare for render'}
   }
-  if(!els.length){rs.textContent='The selected media could not be prepared for rendering. Try MP4/H.264 video.';try{await wake?.release?.()}catch{};try{await ac.close()}catch{};return}
-  const total=requested,seg=total/els.length,tr=Math.min(.55,seg*.18),cfg=createRecorder(stream,portrait?5200000:6200000);
-  if(!cfg){rs.textContent='Chrome could not start a local video recorder on this phone.';try{await wake?.release?.()}catch{};try{await ac.close()}catch{};return}
-  const rec=cfg.rec,mime=cfg.mime,chunks=[];let recorderError=null;rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};
-  const done=new Promise(resolve=>rec.onstop=resolve);rec.start(750);const start=performance.now();let ci=-1;
-  async function prep(i){
-   const o=els[i];if(!o||o.it.type!=='video')return;
-   if(ci!==i){els.forEach((x,j)=>{if(x.it.type==='video'&&j!==i)x.e.pause()});ci=i;const d=o.e.duration||o.it.dur||seg;try{o.e.currentTime=Math.max(0,Math.min(Math.max(0,d-.08),d>seg?d*.18:0));await o.e.play()}catch{}}
+  if(!els.length){rs.textContent='Media could not be prepared for rendering.';try{await ac.close()}catch{};return}
+  const durations=buildTimeline(els.length,requested,profile.bpm,pace),bounds=[];let acc=0;for(const d of durations){bounds.push({s:acc,e:acc+d});acc+=d}
+  const total=acc,tr=pace==='dynamic'?.28:.45,cfg=createRecorder(stream,portrait?6500000:7600000);if(!cfg){rs.textContent='Chrome could not start local recorder.';return}
+  const rec=cfg.rec,mime=cfg.mime,chunks=[];let recorderError=null,active=-1,nextPrepared=-1;
+  rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};const done=new Promise(r=>rec.onstop=r);rec.start(600);const start=performance.now();
+  async function activate(i){
+   if(i<0||i>=els.length||active===i)return;
+   els.forEach((x,j)=>{if(x.it.type==='video'&&j!==i&&j!==i+1)x.e.pause()});active=i;const o=els[i];if(o.it.type==='video'){try{const d=o.e.duration||o.it.dur||1,oStart=Math.min(Math.max(.05,d*.12),Math.max(.05,d-durations[i]-.1));o.e.currentTime=oStart;await o.e.play()}catch{}}
   }
+  async function prepareNext(i){
+   if(i<0||i>=els.length||nextPrepared===i)return;nextPrepared=i;const o=els[i];if(o.it.type==='video'){try{o.e.currentTime=Math.min(Math.max(.03,(o.e.duration||1)*.08),Math.max(.03,(o.e.duration||1)-.1));await o.e.play()}catch{}}
+  }
+  function indexAt(t){for(let i=0;i<bounds.length;i++)if(t<bounds[i].e)return i;return bounds.length-1}
   async function frame(){
-   const t=(performance.now()-start)/1000;
-   if(t>=total){try{rec.stop()}catch{}music?.pause();procedural?.stop();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}
-   const i=Math.min(els.length-1,Math.floor(t/seg)),local=t-i*seg,next=Math.min(els.length-1,i+1);await prep(i);
-   const lvl=audioLevel(els[i].analyser);if(musicGain){const target=lvl>.028?.055:.15;musicGain.gain.setTargetAtTime(target,ac.currentTime,.15)}
-   q.fillStyle='#111';q.fillRect(0,0,canvas.width,canvas.height);const cur=els[i],ph=local/seg,zoom=cur.it.type==='image'?1+.055*ph:1,pan=(ph-.5)*canvas.width*.024;
-   cover(q,cur.e,canvas.width,canvas.height,zoom,pan,1,cur.it.focus?cur.it.focal:null);
-   if(local>seg-tr&&next!==i){const a=(local-(seg-tr))/tr,nx=els[next];if(nx.it.type==='video'&&nx.e.paused){try{nx.e.currentTime=0;await nx.e.play()}catch{}}cover(q,nx.e,canvas.width,canvas.height,nx.it.type==='image'?1.025:1,-pan,a,nx.it.focus?nx.it.focal:null)}
-   overlay(q,canvas.width,canvas.height,t,total);const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';rs.textContent='Rendering locally… '+Math.round(pct)+'%\nPrimary-subject shots + work relevance are prioritized. Source audio is preserved; music ducks when audio is present.';requestAnimationFrame(frame)
+   const t=(performance.now()-start)/1000;if(t>=total){try{rec.stop()}catch{}music?.pause();procedural?.stop();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}
+   const i=indexAt(t),b=bounds[i],local=t-b.s,phase=Math.max(0,Math.min(1,local/(b.e-b.s)));await activate(i);
+   const next=i+1<els.length?i+1:-1,nearEnd=b.e-t<tr&&next>=0;if(nearEnd)await prepareNext(next);
+   const lvl=audioLevel(els[i].analyser),hasVoice=lvl>.022;
+   if(musicGain)musicGain.gain.setTargetAtTime(hasVoice?(musicFile?.07:.09):(musicFile?.26:.34),ac.currentTime,.10);
+   if(els[i].gain)els[i].gain.gain.setTargetAtTime(hasVoice?1:.82,ac.currentTime,.08);
+   q.save();q.fillStyle='#090909';q.fillRect(0,0,canvas.width,canvas.height);
+   drawEditorialShot(q,els[i].it,els[i].e,canvas.width,canvas.height,phase,i,1,0);
+   if(nearEnd){
+    const a=Math.max(0,Math.min(1,(t-(b.e-tr))/tr)),kind=i%3===0?1:(i%3===1?2:0),nx=els[next];drawEditorialShot(q,nx.it,nx.e,canvas.width,canvas.height,0,next,a,kind)
+   }
+   q.restore();overlay(q,canvas.width,canvas.height,t,total);
+   const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';
+   rs.textContent='Advanced edit '+Math.round(pct)+'%\\n'+profile.label+' · beat-paced cuts · subject/work alternation · dialogue ducking · color grade';requestAnimationFrame(frame)
   }
   requestAnimationFrame(frame);await done;music?.pause();procedural?.stop();try{await ac.close()}catch{}try{await wake?.release?.()}catch{}
-  if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced. Update Chrome and retry with a shorter 15 sec reel.';return}
-  renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';rs.textContent='Render complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase();
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-'+style+'-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
+  renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
+  rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v43-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -294,6 +406,6 @@ function hookInstall(){refreshInstallButton()}
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Local reel rendering needs a recent Chrome version.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=42').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=43').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=42"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=43"></script></body></html>
