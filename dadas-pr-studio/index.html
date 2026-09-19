@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR v5.2</title>
+<title>Dada's PR v5.3</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<header class="brandbar"><h1>Dada's PR</h1><span>v5.2</span></header>
+<header class="brandbar"><h1>Dada's PR</h1><span>v5.3</span></header>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -46,9 +46,9 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div class="proctl"><b>Text density</b><select id="textDensity"><option value="balanced">Balanced</option><option value="minimal">Minimal</option><option value="rich">Rich</option></select></div>
 <div class="proctl"><b>Media coverage</b><select id="coverageMode"><option value="auto">Auto · use as much as fits</option><option value="allvideo">Use all videos</option><option value="best">Best only</option></select></div>
 <div class="proctl"><b>Music</b><div class="pro-note">Maharashtra/India only · auto topic match</div></div>
-</div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
+</div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director adapts shot length, motion, transitions and overlays to the media and music.</div></div>
 <label>Music / song / poem recording (optional — upload audio you can use)<input id="music" type="file" accept="audio/*"></label>
-<div id="musicPlan" class="status">🎵 Maharashtra/India music · stronger melody · louder mastered mix · clear speech · automatic ducking.</div>
+<div id="musicPlan" class="status">🎵 Maharashtra/India music · real beat/onset analysis · beat-snapped cuts · louder mastered mix · clear speech.</div>
 <div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
 <button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
@@ -176,21 +176,34 @@ async function aiFrames(item){
  }
  const video=document.createElement('video');video.src=item.url;video.muted=true;video.playsInline=true;video.preload='auto';await waitEvent(video,'loadedmetadata',9000);
  const d=item.dur||video.duration||1;
- for(const p of [.18,.5,.82]){
+ for(const p of [.08,.26,.5,.74,.92]){
   try{await seekVideo(video,Math.min(Math.max(.04,d*p),Math.max(.04,d-.08)),4500);const scale=Math.min(1,max/Math.max(video.videoWidth,video.videoHeight)),cv=document.createElement('canvas');cv.width=Math.max(2,Math.round(video.videoWidth*scale));cv.height=Math.max(2,Math.round(video.videoHeight*scale));cv.getContext('2d').drawImage(video,0,0,cv.width,cv.height);out.push(cv)}catch{}
  }
  return out
+}
+
+function frameDifference(a,b){
+ try{
+  const w=80,h=45,cv=document.createElement('canvas');cv.width=w;cv.height=h;const q=cv.getContext('2d',{willReadFrequently:true});
+  q.drawImage(a,0,0,w,h);const x=q.getImageData(0,0,w,h).data;q.clearRect(0,0,w,h);q.drawImage(b,0,0,w,h);const y=q.getImageData(0,0,w,h).data;
+  let sum=0,n=0;for(let i=0;i<x.length;i+=16){const xa=.2126*x[i]+.7152*x[i+1]+.0722*x[i+2],ya=.2126*y[i]+.7152*y[i+1]+.0722*y[i+2];sum+=Math.abs(xa-ya);n++}
+  return Math.min(100,(sum/Math.max(1,n))/1.15)
+ }catch{return 0}
+}
+function mediaMotion(frames){
+ if(!frames||frames.length<2)return 0;let s=0,n=0;for(let i=1;i<frames.length;i++){s+=frameDifference(frames[i-1],frames[i]);n++}return n?s/n:0
 }
 async function runLocalAI(){
  const st=document.getElementById('analysisStatus'),usable=items.filter(x=>x.ready&&!x.error);st.hidden=false;st.className='status';
  if(!usable.length){st.textContent='Select photos/videos first.';return}
  try{
-  const AI=await waitLocalAI(),names=primaryNames(),context=workContext(),targets=usable.slice(0,12);
+  const AI=await waitLocalAI(),names=primaryNames(),context=workContext(),targets=usable;
   for(let i=0;i<targets.length;i++){
    const item=targets[i];st.textContent='Dada Focus AI '+(i+1)+'/'+targets.length+' · preparing frames…';
-   const frames=await aiFrames(item);let best=null,texts=[],faceMax=0,nameInText=false;
+   const frames=await aiFrames(item);item.motion=mediaMotion(frames);let best=null,texts=[],faceMax=0,nameInText=false;
    for(let j=0;j<frames.length;j++){
-    const result=await AI.analyzeCanvas(frames[j],{context:context,personNames:names,onStatus:m=>{st.textContent='Dada Focus AI '+(i+1)+'/'+targets.length+' · '+m}});
+    const doOCR=item.type==='image'||j===0||j===Math.floor(frames.length/2);
+    const result=await AI.analyzeCanvas(frames[j],{context:context,personNames:names,ocr:doOCR,onStatus:m=>{st.textContent='Dada Focus AI '+(i+1)+'/'+targets.length+' · '+m}});
     texts.push(result.ocrText||'');faceMax=Math.max(faceMax,result.faceCount||0);nameInText=nameInText||!!result.nameInText;
     if(!best||(result.relevance||0)>(best.relevance||0)||((result.faceCount||0)>(best.faceCount||0)&&!best.nameInText))best=result
    }
@@ -254,7 +267,7 @@ function inferMusicProfile(){
 }
 function previewMusicPlan(){
  const e=document.getElementById('musicPlan');if(!e)return;const p=inferMusicProfile();
- e.textContent=musicFile?'🎵 Uploaded audio · strongest matching excerpt + dialogue ducking · '+p.label:'🎵 Auto topic-match · '+p.label+' · '+p.bpm+' BPM'
+ e.textContent=musicFile?'🎵 Uploaded music · beat/onset analysis + strongest section + speech ducking':'🎵 Auto Indian music · '+p.label+' · '+p.bpm+' BPM'
 }
 function noiseBuffer(ac,seconds=.13){
  const n=Math.max(1,Math.floor(ac.sampleRate*seconds)),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
@@ -352,6 +365,51 @@ function startTopicBed(ac,dest,total,profile){
  }
  return {gain:master,profile,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
 }
+
+async function analyzeUploadedMusic(file,targetSeconds,profile,ac){
+ try{
+  const buf=await ac.decodeAudioData((await file.arrayBuffer()).slice(0)),data=buf.getChannelData(0),sr=buf.sampleRate,dur=buf.duration||0;
+  const hop=Math.max(512,Math.floor(sr*.045)),win=hop*2,env=[];let prev=0;
+  for(let s=0;s+win<data.length;s+=hop){
+   let e=0;for(let i=s;i<s+win;i+=8){const v=data[i];e+=v*v}
+   const rms=Math.sqrt(e/Math.ceil(win/8)),flux=Math.max(0,rms-prev);env.push({t:s/sr,r:rms,f:flux});prev=rms
+  }
+  if(env.length<8)return {offset:0,bpm:profile.bpm,peaks:[]};
+  const mean=env.reduce((a,x)=>a+x.f,0)/env.length,sd=Math.sqrt(env.reduce((a,x)=>a+(x.f-mean)*(x.f-mean),0)/env.length),thr=mean+sd*.72;
+  const peaks=[];let last=-9;
+  for(let i=2;i<env.length-2;i++){
+   const x=env[i];if(x.f>thr&&x.f>=env[i-1].f&&x.f>=env[i+1].f&&x.t-last>.18){peaks.push(x.t);last=x.t}
+  }
+  const intervals=[];for(let i=1;i<peaks.length;i++){const d=peaks[i]-peaks[i-1];if(d>=.28&&d<=1.05)intervals.push(d)}
+  intervals.sort((a,b)=>a-b);let bpm=profile.bpm;
+  if(intervals.length){let med=intervals[Math.floor(intervals.length/2)];bpm=60/med;while(bpm<72)bpm*=2;while(bpm>156)bpm/=2;bpm=Math.round(bpm)}
+  const maxStart=Math.max(0,dur-targetSeconds-.25),step=Math.max(.5,Math.min(1.5,targetSeconds/12));let best={t:0,s:-1};
+  for(let t=0;t<=maxStart;t+=step){
+   let score=0;for(const x of env)if(x.t>=t&&x.t<=t+targetSeconds)score+=x.r*.22+x.f*2.6;
+   const localPeaks=peaks.filter(p=>p>=t&&p<=t+targetSeconds).length;score+=localPeaks*.035;
+   if(score>best.s)best={t,s:score}
+  }
+  const rel=peaks.filter(p=>p>=best.t-.02&&p<=best.t+targetSeconds+.02).map(p=>p-best.t);
+  return {offset:Math.min(maxStart,best.t),bpm:bpm,peaks:rel,duration:dur}
+ }catch{return {offset:0,bpm:profile.bpm,peaks:[]}}
+}
+function beatPulseAt(t,analysis,bpm){
+ if(analysis&&analysis.peaks&&analysis.peaks.length){
+  let nearest=9;for(const p of analysis.peaks){const d=Math.abs(t-p);if(d<nearest)nearest=d;if(p>t+.16)break}
+  return Math.max(0,1-nearest/.11)
+ }
+ const beat=60/(bpm||96),d=Math.min(t%beat,beat-(t%beat));return Math.max(0,1-d/.10)
+}
+function buildMusicTimeline(count,total,bpm,pace,analysis){
+ const out=buildTimeline(count,total,bpm,pace);if(!analysis||!analysis.peaks||analysis.peaks.length<2||out.length<2)return out;
+ let pos=0;
+ for(let i=0;i<out.length-1;i++){
+  pos+=out[i];let best=null,dist=.24;
+  for(const p of analysis.peaks){const d=Math.abs(p-pos);if(d<dist){dist=d;best=p}if(p>pos+.25)break}
+  if(best!=null){const delta=best-pos;if(out[i]+delta>.48&&out[i+1]-delta>.48){out[i]+=delta;out[i+1]-=delta;pos=best}}
+ }
+ return out
+}
 async function chooseMusicOffset(file,targetSeconds,profile,ac){
  try{
   const buf=await ac.decodeAudioData((await file.arrayBuffer()).slice(0)),duration=buf.duration||0;if(duration<=targetSeconds+3)return 0;
@@ -367,7 +425,7 @@ async function chooseMusicOffset(file,targetSeconds,profile,ac){
  }catch{return 0}
 }
 function editorialValue(x){
- return (x.priority??1)*100+(x.focus?38:0)+(x.relevance||0)*1.35+(x.score||0)*.55+(x.type==='video'?14:0)
+ return (x.priority??1)*100+(x.focus?38:0)+(x.relevance||0)*1.35+(x.score||0)*.55+(x.motion||0)*.22+(x.type==='video'?14:0)
 }
 function buildStoryOrder(usable){
  const pool=usable.filter(x=>(x.priority??1)>0);
@@ -414,9 +472,12 @@ function motionStrength(){
  const m=v('motionMode')||'auto';if(m==='subtle')return .55;if(m==='bold')return 1.35;
  return ch('pace')==='dynamic'?1.05:.72
 }
-function transitionChoice(index){
- const m=v('transitionMode')||'auto';if(m==='clean')return index%2===0?0:2;if(m==='dynamic')return [1,2,3,4][index%4];
- return [0,1,2,0,3,4][index%6]
+function transitionChoice(index,current=null,next=null,beatPulse=0){
+ const m=v('transitionMode')||'auto';if(m==='clean')return beatPulse>.72?2:0;if(m==='dynamic')return [1,2,3,4,5,6][index%6];
+ if((current?.focus||next?.focus)&&beatPulse<.55)return index%2?2:0;
+ if(current?.type==='image'&&next?.type==='image')return beatPulse>.55?5:4;
+ if(current?.type==='video'&&next?.type==='video')return beatPulse>.6?1:3;
+ return beatPulse>.7?[1,2,5,6][index%4]:[0,2,3,4][index%4]
 }
 function drawTexture(q,w,h,t){
  const mode=v('textureMode')||'cinema';if(mode==='clean')return;
@@ -433,14 +494,23 @@ function drawFlashAccent(q,w,h,local,index){
  if(local>.11||index===0)return;
  q.save();q.globalAlpha=(.11-local)*2.3;q.fillStyle=index%2===0?'#fff':'#d3a15a';q.fillRect(0,0,w,h);q.restore()
 }
-function drawEditorialShot(q,item,el,w,h,phase,index,alpha=1,transition=0){
+
+function drawBeatAccent(q,w,h,pulse,index){
+ if(pulse<.66)return;
+ q.save();const a=(pulse-.66)*.18;q.globalAlpha=a;
+ const g=q.createRadialGradient(w*.5,h*.45,0,w*.5,h*.45,Math.max(w,h)*.7);g.addColorStop(0,index%2?'#fff2d2':'#fff');g.addColorStop(1,'rgba(255,255,255,0)');
+ q.fillStyle=g;q.fillRect(0,0,w,h);q.restore()
+}
+function drawEditorialShot(q,item,el,w,h,phase,index,alpha=1,transition=0,pulse=0){
  q.save();q.filter=colorFilter();q.globalAlpha=alpha;
- const still=item.type==='image',strength=motionStrength(),baseZoom=still?1.025:1.002,zoom=baseZoom+(still?.085:.022)*phase*strength;
- const dir=index%2===0?1:-1,pan=(phase-.5)*w*.038*dir*strength;
+ const still=item.type==='image',motion=Math.min(1,(item.motion||0)/65),baseStrength=motionStrength(),strength=still?baseStrength:(baseStrength*(.72+.28*(1-motion))),baseZoom=still?1.025:1.002,zoom=baseZoom+(still?.085:.022)*phase*strength+pulse*.012;
+ const dir=index%2===0?1:-1,pan=(phase-.5)*w*(still?.044:.026)*dir*strength;
  if(transition===1)q.translate((1-alpha)*w*.13*dir,0);
  else if(transition===2){const z=1+(1-alpha)*.05;q.translate(w*.5,h*.5);q.scale(z,z);q.translate(-w*.5,-h*.5)}
  else if(transition===3){q.translate(0,(1-alpha)*h*.07*(index%2?1:-1));q.rotate((1-alpha)*.012*dir)}
  else if(transition===4){const z=.97+alpha*.03;q.translate(w*.5,h*.5);q.scale(z,z);q.translate(-w*.5,-h*.5)}
+ else if(transition===5){q.filter=colorFilter()+' blur('+((1-alpha)*7).toFixed(1)+'px)';const z=1+(1-alpha)*.075;q.translate(w*.5,h*.5);q.scale(z,z);q.translate(-w*.5,-h*.5)}
+ else if(transition===6){q.translate((1-alpha)*w*.09*dir,(1-alpha)*h*.035);q.rotate((1-alpha)*.018*dir)}
  cover(q,el,w,h,zoom,pan,1,item.focus?item.focal:null);q.restore()
 }
 function audioLevel(analyser){
@@ -480,9 +550,9 @@ async function renderReel(){
   const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),pace=ch('pace')||'dynamic',canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
   let wake=null;try{wake=await navigator.wakeLock?.request('screen')}catch{}
   const ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();const dest=ac.createMediaStreamDestination(),masterChain=createMasterAudioChain(ac,dest),stream=canvas.captureStream(30);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
-  const profile=inferMusicProfile();let music=null,musicGain=null,procedural=null,musicOffset=0;
+  const profile=inferMusicProfile();let music=null,musicGain=null,procedural=null,musicOffset=0,musicAnalysis=null,editBpm=profile.bpm;
   if(musicFile){
-   musicOffset=await chooseMusicOffset(musicFile,requested,profile,ac);music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';
+   musicAnalysis=await analyzeUploadedMusic(musicFile,requested,profile,ac);musicOffset=musicAnalysis.offset;editBpm=musicAnalysis.bpm||profile.bpm;music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';
    const src=ac.createMediaElementSource(music),comp=ac.createDynamicsCompressor();musicGain=ac.createGain();musicGain.gain.value=.34;comp.threshold.value=-18;comp.ratio.value=3.2;comp.attack.value=.006;comp.release.value=.18;src.connect(comp).connect(musicGain).connect(masterChain.input);
    try{await new Promise((r,j)=>{music.onloadedmetadata=r;music.onerror=j});music.currentTime=Math.min(musicOffset,Math.max(0,(music.duration||0)-1))}catch{}
    await music.play().catch(()=>{})
@@ -499,7 +569,7 @@ async function renderReel(){
    }catch{it.error='Could not prepare for render'}
   }
   if(!els.length){rs.textContent='Media could not be prepared for rendering.';try{await ac.close()}catch{};return}
-  const durations=buildTimeline(els.length,requested,profile.bpm,pace),bounds=[];let acc=0;for(const d of durations){bounds.push({s:acc,e:acc+d});acc+=d}
+  const durations=buildMusicTimeline(els.length,requested,editBpm,pace,musicAnalysis),bounds=[];let acc=0;for(const d of durations){bounds.push({s:acc,e:acc+d});acc+=d}
   const total=acc,tr=pace==='dynamic'?.28:.45,cfg=createRecorder(stream,portrait?6500000:7600000);if(!cfg){rs.textContent='Video recorder could not start on this device.';return}
   const rec=cfg.rec,mime=cfg.mime,chunks=[];let recorderError=null,active=-1,nextPrepared=-1;
   rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};const done=new Promise(r=>rec.onstop=r);rec.start(600);const start=performance.now();
@@ -513,25 +583,25 @@ async function renderReel(){
   function indexAt(t){for(let i=0;i<bounds.length;i++)if(t<bounds[i].e)return i;return bounds.length-1}
   async function frame(){
    const t=(performance.now()-start)/1000;if(t>=total){try{rec.stop()}catch{}music?.pause();procedural?.stop();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}
-   const i=indexAt(t),b=bounds[i],local=t-b.s,phase=Math.max(0,Math.min(1,local/(b.e-b.s)));await activate(i);
+   const i=indexAt(t),b=bounds[i],local=t-b.s,phase=Math.max(0,Math.min(1,local/(b.e-b.s))),pulse=beatPulseAt(t,musicAnalysis,editBpm);await activate(i);
    const next=i+1<els.length?i+1:-1,nearEnd=b.e-t<tr&&next>=0;if(nearEnd)await prepareNext(next);
    const lvl=audioLevel(els[i].analyser),hasVoice=lvl>.022;
    if(musicGain)musicGain.gain.setTargetAtTime(hasVoice?(musicFile?.055:.075):(musicFile?.38:.46),ac.currentTime,.085);
    if(els[i].gain)els[i].gain.gain.setTargetAtTime(hasVoice?1.22:.98,ac.currentTime,.065);
    q.save();q.fillStyle='#090909';q.fillRect(0,0,canvas.width,canvas.height);
-   drawEditorialShot(q,els[i].it,els[i].e,canvas.width,canvas.height,phase,i,1,0);
+   drawEditorialShot(q,els[i].it,els[i].e,canvas.width,canvas.height,phase,i,1,0,pulse);
    if(nearEnd){
-    const a=Math.max(0,Math.min(1,(t-(b.e-tr))/tr)),kind=transitionChoice(i),nx=els[next];drawEditorialShot(q,nx.it,nx.e,canvas.width,canvas.height,0,next,a,kind)
+    const a=Math.max(0,Math.min(1,(t-(b.e-tr))/tr)),nx=els[next],kind=transitionChoice(i,els[i].it,nx.it,pulse);drawEditorialShot(q,nx.it,nx.e,canvas.width,canvas.height,0,next,a,kind,pulse)
    }
-   q.restore();drawTexture(q,canvas.width,canvas.height,t);drawFlashAccent(q,canvas.width,canvas.height,local,i);overlay(q,canvas.width,canvas.height,t,total);
+   q.restore();drawTexture(q,canvas.width,canvas.height,t);drawBeatAccent(q,canvas.width,canvas.height,pulse,i);drawFlashAccent(q,canvas.width,canvas.height,local,i);overlay(q,canvas.width,canvas.height,t,total);
    const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';
-   rs.textContent='Advanced edit '+Math.round(pct)+'%\\n'+profile.label+' · beat-paced cuts · subject/work alternation · dialogue ducking · color grade';requestAnimationFrame(frame)
+   rs.textContent='Advanced edit '+Math.round(pct)+'%\\n'+profile.label+' · '+editBpm+' BPM · onset-synced cuts · adaptive effects · speech clarity';requestAnimationFrame(frame)
   }
   requestAnimationFrame(frame);await done;music?.pause();procedural?.stop();try{await ac.close()}catch{}try{await wake?.release?.()}catch{}
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · mastered music · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v52-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v53-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -540,6 +610,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=52').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=53').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=52"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=53"></script></body></html>
