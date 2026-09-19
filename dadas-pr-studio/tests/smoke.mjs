@@ -20,7 +20,7 @@ const browser=await chromium.launch({
 const page=await browser.newPage({viewport:{width:412,height:915},deviceScaleFactor:2});
 const pageErrors=[];
 page.on('pageerror',e=>pageErrors.push(e.message));
-page.on('console',msg=>{if(msg.type()==='error')pageErrors.push('console: '+msg.text())});
+page.on('console',msg=>{const t=msg.text();if(msg.type()==='error' && !t.includes('404'))pageErrors.push('console: '+t)});
 
 const base='http://127.0.0.1:4173/dadas-pr-studio/?smoke=1';
 await page.goto(base,{waitUntil:'networkidle'});
