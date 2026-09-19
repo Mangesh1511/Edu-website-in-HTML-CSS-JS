@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR Studio v4.4</title>
+<title>Dada's PR Studio v4.5</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -14,7 +14,7 @@
 input,textarea,select,button{font:inherit}input,textarea,select{width:100%;padding:12px 13px;border:1px solid #dcd6cd;border-radius:13px;background:#fff;margin-top:5px}textarea{resize:vertical}label{display:block;margin-top:10px;font-weight:720}
 button{border:0;border-radius:13px;padding:12px 14px;background:#191919;color:white;font-weight:850;cursor:pointer}.primary{width:100%;margin-top:12px;background:linear-gradient(135deg,#151515,#4a2a1d)}.secondary{background:white;color:#171717;border:1px solid #d9d3ca;margin:6px 6px 0 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.styles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.style{padding:0;overflow:hidden;text-align:left;background:#fff;color:#111;border:1px solid #ddd7ce}.style.sel{box-shadow:0 0 0 2px #161616}.sw{height:66px;display:block;position:relative}.sw:after{content:"Aa";position:absolute;left:11px;bottom:8px;font-size:23px;font-weight:900}.cinematic{background:linear-gradient(135deg,#080808,#372820 68%,#a87c45);color:#fff}.documentary{background:linear-gradient(135deg,#f0eadc,#bdcabf);color:#24362d}.newsroom{background:linear-gradient(135deg,#05172e,#173f69);color:#e3b65b}.heritage{background:linear-gradient(135deg,#51171d,#8a2d22 65%,#d68b34);color:#fff4df}.minimal{background:linear-gradient(135deg,#fafaf7,#e3e3de);color:#111}.style b,.style small{display:block;padding:0 9px}.style b{padding-top:8px}.style small{padding-top:2px;padding-bottom:9px;color:#777}
-.preview{position:relative;overflow:hidden;aspect-ratio:9/16;border-radius:17px;margin-top:12px;background:#222;display:flex;align-items:flex-end;color:white}.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.preview:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0001 35%,#000d);z-index:1}.copy{position:relative;z-index:2;padding:8%;width:100%}.rule{height:5px;width:23%;border-radius:9px;background:#c99a52;margin-bottom:10px}.copy h2{font-size:27px;line-height:1.07;margin:0 0 8px}.copy p{margin:0;opacity:.8}.media{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.mcard{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:14px;background:#eee}.mcard img,.mcard video{width:100%;height:100%;object-fit:cover}.rank,.score{position:absolute;top:6px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:900}.rank{left:6px;background:#111d;color:#fff}.score{right:6px;background:#ffffffe8;color:#111}.focusbtn{position:absolute;left:6px;bottom:6px;padding:6px 8px;border-radius:10px;font-size:10px;background:#ffffffed;color:#111;border:1px solid #ddd}.focusbtn.on{background:#171717;color:#fff;border-color:#171717}.aimeta{position:absolute;right:6px;bottom:6px;display:flex;gap:4px;flex-direction:column;align-items:flex-end}.aimeta span{background:#111d;color:#fff;border-radius:999px;padding:3px 6px;font-size:9px;font-weight:800}.aipanel{border:1px solid #e0d9cf;background:linear-gradient(135deg,#fff,#f7f2e9);border-radius:17px;padding:12px;margin:10px 0}.airow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.airow .badge{background:#f2e9db;color:#7a451f}.progrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.proctl{border:1px solid #e2ddd5;background:#faf9f6;border-radius:15px;padding:10px}.proctl b{display:block;font-size:12px;margin-bottom:5px}.meter{height:5px;border-radius:99px;background:#e5e0d8;overflow:hidden}.meter i{display:block;height:100%;width:65%;background:#191919}.timeline-map{display:flex;gap:5px;margin-top:8px;overflow:hidden}.timeline-map span{height:28px;flex:1;border-radius:8px;background:linear-gradient(135deg,#221b18,#b47a3d);opacity:.88}.timeline-map span:nth-child(2n){background:linear-gradient(135deg,#e8e1d6,#7c8b82)}.pro-note{font-size:11px;color:#716b64;margin-top:6px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{position:relative}.chip input{position:absolute;opacity:0}.chip span{display:block;padding:9px 11px;border:1px solid #ddd6cc;border-radius:999px;background:#fff;font-weight:800}.chip input:checked+span{background:#191919;color:#fff;border-color:#191919}.status{padding:11px;border-radius:13px;background:#f2f0eb;margin-top:10px;white-space:pre-wrap}.ok{background:#ecfdf3;color:#166534}.progress{height:9px;background:#e7e3dc;border-radius:99px;overflow:hidden;margin-top:10px}.progress div{height:100%;width:0;background:#191919}.output video{width:100%;margin-top:10px;border-radius:16px;background:#000}.output a{display:block;text-align:center;text-decoration:none;color:white;background:#181818;padding:12px;border-radius:13px;margin-top:8px;font-weight:850}.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:11px;width:min(700px,calc(100% - 22px));display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:6px;border-radius:19px;background:#171615ef;backdrop-filter:blur(17px);box-shadow:0 14px 38px #0005;z-index:9999}.tabs button{background:transparent;color:#ddd7d1;padding:9px 4px;font-size:12px}.tabs button.active{background:#fff;color:#111}.page{display:none}.page.active{display:block}.festival-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.festival{border:1px solid #e2ddd5;border-radius:16px;background:#fff;padding:12px}.festival .date{font-size:11px;font-weight:900;color:#83431f}.festival h3{margin:4px 0}.festival small{color:#777}.lock{min-height:100vh;display:grid;place-items:center;padding:18px}.lockbox{width:min(390px,100%);text-align:center}
+.preview{position:relative;overflow:hidden;aspect-ratio:9/16;border-radius:17px;margin-top:12px;background:#222;display:flex;align-items:flex-end;color:white}.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.preview:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0001 35%,#000d);z-index:1}.copy{position:relative;z-index:2;padding:8%;width:100%}.rule{height:5px;width:23%;border-radius:9px;background:#c99a52;margin-bottom:10px}.copy h2{font-size:27px;line-height:1.07;margin:0 0 8px}.copy p{margin:0;opacity:.8}.media{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.mcard{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:14px;background:#eee}.mcard img,.mcard video{width:100%;height:100%;object-fit:cover}.rank,.score{position:absolute;top:6px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:900}.rank{left:6px;background:#111d;color:#fff}.score{right:6px;background:#ffffffe8;color:#111}.focusbtn{position:absolute;left:6px;bottom:6px;padding:6px 8px;border-radius:10px;font-size:10px;background:#ffffffed;color:#111;border:1px solid #ddd}.focusbtn.on{background:#171717;color:#fff;border-color:#171717}.prioritybtn{position:absolute;right:6px;bottom:6px;padding:6px 8px;border-radius:10px;font-size:9px;background:#fff8e7ed;color:#4a3216;border:1px solid #d7c49c}.prioritybtn.p3{background:#171717;color:#fff;border-color:#171717}.prioritybtn.p0{background:#8b1e1ee8;color:#fff;border-color:#8b1e1e}.aimeta{position:absolute;right:6px;bottom:36px;display:flex;gap:4px;flex-direction:column;align-items:flex-end}.aimeta span{background:#111d;color:#fff;border-radius:999px;padding:3px 6px;font-size:9px;font-weight:800}.aipanel{border:1px solid #e0d9cf;background:linear-gradient(135deg,#fff,#f7f2e9);border-radius:17px;padding:12px;margin:10px 0}.airow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.airow .badge{background:#f2e9db;color:#7a451f}.progrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.proctl{border:1px solid #e2ddd5;background:#faf9f6;border-radius:15px;padding:10px}.proctl b{display:block;font-size:12px;margin-bottom:5px}.meter{height:5px;border-radius:99px;background:#e5e0d8;overflow:hidden}.meter i{display:block;height:100%;width:65%;background:#191919}.timeline-map{display:flex;gap:5px;margin-top:8px;overflow:hidden}.timeline-map span{height:28px;flex:1;border-radius:8px;background:linear-gradient(135deg,#221b18,#b47a3d);opacity:.88}.timeline-map span:nth-child(2n){background:linear-gradient(135deg,#e8e1d6,#7c8b82)}.pro-note{font-size:11px;color:#716b64;margin-top:6px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{position:relative}.chip input{position:absolute;opacity:0}.chip span{display:block;padding:9px 11px;border:1px solid #ddd6cc;border-radius:999px;background:#fff;font-weight:800}.chip input:checked+span{background:#191919;color:#fff;border-color:#191919}.status{padding:11px;border-radius:13px;background:#f2f0eb;margin-top:10px;white-space:pre-wrap}.ok{background:#ecfdf3;color:#166534}.progress{height:9px;background:#e7e3dc;border-radius:99px;overflow:hidden;margin-top:10px}.progress div{height:100%;width:0;background:#191919}.output video{width:100%;margin-top:10px;border-radius:16px;background:#000}.output a{display:block;text-align:center;text-decoration:none;color:white;background:#181818;padding:12px;border-radius:13px;margin-top:8px;font-weight:850}.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:11px;width:min(700px,calc(100% - 22px));display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:6px;border-radius:19px;background:#171615ef;backdrop-filter:blur(17px);box-shadow:0 14px 38px #0005;z-index:9999}.tabs button{background:transparent;color:#ddd7d1;padding:9px 4px;font-size:12px}.tabs button.active{background:#fff;color:#111}.page{display:none}.page.active{display:block}.festival-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.festival{border:1px solid #e2ddd5;border-radius:16px;background:#fff;padding:12px}.festival .date{font-size:11px;font-weight:900;color:#83431f}.festival h3{margin:4px 0}.festival small{color:#777}.lock{min-height:100vh;display:grid;place-items:center;padding:18px}.lockbox{width:min(390px,100%);text-align:center}
 @media(max-width:750px){.styles{grid-template-columns:repeat(2,1fr)}.media{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.grid2,.festival-grid{grid-template-columns:1fr}.media{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<section class="hero"><div class="eyebrow">DADA'S PR · ADVANCED EDITOR · v4.4</div><h1>Smart reels, videos and visual stories.</h1><p>Auto Director · subject/work sequencing · beat-aware cuts · audio ducking · motion design · editorial graphics.</p></section>
+<section class="hero"><div class="eyebrow">DADA'S PR · ADVANCED EDITOR · v4.5</div><h1>Smart reels, videos and visual stories.</h1><p>Auto Director · subject/work sequencing · beat-aware cuts · audio ducking · motion design · editorial graphics.</p></section>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -49,6 +49,8 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div class="proctl"><b>Transitions</b><select id="transitionMode"><option value="auto">Auto</option><option value="clean">Clean</option><option value="dynamic">Dynamic</option></select></div>
 <div class="proctl"><b>Texture</b><select id="textureMode"><option value="cinema">Cinema</option><option value="clean">Clean</option><option value="film">Film</option></select></div>
 <div class="proctl"><b>Text density</b><select id="textDensity"><option value="balanced">Balanced</option><option value="minimal">Minimal</option><option value="rich">Rich</option></select></div>
+<div class="proctl"><b>Media coverage</b><select id="coverageMode"><option value="auto">Auto · use as much as fits</option><option value="allvideo">Use all videos</option><option value="best">Best only</option></select></div>
+<div class="proctl"><b>Soundtrack</b><select id="musicMood" onchange="previewMusicPlan()"><option value="auto">Auto · Maharashtra/India</option><option value="work">Development / field work</option><option value="rural">Folk / rural</option><option value="festive">Festival · dhol-tasha energy</option><option value="speech">Speech / meeting</option><option value="service">Public service</option><option value="reflective">Reflective</option></select></div>
 </div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
 <label>Music (optional — upload audio you have rights to)<input id="music" type="file" accept="audio/*"></label>
 <div id="musicPlan" class="status">🎵 Auto soundtrack will match the topic and use a rhythmic original bed. Uploaded music uses a stronger matching excerpt instead of always starting at 0:00.</div>
@@ -114,7 +116,7 @@ async function load(e){
  if(!files.length)return;
  items.forEach(x=>{try{URL.revokeObjectURL(x.url)}catch{}});items=[];firstImage='';renderBlob=null;
  const accepted=files.slice(0,24);
- items=accepted.map(f=>({f,url:URL.createObjectURL(f),type:detectFileType(f),score:50,dur:0,ready:false,error:'',thumb:'',focus:false,faces:0,ocr:'',relevance:0,focal:null,aiScanned:false}));
+ items=accepted.map(f=>({f,url:URL.createObjectURL(f),type:detectFileType(f),score:50,dur:0,ready:false,error:'',thumb:'',focus:false,faces:0,ocr:'',relevance:0,focal:null,aiScanned:false,priority:detectFileType(f)==='video'?2:1}));
  draw();
  const hint=document.getElementById('mediaHint'),st=document.getElementById('analysisStatus');st.hidden=false;st.className='status';
  st.textContent=`Selected ${items.length} file(s). Checking media compatibility…`;
@@ -146,8 +148,9 @@ function draw(){
   const visual=x.thumb?'<img src="'+x.thumb+'" alt="">':(x.type==='video'?'<video src="'+x.url+'" muted playsinline preload="metadata"></video>':'<div style="display:grid;place-items:center;height:100%;font-size:28px">?</div>');
   const bad=x.error?'<div style="position:absolute;inset:auto 5px 5px 5px;background:#8b1e1ee8;color:#fff;padding:5px;border-radius:8px;font-size:9px">'+escapeHtml(x.error)+'</div>':'';
   const ai=x.aiScanned?'<div class="aimeta"><span>👤 '+(x.faces||0)+'</span><span>Work '+Math.round(x.relevance||0)+'%</span></div>':'';
-  const focus=x.ready&&!x.error?'<button class="focusbtn '+(x.focus?'on':'')+'" onclick="event.stopPropagation();toggleFocus('+i+')">'+(x.focus?'★ Primary':'☆ Mark primary')+'</button>':'';
-  return '<div class="mcard">'+visual+'<span class="rank">#'+(i+1)+'</span><span class="score">'+(x.error?'!':Math.round(x.score))+'</span>'+focus+ai+bad+'</div>'
+  const focus=x.ready&&!x.error?'<button class="focusbtn '+(x.focus?'on':'')+'" onclick="event.stopPropagation();toggleFocus('+i+')">'+(x.focus?'★ Primary':'☆ Primary')+'</button>':'';
+  const labels=['Skip','Normal','Prefer','Must use'],pv=x.priority??(x.type==='video'?2:1),priority=x.ready&&!x.error?'<button class="prioritybtn p'+pv+'" onclick="event.stopPropagation();cyclePriority('+i+')">'+labels[pv]+'</button>':'';
+  return '<div class="mcard">'+visual+'<span class="rank">#'+(i+1)+'</span><span class="score">'+(x.error?'!':Math.round(x.score))+'</span>'+focus+priority+ai+bad+'</div>'
  }).join('');
  const pr=document.getElementById('preview');if(pr){pr.querySelector('img')?.remove();if(firstImage){const im=document.createElement('img');im.src=firstImage;pr.prepend(im)}}
 }
@@ -161,7 +164,8 @@ async function analyze(showMessage=true){
 function primaryNames(){return [v('primaryPerson'),v('primaryPersonMr')].filter(Boolean)}
 function workContext(){return [v('primaryPerson'),v('primaryPersonMr'),v('topic'),v('place'),v('facts'),v('outcome')].filter(Boolean).join(' ')}
 function toggleFocus(i){if(!items[i])return;items[i].focus=!items[i].focus;rankByEditorial();draw()}
-function rankByEditorial(){items.sort((a,b)=>(b.ready?1:0)-(a.ready?1:0)||(b.focus?1:0)-(a.focus?1:0)||(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0))}
+function cyclePriority(i){if(!items[i])return;items[i].priority=((items[i].priority??1)+1)%4;rankByEditorial();draw()}
+function rankByEditorial(){items.sort((a,b)=>(b.ready?1:0)-(a.ready?1:0)||(b.priority??1)-(a.priority??1)||(b.focus?1:0)-(a.focus?1:0)||(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0))}
 function waitLocalAI(timeout=16000){if(window.LocalAI)return Promise.resolve(window.LocalAI);return new Promise((resolve,reject)=>{let done=false;const ok=()=>{if(done)return;done=true;clearTimeout(t);resolve(window.LocalAI)};window.addEventListener('local-ai-ready',ok,{once:true});const t=setTimeout(()=>{if(done)return;done=true;reject(new Error('Media intelligence engine could not load. Retry once.'))},timeout)})}
 async function aiFrames(item){
  const out=[],max=960;
@@ -226,18 +230,28 @@ function soundtrackText(){
  return [v('topic'),v('facts'),v('outcome'),v('place'),...items.map(x=>x.ocr||'')].join(' ').toLocaleLowerCase()
 }
 function inferMusicProfile(){
- const t=soundtrackText(),hit=a=>a.some(k=>t.includes(k));
- if(hit(['श्रद्धांजली','निधन','स्मरण','tribute','memorial','condolence']))return{id:'reflective',label:'Reflective / memorial',bpm:72,energy:.42,root:146.83,scale:[1,1.2,1.5,1.8],drums:.28};
- if(hit(['गणेश','उत्सव','जत्रा','यात्रा','festival','celebration','मिरवणूक','सांस्कृतिक','cultural','पूजा','आरती']))return{id:'festive',label:'Festive Maharashtra',bpm:118,energy:.96,root:146.83,scale:[1,1.125,1.5,1.8],drums:1};
- if(hit(['शेत','शेती','शेतकरी','farmer','agriculture','पीक','कृषी','गाव','rural']))return{id:'rural',label:'Rural / people',bpm:96,energy:.76,root:130.81,scale:[1,1.25,1.5,1.875],drums:.82};
- if(hit(['रस्ता','road','पूल','bridge','पाणी','pipeline','drainage','गटार','काम','विकास','development','infrastructure','बांधकाम','construction','उद्घाटन','inspection','पाहणी']))return{id:'work',label:'Development / field work',bpm:104,energy:.88,root:146.83,scale:[1,1.333,1.5,2],drums:.9};
- if(hit(['सभा','बैठक','meeting','भाषण','speech','संवाद','interview','पत्रकार','media','conference']))return{id:'speech',label:'Speech / meeting',bpm:84,energy:.55,root:130.81,scale:[1,1.25,1.5,1.667],drums:.42};
- if(hit(['आरोग्य','health','hospital','शिक्षण','education','school','शाळा','सेवा','camp','रुग्ण']))return{id:'service',label:'Public service',bpm:90,energy:.66,root:130.81,scale:[1,1.2,1.5,1.8],drums:.62};
- return{id:'documentary',label:'Documentary / field update',bpm:94,energy:.72,root:146.83,scale:[1,1.25,1.5,1.75],drums:.7}
+ const forced=v('musicMood')||'auto',t=soundtrackText(),hit=a=>a.some(k=>t.includes(k));
+ const profiles={
+  reflective:{id:'reflective',label:'Soft bansuri-style reflection',bpm:72,energy:.42,root:146.83,scale:[1,1.125,1.5,1.6875],drums:.22,folk:'soft'},
+  festive:{id:'festive',label:'Dhol–tasha festival energy',bpm:122,energy:1,root:146.83,scale:[1,1.125,1.5,1.8],drums:1,folk:'tasha'},
+  rural:{id:'rural',label:'Maharashtra folk field rhythm',bpm:98,energy:.82,root:130.81,scale:[1,1.25,1.5,1.875],drums:.86,folk:'dholki'},
+  work:{id:'work',label:'Development reel percussion',bpm:108,energy:.94,root:146.83,scale:[1,1.333,1.5,2],drums:.94,folk:'dholki'},
+  speech:{id:'speech',label:'Restrained tabla-style underscore',bpm:86,energy:.58,root:130.81,scale:[1,1.25,1.5,1.667],drums:.44,folk:'tabla'},
+  service:{id:'service',label:'Warm public-service instrumental',bpm:92,energy:.70,root:130.81,scale:[1,1.2,1.5,1.8],drums:.66,folk:'tabla'},
+  documentary:{id:'documentary',label:'Indian documentary rhythm',bpm:96,energy:.76,root:146.83,scale:[1,1.25,1.5,1.75],drums:.74,folk:'tabla'}
+ };
+ if(forced!=='auto'&&profiles[forced])return profiles[forced];
+ if(hit(['श्रद्धांजली','निधन','स्मरण','tribute','memorial','condolence']))return profiles.reflective;
+ if(hit(['गणेश','उत्सव','जत्रा','यात्रा','festival','celebration','मिरवणूक','सांस्कृतिक','cultural','पूजा','आरती']))return profiles.festive;
+ if(hit(['शेत','शेती','शेतकरी','farmer','agriculture','पीक','कृषी','गाव','rural','ग्राम']))return profiles.rural;
+ if(hit(['रस्ता','road','पूल','bridge','पाणी','pipeline','drainage','गटार','काम','विकास','development','infrastructure','बांधकाम','construction','उद्घाटन','inspection','पाहणी']))return profiles.work;
+ if(hit(['सभा','बैठक','meeting','भाषण','speech','संवाद','interview','पत्रकार','media','conference']))return profiles.speech;
+ if(hit(['आरोग्य','health','hospital','शिक्षण','education','school','शाळा','सेवा','camp','रुग्ण']))return profiles.service;
+ return profiles.documentary
 }
 function previewMusicPlan(){
  const e=document.getElementById('musicPlan');if(!e)return;const p=inferMusicProfile();
- e.textContent=musicFile?'🎵 Uploaded music · smart excerpt + dialogue ducking · '+p.label:'🎵 Auto soundtrack · '+p.label+' · '+p.bpm+' BPM · drums + bass + texture'
+ e.textContent=musicFile?'🎵 Uploaded music · smart excerpt + dialogue ducking · '+p.label:'🎵 Original Indian instrumental · '+p.label+' · '+p.bpm+' BPM'
 }
 function noiseBuffer(ac,seconds=.13){
  const n=Math.max(1,Math.floor(ac.sampleRate*seconds)),b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
@@ -264,22 +278,47 @@ function tone(ac,out,t,freq,amount=1,dur=.32){
  const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=freq;
  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.035*amount,t+.018);g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(g).connect(out);o.start(t);o.stop(t+dur+.03)
 }
+function tablaHit(ac,out,t,amount=1,low=false){
+ const o=ac.createOscillator(),g=ac.createGain(),bp=ac.createBiquadFilter();o.type='sine';o.frequency.setValueAtTime(low?180:310,t);o.frequency.exponentialRampToValueAtTime(low?95:190,t+.10);bp.type='bandpass';bp.frequency.value=low?190:520;bp.Q.value=1.4;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime((low?.13:.095)*amount,t+.004);g.gain.exponentialRampToValueAtTime(.001,t+.13);o.connect(bp).connect(g).connect(out);o.start(t);o.stop(t+.15)
+}
+function dholHit(ac,out,t,amount=1,high=false){
+ const o=ac.createOscillator(),n=ac.createBufferSource(),ng=ac.createGain(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sine';o.frequency.setValueAtTime(high?185:105,t);o.frequency.exponentialRampToValueAtTime(high?110:58,t+.18);
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime((high?.14:.22)*amount,t+.006);g.gain.exponentialRampToValueAtTime(.001,t+.25);o.connect(g).connect(out);o.start(t);o.stop(t+.27);
+ n.buffer=noiseBuffer(ac,.10);lp.type='lowpass';lp.frequency.value=high?1800:900;ng.gain.setValueAtTime(.06*amount,t);ng.gain.exponentialRampToValueAtTime(.001,t+.09);n.connect(lp).connect(ng).connect(out);n.start(t);n.stop(t+.11)
+}
+function manjira(ac,out,t,amount=.5){
+ const o1=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),hp=ac.createBiquadFilter();o1.type='square';o2.type='square';o1.frequency.value=3100;o2.frequency.value=3650;hp.type='highpass';hp.frequency.value=2400;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.022*amount,t+.002);g.gain.exponentialRampToValueAtTime(.001,t+.085);o1.connect(hp);o2.connect(hp);hp.connect(g).connect(out);o1.start(t);o2.start(t);o1.stop(t+.09);o2.stop(t+.09)
+}
+function fluteNote(ac,out,t,freq,amount=.6,dur=.55){
+ const o=ac.createOscillator(),v=ac.createOscillator(),vg=ac.createGain(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sine';v.type='sine';v.frequency.value=5.2;vg.gain.value=freq*.008;v.connect(vg).connect(o.frequency);lp.type='lowpass';lp.frequency.value=2500;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.026*amount,t+.06);g.gain.setValueAtTime(.022*amount,t+Math.max(.08,dur-.12));g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(lp).connect(g).connect(out);o.start(t);v.start(t);o.stop(t+dur+.03);v.stop(t+dur+.03)
+}
 function startTopicBed(ac,dest,total,profile){
- const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.34;master.connect(comp).connect(dest);
+ const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.38;master.connect(comp).connect(dest);
  comp.threshold.value=-16;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.006;comp.release.value=.18;
  const now=ac.currentTime+.06,beat=60/profile.bpm,notes=profile.scale.map(x=>profile.root*x),voices=[];
- const pad=ac.createOscillator(),pf=ac.createBiquadFilter(),pg=ac.createGain();pad.type='sawtooth';pad.frequency.value=profile.root/2;pf.type='lowpass';pf.frequency.value=540;pg.gain.value=.018+.018*profile.energy;
+ const pad=ac.createOscillator(),pf=ac.createBiquadFilter(),pg=ac.createGain();pad.type='sawtooth';pad.frequency.value=profile.root/2;pf.type='lowpass';pf.frequency.value=480;pg.gain.value=.014+.016*profile.energy;
  pad.connect(pf).connect(pg).connect(master);pad.start(now);pad.stop(now+total+.4);voices.push(pad);
  const beats=Math.ceil(total/beat)+2;
  for(let i=0;i<beats;i++){
-  const t=now+i*beat;
-  if(i%4===0)kick(ac,master,t,.8*profile.drums);
-  if(i%4===2)kick(ac,master,t,.55*profile.drums);
-  if(i%4===1||i%4===3)snare(ac,master,t,.68*profile.drums);
-  if(profile.drums>.45){hat(ac,master,t,.7*profile.drums);hat(ac,master,t+beat*.5,.45*profile.drums)}
-  if(profile.id==='festive'&&i%2===0){snare(ac,master,t+beat*.48,.45);snare(ac,master,t+beat*.72,.32)}
-  bass(ac,master,t,notes[(i>>1)%notes.length]/2,.8*profile.energy,Math.min(.38,beat*.72));
-  if(i%2===0)tone(ac,master,t,notes[(i/2)%notes.length|0],profile.energy,Math.min(.28,beat*.55))
+  const t=now+i*beat,bar=i%4;
+  if(profile.folk==='tasha'){
+   dholHit(ac,master,t,.92,bar%2===1);if(bar===0||bar===2)dholHit(ac,master,t+beat*.48,.66,true);
+   snare(ac,master,t+beat*.72,.50);manjira(ac,master,t+beat*.5,.65)
+  }else if(profile.folk==='dholki'){
+   dholHit(ac,master,t,.72,bar%2===1);if(bar===1||bar===3)tablaHit(ac,master,t+beat*.5,.72,false);
+   if(bar===0)manjira(ac,master,t+beat*.5,.36)
+  }else if(profile.folk==='tabla'){
+   tablaHit(ac,master,t,.70,bar===0||bar===2);tablaHit(ac,master,t+beat*.5,.52,false);
+   if(profile.id!=='speech'&&bar===0)manjira(ac,master,t+beat*.75,.24)
+  }else{
+   if(bar===0)tablaHit(ac,master,t,.34,true)
+  }
+  if(profile.drums>.55){kick(ac,master,t,.34*profile.drums);hat(ac,master,t+beat*.5,.22*profile.drums)}
+  bass(ac,master,t,notes[(i>>1)%notes.length]/2,.66*profile.energy,Math.min(.38,beat*.72));
+  if(i%4===0||i%4===2)fluteNote(ac,master,t+beat*.12,notes[(i>>1)%notes.length],profile.energy,Math.min(.68,beat*1.2))
  }
  return {gain:master,profile,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
 }
@@ -297,23 +336,41 @@ async function chooseMusicOffset(file,targetSeconds,profile,ac){
   return Math.min(maxStart,scores[Math.min(scores.length-1,Math.floor((scores.length-1)*q))].t)
  }catch{return 0}
 }
+function editorialValue(x){
+ return (x.priority??1)*100+(x.focus?38:0)+(x.relevance||0)*1.35+(x.score||0)*.55+(x.type==='video'?14:0)
+}
 function buildStoryOrder(usable){
- const subject=usable.filter(x=>x.focus).sort((a,b)=>(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
- const work=usable.filter(x=>!x.focus).sort((a,b)=>(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
- if(!subject.length)return [...usable].sort((a,b)=>(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
- const out=[];let si=0,wi=0;out.push(subject[si++]);
- while(si<subject.length||wi<work.length){if(wi<work.length)out.push(work[wi++]);if(si<subject.length)out.push(subject[si++])}
+ const pool=usable.filter(x=>(x.priority??1)>0);
+ const subject=pool.filter(x=>x.focus).sort((a,b)=>editorialValue(b)-editorialValue(a));
+ const context=pool.filter(x=>!x.focus).sort((a,b)=>editorialValue(b)-editorialValue(a));
+ if(!subject.length)return [...pool].sort((a,b)=>editorialValue(b)-editorialValue(a));
+ const out=[];let si=0,ci=0;out.push(subject[si++]);
+ while(si<subject.length||ci<context.length){if(ci<context.length)out.push(context[ci++]);if(si<subject.length)out.push(subject[si++])}
  return out
 }
-function buildTimeline(count,total,bpm,pace){
- const beat=60/bpm,target=pace==='dynamic'?beat*4:beat*6,min=pace==='dynamic'?1.55:2.35,max=pace==='dynamic'?3.1:4.2,arr=[];
- let remain=total;
- for(let i=0;i<count;i++){
-  const left=count-i,raw=i===0?Math.min(max,target*.78):(i===count-1?Math.min(max,target*1.1):target*(i%3===0?.85:i%3===1?1.08:.96));
-  const d=i===count-1?remain:Math.max(min,Math.min(max,Math.round(raw/beat)*beat,remain-min*(left-1)));arr.push(d);remain-=d
+function selectStoryMedia(usable,total,pace){
+ const ordered=buildStoryOrder(usable),mode=v('coverageMode')||'auto',must=ordered.filter(x=>(x.priority??1)===3),videos=ordered.filter(x=>x.type==='video'&&(x.priority??1)>0);
+ if(mode==='allvideo'){
+  const first=[...must,...videos.filter(x=>!must.includes(x))],rest=ordered.filter(x=>!first.includes(x));
+  return [...first,...rest]
  }
- if(remain>0)arr[arr.length-1]+=remain;
- return arr
+ const practical=Math.max(3,Math.floor(total/(pace==='dynamic'?1.15:1.75)));
+ if(mode==='best')return ordered.slice(0,Math.min(ordered.length,practical));
+ const desired=new Set(must);
+ if(videos.length<=practical)videos.forEach(x=>desired.add(x));
+ else videos.slice(0,practical).forEach(x=>desired.add(x));
+ for(const x of ordered){if(desired.size>=Math.min(ordered.length,Math.max(practical,videos.length<=practical?videos.length:0)))break;desired.add(x)}
+ return [...ordered.filter(x=>desired.has(x))]
+}
+function buildTimeline(count,total,bpm,pace){
+ if(count<=0)return[];const beat=60/bpm,avg=total/count,baseMin=pace==='dynamic'?1.25:1.85,min=Math.min(baseMin,Math.max(.58,avg*.64)),max=Math.max(min,Math.min(pace==='dynamic'?3.1:4.3,avg*1.55)),weights=[];
+ for(let i=0;i<count;i++)weights.push(i===0?.82:(i===count-1?1.16:(i%4===0?.86:i%4===1?1.08:i%4===2?.94:1.02)));
+ let left=total,out=[];
+ for(let i=0;i<count;i++){
+  const remain=count-i-1,ideal=avg*weights[i],quant=Math.max(min,Math.min(max,Math.round(ideal/beat)*beat)),d=i===count-1?left:Math.min(quant,left-min*remain);
+  out.push(Math.max(.45,d));left-=out[out.length-1]
+ }
+ if(Math.abs(left)>.01)out[out.length-1]+=left;return out
 }
 function colorFilter(){
  if(style==='cinematic')return 'contrast(1.10) saturate(1.08) brightness(.98)';
@@ -380,8 +437,8 @@ async function renderReel(){
    try{await new Promise((r,j)=>{music.onloadedmetadata=r;music.onerror=j});music.currentTime=Math.min(musicOffset,Math.max(0,(music.duration||0)-1))}catch{}
    await music.play().catch(()=>{})
   }else{procedural=startTopicBed(ac,dest,requested,profile);musicGain=procedural.gain}
-  const ordered=buildStoryOrder(usable),maxCount=Math.min(ordered.length,pace==='dynamic'?Math.max(5,Math.ceil(requested/2.5)):Math.max(4,Math.ceil(requested/3.5))),chosen=ordered.slice(0,maxCount),els=[];
-  rs.textContent='Preparing '+chosen.length+' story shots · '+profile.label+' soundtrack…';
+  const chosen=selectStoryMedia(usable,requested,pace),els=[];
+  rs.textContent='Preparing '+chosen.length+' of '+usable.filter(x=>(x.priority??1)>0).length+' selected media · '+profile.label+'…';
   for(const it of chosen){
    try{
     const media=await el(it),entry={it,e:media,analyser:null,gain:null};
@@ -424,7 +481,7 @@ async function renderReel(){
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v44-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v45-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -433,6 +490,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=44').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=45').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=44"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=45"></script></body></html>
