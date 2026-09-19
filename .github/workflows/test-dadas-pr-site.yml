@@ -1,0 +1,30 @@
+name: Test Dadas PR Website
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'dadas-pr-studio/**'
+      - '.github/workflows/test-dadas-pr-site.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - name: Install browser test library
+        run: npm install --no-save playwright-core
+      - name: Create real H.264 test video
+        run: |
+          mkdir -p dadas-pr-studio/tests
+          ffmpeg -y -f lavfi -i "testsrc2=size=720x1280:rate=30" -t 3 -c:v libx264 -pix_fmt yuv420p -movflags +faststart dadas-pr-studio/tests/sample.mp4
+      - name: Serve site
+        run: |
+          python3 -m http.server 4173 --directory . >/tmp/dadas-site.log 2>&1 &
+          sleep 2
+      - name: Run mobile Chrome smoke tests
+        run: node dadas-pr-studio/tests/smoke.mjs
