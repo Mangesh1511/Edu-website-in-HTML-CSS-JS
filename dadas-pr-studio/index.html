@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR v4.8</title>
+<title>Dada's PR v4.9</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<header class="brandbar"><h1>Dada's PR</h1><span>v4.8</span></header>
+<header class="brandbar"><h1>Dada's PR</h1><span>v4.9</span></header>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -48,7 +48,7 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div class="proctl"><b>Soundtrack</b><div class="pro-note">Auto · matched from topic, OCR and event context</div></div>
 </div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
 <label>Song / BGM / poem recording (optional — upload audio you can use)<input id="music" type="file" accept="audio/*"></label>
-<div id="musicPlan" class="status">🎵 Auto soundtrack will match the topic and use a rhythmic original bed. Uploaded music uses a stronger matching excerpt instead of always starting at 0:00.</div>
+<div id="musicPlan" class="status">🎵 Auto soundtrack uses Maharashtra/India-oriented percussion and melodic textures matched to the topic. Uploaded audio uses a stronger matching excerpt and ducks under speech.</div>
 <div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
 <button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
@@ -297,30 +297,59 @@ function fluteNote(ac,out,t,freq,amount=.6,dur=.55){
  const o=ac.createOscillator(),v=ac.createOscillator(),vg=ac.createGain(),g=ac.createGain(),lp=ac.createBiquadFilter();o.type='sine';v.type='sine';v.frequency.value=5.2;vg.gain.value=freq*.008;v.connect(vg).connect(o.frequency);lp.type='lowpass';lp.frequency.value=2500;
  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.026*amount,t+.06);g.gain.setValueAtTime(.022*amount,t+Math.max(.08,dur-.12));g.gain.exponentialRampToValueAtTime(.001,t+dur);o.connect(lp).connect(g).connect(out);o.start(t);v.start(t);o.stop(t+dur+.03);v.stop(t+dur+.03)
 }
+
+function tanpuraDrone(ac,out,t,root,total,amount=.7){
+ const voices=[];
+ const freqs=[root/2,root/2*1.5,root/2*2,root/2*2.25];
+ for(let i=0;i<freqs.length;i++){
+  const o=ac.createOscillator(),g=ac.createGain(),lp=ac.createBiquadFilter();
+  o.type='sine';o.frequency.value=freqs[i];lp.type='lowpass';lp.frequency.value=900;
+  g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime((.010+i*.002)*amount,t+.35);
+  g.gain.setValueAtTime((.010+i*.002)*amount,t+Math.max(.5,total-.6));g.gain.exponentialRampToValueAtTime(.001,t+total);
+  o.connect(lp).connect(g).connect(out);o.start(t);o.stop(t+total+.05);voices.push(o)
+ }
+ return voices
+}
+function tutariNote(ac,out,t,freq,amount=.7,dur=.42){
+ const o=ac.createOscillator(),o2=ac.createOscillator(),g=ac.createGain(),bp=ac.createBiquadFilter();
+ o.type='sawtooth';o2.type='square';o.frequency.value=freq;o2.frequency.value=freq*2.01;bp.type='bandpass';bp.frequency.value=1100;bp.Q.value=1.1;
+ g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.024*amount,t+.035);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+ o.connect(bp);o2.connect(bp);bp.connect(g).connect(out);o.start(t);o2.start(t);o.stop(t+dur+.03);o2.stop(t+dur+.03)
+}
 function startTopicBed(ac,dest,total,profile){
- const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.38;master.connect(comp).connect(dest);
- comp.threshold.value=-16;comp.knee.value=14;comp.ratio.value=3;comp.attack.value=.006;comp.release.value=.18;
- const now=ac.currentTime+.06,beat=60/profile.bpm,notes=profile.scale.map(x=>profile.root*x),voices=[];
- const pad=ac.createOscillator(),pf=ac.createBiquadFilter(),pg=ac.createGain();pad.type='sawtooth';pad.frequency.value=profile.root/2;pf.type='lowpass';pf.frequency.value=480;pg.gain.value=.014+.016*profile.energy;
- pad.connect(pf).connect(pg).connect(master);pad.start(now);pad.stop(now+total+.4);voices.push(pad);
+ const master=ac.createGain(),comp=ac.createDynamicsCompressor();master.gain.value=.44;master.connect(comp).connect(dest);
+ comp.threshold.value=-18;comp.knee.value=12;comp.ratio.value=3.2;comp.attack.value=.004;comp.release.value=.16;
+ const now=ac.currentTime+.05,beat=60/profile.bpm,notes=profile.scale.map(x=>profile.root*x),voices=[];
+ tanpuraDrone(ac,master,now,profile.root,total+.15,profile.id==='speech'?.45:.72).forEach(v=>voices.push(v));
  const beats=Math.ceil(total/beat)+2;
  for(let i=0;i<beats;i++){
-  const t=now+i*beat,bar=i%4;
+  const t=now+i*beat,bar=i%8,strong=bar===0||bar===4;
+
   if(profile.folk==='tasha'){
-   dholHit(ac,master,t,.92,bar%2===1);if(bar===0||bar===2)dholHit(ac,master,t+beat*.48,.66,true);
-   snare(ac,master,t+beat*.72,.50);manjira(ac,master,t+beat*.5,.65)
+   dholHit(ac,master,t,strong?1:.78,bar%2===1);
+   if(bar%2===0)dholHit(ac,master,t+beat*.48,.68,true);
+   snare(ac,master,t+beat*.72,.55);
+   manjira(ac,master,t+beat*.5,strong?.82:.58);
+   if(strong)tutariNote(ac,master,t+beat*.08,notes[(i>>2)%notes.length]*1.5,.82,Math.min(.46,beat*.8))
   }else if(profile.folk==='dholki'){
-   dholHit(ac,master,t,.72,bar%2===1);if(bar===1||bar===3)tablaHit(ac,master,t+beat*.5,.72,false);
-   if(bar===0)manjira(ac,master,t+beat*.5,.36)
+   dholHit(ac,master,t,strong?.88:.68,bar%2===1);
+   tablaHit(ac,master,t+beat*.5,bar%2===0?.65:.48,false);
+   if(bar===0||bar===4)manjira(ac,master,t+beat*.74,.42);
+   if(bar===0||bar===4)fluteNote(ac,master,t+beat*.08,notes[(i>>2)%notes.length],.72,Math.min(.72,beat*1.25))
   }else if(profile.folk==='tabla'){
-   tablaHit(ac,master,t,.70,bar===0||bar===2);tablaHit(ac,master,t+beat*.5,.52,false);
-   if(profile.id!=='speech'&&bar===0)manjira(ac,master,t+beat*.75,.24)
+   tablaHit(ac,master,t,strong?.82:.58,strong);
+   tablaHit(ac,master,t+beat*.5,.46,false);
+   if(profile.id==='service'&&(bar===0||bar===4))fluteNote(ac,master,t+beat*.10,notes[(i>>2)%notes.length],.62,Math.min(.75,beat*1.35));
+   if(profile.id==='speech'&&strong)tutariNote(ac,master,t+beat*.10,notes[(i>>2)%notes.length],.34,Math.min(.30,beat*.55))
   }else{
-   if(bar===0)tablaHit(ac,master,t,.34,true)
+   tablaHit(ac,master,t,strong?.42:.28,strong)
   }
-  if(profile.drums>.55){kick(ac,master,t,.34*profile.drums);hat(ac,master,t+beat*.5,.22*profile.drums)}
-  bass(ac,master,t,notes[(i>>1)%notes.length]/2,.66*profile.energy,Math.min(.38,beat*.72));
-  if(i%4===0||i%4===2)fluteNote(ac,master,t+beat*.12,notes[(i>>1)%notes.length],profile.energy,Math.min(.68,beat*1.2))
+
+  if(profile.id==='poetry'||profile.id==='reflective'){
+   if(strong)fluteNote(ac,master,t+beat*.12,notes[(i>>2)%notes.length],.62,Math.min(1.0,beat*1.8))
+  }else if(profile.id==='documentary'){
+   if(strong)fluteNote(ac,master,t+beat*.1,notes[(i>>2)%notes.length],.58,Math.min(.72,beat*1.2))
+  }
  }
  return {gain:master,profile,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
 }
@@ -483,7 +512,7 @@ async function renderReel(){
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v48-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v49-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -492,6 +521,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=48').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=49').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=48"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=49"></script></body></html>
