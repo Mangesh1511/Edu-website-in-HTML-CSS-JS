@@ -1,12 +1,12 @@
 {
-  "name": "Dada's PR Studio ZERO",
+  "name": "Dada's PR Studio",
   "short_name": "Dada's PR",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#efede8",
   "theme_color": "#111111",
-  "description": "Zero-cost local-first media and reel studio",
+  "description": "Advanced media and reel studio",
   "icons": [
     {
       "src": "icon.svg",
