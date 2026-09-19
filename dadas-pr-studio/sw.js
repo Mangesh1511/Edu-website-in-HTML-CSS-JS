@@ -1,4 +1,4 @@
-const CACHE='dadas-pr-zero-v43-20260919';
+const CACHE='dadas-pr-studio-v44-20260919';
 const SHELL=['./','./index.html','./manifest.webmanifest','./icon.svg','./ai-engine.js'];
 
 self.addEventListener('install',event=>{
