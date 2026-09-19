@@ -28,6 +28,10 @@ await page.fill('#pin','2580');
 await page.click('button.primary');
 await page.waitForSelector('#studio.page.active');
 
+const uiText=await page.locator('#app').innerText();
+if(/₹0|ZERO COST|Chrome-ready|no paid API|Why this stays free|About/i.test(uiText))throw new Error('Marketing/about copy still visible');
+if(await page.locator('#about').count())throw new Error('About page still exists');
+
 const extensionDetection=await page.evaluate(()=>detectFileType({type:'',name:'phone-recording.MP4'}));
 if(extensionDetection!=='video')throw new Error('Blank-MIME MP4 extension detection failed');
 
@@ -55,10 +59,10 @@ if(!(await page.locator('.focusbtn').getAttribute('class')).includes('on'))throw
 await page.click('button[onclick="runLocalAI()"]');
 await page.waitForFunction(()=>{
   const t=document.querySelector('#analysisStatus')?.textContent||'';
-  return /Local AI scan complete|AI scan error/.test(t);
+  return /Media intelligence scan complete|AI scan error/.test(t);
 },{timeout:150000});
 const aiStatus=await page.locator('#analysisStatus').textContent();
-if(!/Local AI scan complete/.test(aiStatus||''))throw new Error('Local AI model scan failed: '+aiStatus);
+if(!/Media intelligence scan complete/.test(aiStatus||''))throw new Error('Local AI model scan failed: '+aiStatus);
 
 await page.click('button.style:nth-child(4)');
 if(!(await page.locator('button.style:nth-child(4)').getAttribute('class')).includes('sel'))throw new Error('Style selection failed');
