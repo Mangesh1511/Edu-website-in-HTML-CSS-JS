@@ -197,8 +197,36 @@ async function sv(item){
 }
 function sd(el){const c=document.getElementById('analysisCanvas'),q=c.getContext('2d',{willReadFrequently:true});q.drawImage(el,0,0,c.width,c.height);const d=q.getImageData(0,0,c.width,c.height).data,l=new Float32Array(c.width*c.height);let s=0,s2=0,n=0,e=0;for(let i=0,j=0;i<d.length;i+=4,j++){const y=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];l[j]=y;s+=y;s2+=y*y;n++}for(let y=1;y<c.height-1;y++)for(let x=1;x<c.width-1;x++){const i=y*c.width+x;e+=Math.abs(4*l[i]-l[i-1]-l[i+1]-l[i-c.width]-l[i+c.width])}const m=s/n,varr=s2/n-m*m,sharp=e/((c.width-2)*(c.height-2)),exp=Math.max(0,1-Math.abs(m-128)/128);return Math.min(100,sharp*1.65+Math.sqrt(Math.max(0,varr))*.55+exp*24)}
 function rr(c,x,y,w,h,r){c.beginPath();if(typeof c.roundRect==='function')c.roundRect(x,y,w,h,r);else{r=Math.min(r,w/2,h/2);c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y)}c.fill()}function cover(c,e,w,h,z=1,px=0,a=1,focal=null){const sw=e.videoWidth||e.naturalWidth,sh=e.videoHeight||e.naturalHeight;if(!sw||!sh)return;const s=Math.max(w/sw,h/sh)*z,dw=sw*s,dh=sh*s;let dx=(w-dw)/2+px,dy=(h-dh)/2;if(focal&&Number.isFinite(focal.x)&&Number.isFinite(focal.y)){dx+=w*.5-(dx+focal.x*dw);dy+=h*.45-(dy+focal.y*dh);dx=Math.max(w-dw,Math.min(0,dx));dy=Math.max(h-dh,Math.min(0,dy))}c.save();c.globalAlpha=a;c.drawImage(e,dx,dy,dw,dh);c.restore()}function wt(c,t,x,y,mw,lh,max){let line='',n=0;for(const w of(t||'').split(/\s+/)){const z=line?line+' '+w:w;if(c.measureText(z).width>mw&&line){c.fillText(line,x,y);y+=lh;n++;line=w;if(n>=max-1)break}else line=z}if(line&&n<max){c.fillText(line,x,y);y+=lh}return y}
-function overlay(c,w,h,sec,total){const p=pal(),topic=v('topic')||'माहिती',meta=[v('place'),v('date')].filter(Boolean).join('  •  ');const g=c.createLinearGradient(0,h*.35,0,h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(245,243,236,.9)':'rgba(0,0,0,.82)');c.fillStyle=g;c.fillRect(0,h*.28,w,h*.72);c.fillStyle=p.p;rr(c,w*.045,h*.035,w*.33,h*.04,h*.02);c.fillStyle=p.t;c.font=`800 ${w*.019}px sans-serif`;c.fillText("DADA'S PR · माहिती",w*.066,h*.061);if(sec<3.1){c.fillStyle=p.a;c.fillRect(w*.065,h*.66,w*.16,h*.006);c.fillStyle=p.t;c.font=`900 ${w*.062}px sans-serif`;let y=wt(c,topic,w*.065,h*.72,w*.86,w*.071,3);c.fillStyle=p.s;c.font=`600 ${w*.027}px sans-serif`;if(meta)c.fillText(meta,w*.065,Math.min(h*.91,y+h*.02))}else if(meta&&(sec%7)<2){c.fillStyle=p.p;rr(c,w*.05,h*.84,w*.73,h*.085,w*.018);c.fillStyle=p.a;c.fillRect(w*.05,h*.84,w*.011,h*.085);c.fillStyle=p.t;c.font=`800 ${w*.03}px sans-serif`;c.fillText(v('place')||v('date'),w*.085,h*.878);if(v('place')&&v('date')){c.fillStyle=p.s;c.font=`500 ${w*.021}px sans-serif`;c.fillText(v('date'),w*.085,h*.905)}}if(sec>total-1.1){c.fillStyle=p.p;c.fillRect(0,h*.9,w,h*.1);c.fillStyle=p.a;c.fillRect(w*.05,h*.92,w*.13,h*.005);c.fillStyle=p.t;c.font=`700 ${w*.021}px sans-serif`;c.fillText(meta||'तथ्याधारित माहिती',w*.05,h*.958)}}
+function overlay(c,w,h,sec,total){
+ const p=pal(),topic=v('topic')||'माहिती',meta=[v('place'),v('date')].filter(Boolean).join('  •  '),facts=v('facts'),outcome=v('outcome');
+ const g=c.createLinearGradient(0,h*.35,0,h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(245,243,236,.9)':'rgba(0,0,0,.82)');c.fillStyle=g;c.fillRect(0,h*.28,w,h*.72);
+ c.fillStyle=p.p;rr(c,w*.045,h*.035,w*.33,h*.04,h*.02);c.fillStyle=p.t;c.font='800 '+(w*.019)+'px sans-serif';c.fillText("DADA'S PR · माहिती",w*.066,h*.061);
+ if(sec<3.1){
+  c.fillStyle=p.a;c.fillRect(w*.065,h*.66,w*.16,h*.006);c.fillStyle=p.t;c.font='900 '+(w*.062)+'px sans-serif';let y=wt(c,topic,w*.065,h*.72,w*.86,w*.071,3);c.fillStyle=p.s;c.font='600 '+(w*.027)+'px sans-serif';if(meta)c.fillText(meta,w*.065,Math.min(h*.91,y+h*.02))
+ }else if(facts&&(sec%9)>5.2&&(sec%9)<8.1){
+  c.fillStyle=p.p;rr(c,w*.05,h*.735,w*.88,h*.16,w*.02);c.fillStyle=p.a;c.fillRect(w*.05,h*.735,w*.012,h*.16);c.fillStyle=p.t;c.font='700 '+(w*.026)+'px sans-serif';wt(c,facts.slice(0,180),w*.085,h*.785,w*.79,w*.037,3)
+ }else if(meta&&(sec%7)<2){
+  c.fillStyle=p.p;rr(c,w*.05,h*.84,w*.73,h*.085,w*.018);c.fillStyle=p.a;c.fillRect(w*.05,h*.84,w*.011,h*.085);c.fillStyle=p.t;c.font='800 '+(w*.03)+'px sans-serif';c.fillText(v('place')||v('date'),w*.085,h*.878);if(v('place')&&v('date')){c.fillStyle=p.s;c.font='500 '+(w*.021)+'px sans-serif';c.fillText(v('date'),w*.085,h*.905)}
+ }
+ if(sec>total-1.35){
+  c.fillStyle=p.p;c.fillRect(0,h*.88,w,h*.12);c.fillStyle=p.a;c.fillRect(w*.05,h*.905,w*.13,h*.005);c.fillStyle=p.t;c.font='700 '+(w*.022)+'px sans-serif';const endLine=outcome||meta||'तथ्याधारित माहिती';wt(c,endLine,w*.05,h*.95,w*.88,w*.031,2)
+ }
+}
 async function el(item){if(item.type==='image'){const im=new Image();im.src=item.url;if(im.decode)await im.decode();else await waitEvent(im,'load',8000);return im}const x=document.createElement('video');x.src=item.url;x.playsInline=true;x.preload='auto';x.muted=false;x.volume=1;x.loop=true;await Promise.race([waitEvent(x,'canplay',10000),waitEvent(x,'loadeddata',10000)]);return x}
+function startProceduralBed(ac,dest,total){
+ const master=ac.createGain();master.gain.value=.15;master.connect(dest);
+ const palettes={cinematic:[146.83,196,220,293.66],documentary:[130.81,174.61,196,261.63],newsroom:[164.81,220,246.94,329.63],heritage:[146.83,196,246.94,293.66],minimal:[130.81,164.81,196,261.63]};
+ const notes=palettes[style]||palettes.cinematic,now=ac.currentTime+.08,voices=[];
+ for(let i=0;i<Math.ceil(total/1.35)+1;i++){
+  const t=now+i*1.35,osc=ac.createOscillator(),gain=ac.createGain();osc.type=(i%3===0?'sine':'triangle');osc.frequency.value=notes[i%notes.length]*(i%4===3?2:1);
+  gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.045,t+.16);gain.gain.exponentialRampToValueAtTime(.0001,t+1.15);osc.connect(gain).connect(master);osc.start(t);osc.stop(t+1.2);voices.push(osc)
+ }
+ const pad=ac.createOscillator(),pg=ac.createGain();pad.type='sine';pad.frequency.value=notes[0]/2;pg.gain.value=.018;pad.connect(pg).connect(master);pad.start(now);pad.stop(now+total+.2);voices.push(pad);
+ return {gain:master,stop:()=>voices.forEach(o=>{try{o.stop()}catch{}})}
+}
+function audioLevel(analyser){
+ if(!analyser)return 0;const data=new Uint8Array(analyser.fftSize);analyser.getByteTimeDomainData(data);let sum=0;for(const v of data){const x=(v-128)/128;sum+=x*x}return Math.sqrt(sum/data.length)
+}
 function createRecorder(stream,bps){
  const types=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp8,opus','video/webm;codecs=vp8','video/webm'];
  for(const mime of types){try{if(MediaRecorder.isTypeSupported(mime))return {rec:new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:bps}),mime}}catch{}}
@@ -212,19 +240,29 @@ async function renderReel(){
   if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='This browser cannot render video locally. Update Chrome and try again.';return}
   const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
   let wake=null;try{wake=await navigator.wakeLock?.request('screen')}catch{}
-  let ac=null,dest=null,music=null,stream=canvas.captureStream(30);
+  const ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();const dest=ac.createMediaStreamDestination(),stream=canvas.captureStream(30);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
+  let music=null,musicGain=null,procedural=null;
   if(musicFile){
-   ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();dest=ac.createMediaStreamDestination();dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
-   music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';const src=ac.createMediaElementSource(music),gain=ac.createGain();gain.gain.value=.12;src.connect(gain).connect(dest);await music.play().catch(()=>{})
+   music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';const src=ac.createMediaElementSource(music);musicGain=ac.createGain();musicGain.gain.value=.14;src.connect(musicGain).connect(dest);await music.play().catch(()=>{})
+  }else{
+   procedural=startProceduralBed(ac,dest,requested);musicGain=procedural.gain
   }
-  const maxCount=Math.min(usable.length,Math.max(3,Math.ceil(requested/3.2))),chosen=usable.slice(0,maxCount),els=[];
-  rs.textContent=`Loading ${chosen.length} selected highlight(s)…`;
-  for(const it of chosen){try{els.push({it,e:await el(it)})}catch(err){it.error='Could not prepare for render'}}
-  if(!els.length){rs.textContent='The selected media could be previewed but could not be prepared for rendering. Try MP4/H.264 video.';wake?.release?.();return}
+  const ordered=[...usable].sort((a,b)=>(b.focus?1:0)-(a.focus?1:0)||(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0));
+  const maxCount=Math.min(ordered.length,Math.max(3,Math.ceil(requested/3.2))),chosen=ordered.slice(0,maxCount),els=[];
+  rs.textContent='Loading '+chosen.length+' selected highlight(s)…';
+  for(const it of chosen){
+   try{
+    const media=await el(it),entry={it:it,e:media,analyser:null};
+    if(it.type==='video'){
+     try{const src=ac.createMediaElementSource(media),an=ac.createAnalyser(),gain=ac.createGain();an.fftSize=256;gain.gain.value=.9;src.connect(an);an.connect(gain).connect(dest);entry.analyser=an}catch{}
+    }
+    els.push(entry)
+   }catch{it.error='Could not prepare for render'}
+  }
+  if(!els.length){rs.textContent='The selected media could not be prepared for rendering. Try MP4/H.264 video.';try{await wake?.release?.()}catch{};try{await ac.close()}catch{};return}
   const total=requested,seg=total/els.length,tr=Math.min(.55,seg*.18),cfg=createRecorder(stream,portrait?5200000:6200000);
-  if(!cfg){rs.textContent='Chrome could not start a local video recorder on this phone.';wake?.release?.();return}
-  const {rec,mime}=cfg,chunks=[];let recorderError=null;
-  rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};
+  if(!cfg){rs.textContent='Chrome could not start a local video recorder on this phone.';try{await wake?.release?.()}catch{};try{await ac.close()}catch{};return}
+  const rec=cfg.rec,mime=cfg.mime,chunks=[];let recorderError=null;rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};
   const done=new Promise(resolve=>rec.onstop=resolve);rec.start(750);const start=performance.now();let ci=-1;
   async function prep(i){
    const o=els[i];if(!o||o.it.type!=='video')return;
@@ -232,16 +270,18 @@ async function renderReel(){
   }
   async function frame(){
    const t=(performance.now()-start)/1000;
-   if(t>=total){try{rec.stop()}catch{}music?.pause();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}
+   if(t>=total){try{rec.stop()}catch{}music?.pause();procedural?.stop();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}
    const i=Math.min(els.length-1,Math.floor(t/seg)),local=t-i*seg,next=Math.min(els.length-1,i+1);await prep(i);
-   q.fillStyle='#111';q.fillRect(0,0,canvas.width,canvas.height);const cur=els[i],ph=local/seg,zoom=cur.it.type==='image'?1+.055*ph:1,pan=(ph-.5)*canvas.width*.024;cover(q,cur.e,canvas.width,canvas.height,zoom,pan);
-   if(local>seg-tr&&next!==i){const a=(local-(seg-tr))/tr,nx=els[next];if(nx.it.type==='video'&&nx.e.paused){try{nx.e.currentTime=0;await nx.e.play()}catch{}}cover(q,nx.e,canvas.width,canvas.height,nx.it.type==='image'?1.025:1,-pan,a)}
-   overlay(q,canvas.width,canvas.height,t,total);const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';rs.textContent=`Rendering locally… ${Math.round(pct)}%\nKeep Chrome open until finished.`;requestAnimationFrame(frame)
+   const lvl=audioLevel(els[i].analyser);if(musicGain){const target=lvl>.028?.055:.15;musicGain.gain.setTargetAtTime(target,ac.currentTime,.15)}
+   q.fillStyle='#111';q.fillRect(0,0,canvas.width,canvas.height);const cur=els[i],ph=local/seg,zoom=cur.it.type==='image'?1+.055*ph:1,pan=(ph-.5)*canvas.width*.024;
+   cover(q,cur.e,canvas.width,canvas.height,zoom,pan,1,cur.it.focus?cur.it.focal:null);
+   if(local>seg-tr&&next!==i){const a=(local-(seg-tr))/tr,nx=els[next];if(nx.it.type==='video'&&nx.e.paused){try{nx.e.currentTime=0;await nx.e.play()}catch{}}cover(q,nx.e,canvas.width,canvas.height,nx.it.type==='image'?1.025:1,-pan,a,nx.it.focus?nx.it.focal:null)}
+   overlay(q,canvas.width,canvas.height,t,total);const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';rs.textContent='Rendering locally… '+Math.round(pct)+'%\nPrimary-subject shots + work relevance are prioritized. Source audio is preserved; music ducks when audio is present.';requestAnimationFrame(frame)
   }
-  requestAnimationFrame(frame);await done;music?.pause();try{await ac?.close()}catch{}try{await wake?.release?.()}catch{}
+  requestAnimationFrame(frame);await done;music?.pause();procedural?.stop();try{await ac.close()}catch{}try{await wake?.release?.()}catch{}
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced. Update Chrome and retry with a shorter 15 sec reel.';return}
-  renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';rs.textContent=`Render complete · ${(renderBlob.size/1048576).toFixed(1)} MB · ${ext.toUpperCase()}`;
-  document.getElementById('output').innerHTML=`<video controls playsinline src="${url}"></video><a href="${url}" download="Dadas-PR-${style}-${Date.now()}.${ext}">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel('${ext}')">Share Reel</button>`
+  renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';rs.textContent='Render complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase();
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-'+style+'-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
