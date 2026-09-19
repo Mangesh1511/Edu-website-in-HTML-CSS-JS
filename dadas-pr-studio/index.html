@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR v5.0</title>
+<title>Dada's PR v5.1</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,7 +27,7 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<header class="brandbar"><h1>Dada's PR</h1><span>v5.0</span></header>
+<header class="brandbar"><h1>Dada's PR</h1><span>v5.1</span></header>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
@@ -48,7 +48,7 @@ ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Document
 <div class="proctl"><b>Soundtrack</b><div class="pro-note">Maharashtra/India only · auto topic match</div></div>
 </div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
 <label>Song / BGM / poem recording (optional — upload audio you can use)<input id="music" type="file" accept="audio/*"></label>
-<div id="musicPlan" class="status">🎵 Built-in soundtrack: Maharashtra/India only — taal-based dholki/tabla/dhol-tasha, manjira, tanpura, bansuri and tutari/shehnai textures. No Western rhythm section.</div>
+<div id="musicPlan" class="status">🎵 Maharashtra/India soundtrack · louder mastered mix · clear speech · automatic music ducking · no Western rhythm section.</div>
 <div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
 <button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
@@ -446,6 +446,26 @@ function createRecorder(stream,bps){
  for(const mime of types){try{if(MediaRecorder.isTypeSupported(mime))return {rec:new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:bps}),mime}}catch{}}
  try{return {rec:new MediaRecorder(stream,{videoBitsPerSecond:bps}),mime:''}}catch{return null}
 }
+
+function createMasterAudioChain(ac,dest){
+ const input=ac.createGain(),warmth=ac.createBiquadFilter(),presence=ac.createBiquadFilter(),comp=ac.createDynamicsCompressor(),limit=ac.createDynamicsCompressor(),out=ac.createGain();
+ input.gain.value=1.18;
+ warmth.type='lowshelf';warmth.frequency.value=180;warmth.gain.value=1.2;
+ presence.type='peaking';presence.frequency.value=2600;presence.Q.value=.8;presence.gain.value=2.6;
+ comp.threshold.value=-20;comp.knee.value=12;comp.ratio.value=4.2;comp.attack.value=.004;comp.release.value=.16;
+ limit.threshold.value=-4;limit.knee.value=0;limit.ratio.value=20;limit.attack.value=.001;limit.release.value=.09;
+ out.gain.value=1.12;
+ input.connect(warmth).connect(presence).connect(comp).connect(limit).connect(out).connect(dest);
+ return {input,comp,limit,out}
+}
+function createSpeechChain(ac,analyser,master){
+ const hp=ac.createBiquadFilter(),presence=ac.createBiquadFilter(),gain=ac.createGain();
+ hp.type='highpass';hp.frequency.value=72;hp.Q.value=.7;
+ presence.type='peaking';presence.frequency.value=2900;presence.Q.value=1;presence.gain.value=3.2;
+ gain.gain.value=1.08;
+ analyser.connect(hp).connect(presence).connect(gain).connect(master);
+ return {gain,hp,presence}
+}
 async function renderReel(){
  const rs=document.getElementById('rs');rs.hidden=false;rs.className='status';document.getElementById('output').innerHTML='';document.getElementById('bar').style.width='0%';
  try{
@@ -454,21 +474,21 @@ async function renderReel(){
   if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='Video rendering is not supported on this device.';return}
   const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),pace=ch('pace')||'dynamic',canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
   let wake=null;try{wake=await navigator.wakeLock?.request('screen')}catch{}
-  const ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();const dest=ac.createMediaStreamDestination(),stream=canvas.captureStream(30);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
+  const ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();const dest=ac.createMediaStreamDestination(),masterChain=createMasterAudioChain(ac,dest),stream=canvas.captureStream(30);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
   const profile=inferMusicProfile();let music=null,musicGain=null,procedural=null,musicOffset=0;
   if(musicFile){
    musicOffset=await chooseMusicOffset(musicFile,requested,profile,ac);music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';
-   const src=ac.createMediaElementSource(music),comp=ac.createDynamicsCompressor();musicGain=ac.createGain();musicGain.gain.value=.26;src.connect(comp).connect(musicGain).connect(dest);
+   const src=ac.createMediaElementSource(music),comp=ac.createDynamicsCompressor();musicGain=ac.createGain();musicGain.gain.value=.34;comp.threshold.value=-18;comp.ratio.value=3.2;comp.attack.value=.006;comp.release.value=.18;src.connect(comp).connect(musicGain).connect(masterChain.input);
    try{await new Promise((r,j)=>{music.onloadedmetadata=r;music.onerror=j});music.currentTime=Math.min(musicOffset,Math.max(0,(music.duration||0)-1))}catch{}
    await music.play().catch(()=>{})
-  }else{procedural=startTopicBed(ac,dest,requested,profile);musicGain=procedural.gain}
+  }else{procedural=startTopicBed(ac,masterChain.input,requested,profile);musicGain=procedural.gain}
   const chosen=selectStoryMedia(usable,requested,pace),els=[];
   rs.textContent='Preparing '+chosen.length+' of '+usable.filter(x=>(x.priority??1)>0).length+' selected media · '+profile.label+'…';
   for(const it of chosen){
    try{
     const media=await el(it),entry={it,e:media,analyser:null,gain:null};
     if(it.type==='video'){
-     try{const src=ac.createMediaElementSource(media),an=ac.createAnalyser(),gain=ac.createGain();an.fftSize=512;gain.gain.value=1;src.connect(an);an.connect(gain).connect(dest);entry.analyser=an;entry.gain=gain}catch{}
+     try{const src=ac.createMediaElementSource(media),an=ac.createAnalyser();an.fftSize=512;src.connect(an);const speech=createSpeechChain(ac,an,masterChain.input);entry.analyser=an;entry.gain=speech.gain}catch{}
     }
     els.push(entry)
    }catch{it.error='Could not prepare for render'}
@@ -491,8 +511,8 @@ async function renderReel(){
    const i=indexAt(t),b=bounds[i],local=t-b.s,phase=Math.max(0,Math.min(1,local/(b.e-b.s)));await activate(i);
    const next=i+1<els.length?i+1:-1,nearEnd=b.e-t<tr&&next>=0;if(nearEnd)await prepareNext(next);
    const lvl=audioLevel(els[i].analyser),hasVoice=lvl>.022;
-   if(musicGain)musicGain.gain.setTargetAtTime(hasVoice?(musicFile?.07:.09):(musicFile?.26:.34),ac.currentTime,.10);
-   if(els[i].gain)els[i].gain.gain.setTargetAtTime(hasVoice?1:.82,ac.currentTime,.08);
+   if(musicGain)musicGain.gain.setTargetAtTime(hasVoice?(musicFile?.055:.075):(musicFile?.38:.46),ac.currentTime,.085);
+   if(els[i].gain)els[i].gain.gain.setTargetAtTime(hasVoice?1.22:.98,ac.currentTime,.065);
    q.save();q.fillStyle='#090909';q.fillRect(0,0,canvas.width,canvas.height);
    drawEditorialShot(q,els[i].it,els[i].e,canvas.width,canvas.height,phase,i,1,0);
    if(nearEnd){
@@ -505,8 +525,8 @@ async function renderReel(){
   requestAnimationFrame(frame);await done;music?.pause();procedural?.stop();try{await ac.close()}catch{}try{await wake?.release?.()}catch{}
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
-  rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v50-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · mastered audio · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v51-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
@@ -515,6 +535,6 @@ function calendar(){const g=document.getElementById('fg');if(!g)return;const m=d
 function updateCompatibility(){
  const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=50').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=51').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=50"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=51"></script></body></html>
