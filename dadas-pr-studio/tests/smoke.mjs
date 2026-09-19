@@ -77,7 +77,7 @@ await page.check('input[name="dur"][value="15"]');
 await page.click('button[onclick="renderReel()"]');
 await page.waitForFunction(()=>document.querySelector('#output a')!==null,{timeout:35000});
 const renderStatus=await page.locator('#rs').textContent();
-if(!/Render complete/.test(renderStatus||''))throw new Error('Reel render did not complete: '+renderStatus);
+if(!/reel complete/i.test(renderStatus||''))throw new Error('Reel render did not complete: '+renderStatus);
 
 await page.click('button[onclick="resetMedia()"]');
 if(await page.locator('.mcard').count()!==0)throw new Error('Reset media failed');
