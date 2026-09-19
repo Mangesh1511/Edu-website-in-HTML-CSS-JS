@@ -1,10 +1,14 @@
 let faceDetectorPromise=null;
 let ocrWorkerPromise=null;
+let personSegmenterPromise=null;
 
 const FACE_MODULE='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/+esm';
 const FACE_WASM='https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm';
 const FACE_MODEL='https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/latest/blaze_face_short_range.tflite';
 const OCR_MODULE='https://cdn.jsdelivr.net/npm/tesseract.js@6/+esm';
+const BODY_SEG_MODULE='https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation@1.0.2/+esm';
+const SELFIE_SEG_PATH='https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675465747';
+
 
 function notify(cb,msg){try{cb&&cb(msg)}catch{}}
 
@@ -67,6 +71,50 @@ function chooseFace(detections,w,h){
   return best;
 }
 
+
+async function getPersonSegmenter(cb){
+  if(personSegmenterPromise)return personSegmenterPromise;
+  personSegmenterPromise=(async()=>{
+    notify(cb,'Loading person cutout model…');
+    const body=await import(BODY_SEG_MODULE);
+    const model=body.SupportedModels.MediaPipeSelfieSegmentation;
+    const segmenter=await body.createSegmenter(model,{
+      runtime:'mediapipe',
+      modelType:'general',
+      solutionPath:SELFIE_SEG_PATH
+    });
+    return {body,segmenter};
+  })();
+  try{return await personSegmenterPromise}catch(err){personSegmenterPromise=null;throw err}
+}
+async function personCutout(source,opts){
+  opts=opts||{};const onStatus=opts.onStatus;
+  try{
+    const {body,segmenter}=await getPersonSegmenter(onStatus);
+    notify(onStatus,'Extracting foreground subject…');
+    const people=await segmenter.segmentPeople(source,{multiSegmentation:false,segmentBodyParts:false});
+    if(!people||!people.length)return null;
+    const mask=await body.toMask(
+      people,
+      {r:255,g:255,b:255,a:255},
+      {r:0,g:0,b:0,a:0},
+      false,
+      .48
+    );
+    const mw=mask.width||source.width,mh=mask.height||source.height;
+    const maskCanvas=document.createElement('canvas');maskCanvas.width=mw;maskCanvas.height=mh;
+    maskCanvas.getContext('2d').putImageData(mask,0,0);
+    const out=document.createElement('canvas');out.width=source.width;out.height=source.height;
+    const q=out.getContext('2d');q.drawImage(source,0,0);
+    q.globalCompositeOperation='destination-in';q.imageSmoothingEnabled=true;
+    q.drawImage(maskCanvas,0,0,out.width,out.height);q.globalCompositeOperation='source-over';
+    return out;
+  }catch(err){
+    notify(onStatus,'Person cutout unavailable; using depth crop fallback.');
+    return null;
+  }
+}
+
 async function browserTextDetector(canvas){
   if(!('TextDetector' in window))return '';
   try{
@@ -117,8 +165,9 @@ async function analyzeCanvas(canvas,opts){
 
 window.LocalAI={
   analyzeCanvas:analyzeCanvas,
+  personCutout:personCutout,
   relevance:relevance,
   tokens:tokens,
-  version:'1.0-local'
+  version:'1.1-local-cutout'
 };
 window.dispatchEvent(new Event('local-ai-ready'));
