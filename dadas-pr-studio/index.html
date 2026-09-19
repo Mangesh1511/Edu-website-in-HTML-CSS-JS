@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR Studio ZERO v4.3</title>
+<title>Dada's PR Studio v4.4</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -14,7 +14,7 @@
 input,textarea,select,button{font:inherit}input,textarea,select{width:100%;padding:12px 13px;border:1px solid #dcd6cd;border-radius:13px;background:#fff;margin-top:5px}textarea{resize:vertical}label{display:block;margin-top:10px;font-weight:720}
 button{border:0;border-radius:13px;padding:12px 14px;background:#191919;color:white;font-weight:850;cursor:pointer}.primary{width:100%;margin-top:12px;background:linear-gradient(135deg,#151515,#4a2a1d)}.secondary{background:white;color:#171717;border:1px solid #d9d3ca;margin:6px 6px 0 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.styles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.style{padding:0;overflow:hidden;text-align:left;background:#fff;color:#111;border:1px solid #ddd7ce}.style.sel{box-shadow:0 0 0 2px #161616}.sw{height:66px;display:block;position:relative}.sw:after{content:"Aa";position:absolute;left:11px;bottom:8px;font-size:23px;font-weight:900}.cinematic{background:linear-gradient(135deg,#080808,#372820 68%,#a87c45);color:#fff}.documentary{background:linear-gradient(135deg,#f0eadc,#bdcabf);color:#24362d}.newsroom{background:linear-gradient(135deg,#05172e,#173f69);color:#e3b65b}.heritage{background:linear-gradient(135deg,#51171d,#8a2d22 65%,#d68b34);color:#fff4df}.minimal{background:linear-gradient(135deg,#fafaf7,#e3e3de);color:#111}.style b,.style small{display:block;padding:0 9px}.style b{padding-top:8px}.style small{padding-top:2px;padding-bottom:9px;color:#777}
-.preview{position:relative;overflow:hidden;aspect-ratio:9/16;border-radius:17px;margin-top:12px;background:#222;display:flex;align-items:flex-end;color:white}.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.preview:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0001 35%,#000d);z-index:1}.copy{position:relative;z-index:2;padding:8%;width:100%}.rule{height:5px;width:23%;border-radius:9px;background:#c99a52;margin-bottom:10px}.copy h2{font-size:27px;line-height:1.07;margin:0 0 8px}.copy p{margin:0;opacity:.8}.media{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.mcard{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:14px;background:#eee}.mcard img,.mcard video{width:100%;height:100%;object-fit:cover}.rank,.score{position:absolute;top:6px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:900}.rank{left:6px;background:#111d;color:#fff}.score{right:6px;background:#ffffffe8;color:#111}.focusbtn{position:absolute;left:6px;bottom:6px;padding:6px 8px;border-radius:10px;font-size:10px;background:#ffffffed;color:#111;border:1px solid #ddd}.focusbtn.on{background:#171717;color:#fff;border-color:#171717}.aimeta{position:absolute;right:6px;bottom:6px;display:flex;gap:4px;flex-direction:column;align-items:flex-end}.aimeta span{background:#111d;color:#fff;border-radius:999px;padding:3px 6px;font-size:9px;font-weight:800}.aipanel{border:1px solid #e0d9cf;background:linear-gradient(135deg,#fff,#f7f2e9);border-radius:17px;padding:12px;margin:10px 0}.airow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.airow .badge{background:#f2e9db;color:#7a451f}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{position:relative}.chip input{position:absolute;opacity:0}.chip span{display:block;padding:9px 11px;border:1px solid #ddd6cc;border-radius:999px;background:#fff;font-weight:800}.chip input:checked+span{background:#191919;color:#fff;border-color:#191919}.status{padding:11px;border-radius:13px;background:#f2f0eb;margin-top:10px;white-space:pre-wrap}.ok{background:#ecfdf3;color:#166534}.progress{height:9px;background:#e7e3dc;border-radius:99px;overflow:hidden;margin-top:10px}.progress div{height:100%;width:0;background:#191919}.output video{width:100%;margin-top:10px;border-radius:16px;background:#000}.output a{display:block;text-align:center;text-decoration:none;color:white;background:#181818;padding:12px;border-radius:13px;margin-top:8px;font-weight:850}.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:11px;width:min(700px,calc(100% - 22px));display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:6px;border-radius:19px;background:#171615ef;backdrop-filter:blur(17px);box-shadow:0 14px 38px #0005;z-index:9999}.tabs button{background:transparent;color:#ddd7d1;padding:9px 4px;font-size:12px}.tabs button.active{background:#fff;color:#111}.page{display:none}.page.active{display:block}.festival-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.festival{border:1px solid #e2ddd5;border-radius:16px;background:#fff;padding:12px}.festival .date{font-size:11px;font-weight:900;color:#83431f}.festival h3{margin:4px 0}.festival small{color:#777}.lock{min-height:100vh;display:grid;place-items:center;padding:18px}.lockbox{width:min(390px,100%);text-align:center}
+.preview{position:relative;overflow:hidden;aspect-ratio:9/16;border-radius:17px;margin-top:12px;background:#222;display:flex;align-items:flex-end;color:white}.preview img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.preview:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0001 35%,#000d);z-index:1}.copy{position:relative;z-index:2;padding:8%;width:100%}.rule{height:5px;width:23%;border-radius:9px;background:#c99a52;margin-bottom:10px}.copy h2{font-size:27px;line-height:1.07;margin:0 0 8px}.copy p{margin:0;opacity:.8}.media{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.mcard{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:14px;background:#eee}.mcard img,.mcard video{width:100%;height:100%;object-fit:cover}.rank,.score{position:absolute;top:6px;padding:4px 7px;border-radius:999px;font-size:10px;font-weight:900}.rank{left:6px;background:#111d;color:#fff}.score{right:6px;background:#ffffffe8;color:#111}.focusbtn{position:absolute;left:6px;bottom:6px;padding:6px 8px;border-radius:10px;font-size:10px;background:#ffffffed;color:#111;border:1px solid #ddd}.focusbtn.on{background:#171717;color:#fff;border-color:#171717}.aimeta{position:absolute;right:6px;bottom:6px;display:flex;gap:4px;flex-direction:column;align-items:flex-end}.aimeta span{background:#111d;color:#fff;border-radius:999px;padding:3px 6px;font-size:9px;font-weight:800}.aipanel{border:1px solid #e0d9cf;background:linear-gradient(135deg,#fff,#f7f2e9);border-radius:17px;padding:12px;margin:10px 0}.airow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.airow .badge{background:#f2e9db;color:#7a451f}.progrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.proctl{border:1px solid #e2ddd5;background:#faf9f6;border-radius:15px;padding:10px}.proctl b{display:block;font-size:12px;margin-bottom:5px}.meter{height:5px;border-radius:99px;background:#e5e0d8;overflow:hidden}.meter i{display:block;height:100%;width:65%;background:#191919}.timeline-map{display:flex;gap:5px;margin-top:8px;overflow:hidden}.timeline-map span{height:28px;flex:1;border-radius:8px;background:linear-gradient(135deg,#221b18,#b47a3d);opacity:.88}.timeline-map span:nth-child(2n){background:linear-gradient(135deg,#e8e1d6,#7c8b82)}.pro-note{font-size:11px;color:#716b64;margin-top:6px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{position:relative}.chip input{position:absolute;opacity:0}.chip span{display:block;padding:9px 11px;border:1px solid #ddd6cc;border-radius:999px;background:#fff;font-weight:800}.chip input:checked+span{background:#191919;color:#fff;border-color:#191919}.status{padding:11px;border-radius:13px;background:#f2f0eb;margin-top:10px;white-space:pre-wrap}.ok{background:#ecfdf3;color:#166534}.progress{height:9px;background:#e7e3dc;border-radius:99px;overflow:hidden;margin-top:10px}.progress div{height:100%;width:0;background:#191919}.output video{width:100%;margin-top:10px;border-radius:16px;background:#000}.output a{display:block;text-align:center;text-decoration:none;color:white;background:#181818;padding:12px;border-radius:13px;margin-top:8px;font-weight:850}.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:11px;width:min(700px,calc(100% - 22px));display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:6px;border-radius:19px;background:#171615ef;backdrop-filter:blur(17px);box-shadow:0 14px 38px #0005;z-index:9999}.tabs button{background:transparent;color:#ddd7d1;padding:9px 4px;font-size:12px}.tabs button.active{background:#fff;color:#111}.page{display:none}.page.active{display:block}.festival-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.festival{border:1px solid #e2ddd5;border-radius:16px;background:#fff;padding:12px}.festival .date{font-size:11px;font-weight:900;color:#83431f}.festival h3{margin:4px 0}.festival small{color:#777}.lock{min-height:100vh;display:grid;place-items:center;padding:18px}.lockbox{width:min(390px,100%);text-align:center}
 @media(max-width:750px){.styles{grid-template-columns:repeat(2,1fr)}.media{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.grid2,.festival-grid{grid-template-columns:1fr}.media{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
@@ -24,35 +24,40 @@ const app=document.getElementById('app');let style='cinematic',items=[],musicFil
 const fest=[
 ['2026-01-14','मकर संक्रांत','🪁'],['2026-02-19','छत्रपती शिवाजी महाराज जयंती','🏰'],['2026-03-19','गुढीपाडवा','🎋'],['2026-04-14','डॉ. बाबासाहेब आंबेडकर जयंती','📘'],['2026-05-01','महाराष्ट्र दिन','🟠'],['2026-07-25','आषाढी एकादशी','🙏'],['2026-08-15','स्वातंत्र्य दिन','🇮🇳'],['2026-09-11','पोळा','🐂'],['2026-09-14','गणेश चतुर्थी','🐘'],['2026-09-25','अनंत चतुर्दशी / गणेश विसर्जन','🌊'],['2026-10-02','महात्मा गांधी जयंती','🕊️'],['2026-10-20','दसरा','🏹'],['2026-11-08','दिवाळी लक्ष्मीपूजन','🪔'],['2026-12-25','नाताळ','🎄']
 ];
-function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">₹0 · WEBSITE</span><h1>Dada\'s PR Studio ZERO</h1><p class="muted">Chrome-ready · no paid API</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
+function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">PRIVATE STUDIO</span><h1>Dada\'s PR Studio</h1><p class="muted">Media editor</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<section class="hero"><div class="eyebrow">DADA'S PR · ZERO COST EDITORIAL ENGINE · v4.3</div><h1>Chrome मध्येच smart reel तयार करा.</h1><p>Local media ranking · animated photos · real video compositing · editorial overlays · optional music · no server bill.</p></section>
+<section class="hero"><div class="eyebrow">DADA'S PR · ADVANCED EDITOR · v4.4</div><h1>Smart reels, videos and visual stories.</h1><p>Auto Director · subject/work sequencing · beat-aware cuts · audio ducking · motion design · editorial graphics.</p></section>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
 ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Documentary','grounded · human')}${sb('newsroom','Newsroom','sharp · factual')}${sb('heritage','Heritage','Maharashtra · refined')}${sb('minimal','Minimal','clean · modern')}</div>
 <div id="preview" class="preview"><div class="copy"><div class="rule"></div><h2 id="pt">तुमचा विषय</h2><p id="pm">ठिकाण · दिनांक</p></div></div></div>
-<div class="card"><span class="badge">DADA FOCUS · LOCAL AI</span><h2>Photos / Videos</h2>
+<div class="card"><span class="badge">DADA FOCUS · MEDIA INTELLIGENCE</span><h2>Photos / Videos</h2>
 <div class="aipanel">
  <div class="grid2"><label>Primary subject<input id="primaryPerson" value="Sanjay Dudhgaonkar Patil" placeholder="Name used only for text matching"></label><label>मराठी नाव / text variant<input id="primaryPersonMr" value="संजय दुधगावकर पाटील" placeholder="Optional"></label></div>
- <p class="muted tiny">Face detection does not identify a person by name. Mark clips containing the primary subject; OCR can prioritize media when the entered name appears in visible text.</p>
+ <p class="muted tiny">Use the primary-subject markers together with face presence, OCR and work relevance to shape the edit.</p>
  <div class="airow"><span class="badge">Face scan</span><span class="badge">Marathi/Hindi/English OCR</span><span class="badge">Work relevance</span><span class="badge">Focal crop</span></div>
 </div>
 <input id="mediaInput" type="file" accept="image/*,video/*,.mp4,.m4v,.mov,.webm,.3gp,.jpg,.jpeg,.png,.webp,.heic,.heif" multiple>
 <p id="mediaHint" class="muted tiny">No media selected yet. Select up to 24 photos/videos.</p>
 <div id="media" class="media"></div><div id="analysisStatus" class="status" hidden></div>
-<button class="secondary" onclick="analyze()">⚡ Quality rank</button><button class="secondary" onclick="runLocalAI()">🧠 Run Dada Focus AI scan</button><button class="secondary" onclick="resetMedia()">↺ Reset media</button></div>
-<div class="card"><span class="badge">REAL LOCAL RENDER</span><h2>Reel / Video</h2><div class="grid2"><div><label>Format</label><div class="chips"><label class="chip"><input type="radio" name="ratio" value="9:16" checked><span>📱 Reel 9:16</span></label><label class="chip"><input type="radio" name="ratio" value="16:9"><span>🎬 Video 16:9</span></label></div></div><div><label>Length</label><div class="chips"><label class="chip"><input type="radio" name="dur" value="15"><span>15 sec</span></label><label class="chip"><input type="radio" name="dur" value="30" checked><span>30 sec</span></label><label class="chip"><input type="radio" name="dur" value="45"><span>45 sec</span></label></div></div></div>
+<button class="secondary" onclick="analyze()">⚡ Quality rank</button><button class="secondary" onclick="runLocalAI()">🧠 Analyze story media</button><button class="secondary" onclick="resetMedia()">↺ Reset media</button></div>
+<div class="card"><span class="badge">AUTO DIRECTOR</span><h2>Reel / Video</h2><div class="grid2"><div><label>Format</label><div class="chips"><label class="chip"><input type="radio" name="ratio" value="9:16" checked><span>📱 Reel 9:16</span></label><label class="chip"><input type="radio" name="ratio" value="16:9"><span>🎬 Video 16:9</span></label></div></div><div><label>Length</label><div class="chips"><label class="chip"><input type="radio" name="dur" value="15"><span>15 sec</span></label><label class="chip"><input type="radio" name="dur" value="30" checked><span>30 sec</span></label><label class="chip"><input type="radio" name="dur" value="45"><span>45 sec</span></label></div></div></div>
+<div class="aipanel"><div class="progrid">
+<div class="proctl"><b>Motion</b><select id="motionMode"><option value="auto">Auto</option><option value="subtle">Subtle</option><option value="bold">Bold</option></select></div>
+<div class="proctl"><b>Transitions</b><select id="transitionMode"><option value="auto">Auto</option><option value="clean">Clean</option><option value="dynamic">Dynamic</option></select></div>
+<div class="proctl"><b>Texture</b><select id="textureMode"><option value="cinema">Cinema</option><option value="clean">Clean</option><option value="film">Film</option></select></div>
+<div class="proctl"><b>Text density</b><select id="textDensity"><option value="balanced">Balanced</option><option value="minimal">Minimal</option><option value="rich">Rich</option></select></div>
+</div><div class="timeline-map"><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="pro-note">Auto Director varies shot length, motion, transitions and overlays across the timeline.</div></div>
 <label>Music (optional — upload audio you have rights to)<input id="music" type="file" accept="audio/*"></label>
 <div id="musicPlan" class="status">🎵 Auto soundtrack will match the topic and use a rhythmic original bed. Uploaded music uses a stronger matching excerpt instead of always starting at 0:00.</div>
 <div class="chips" style="margin-top:8px"><label class="chip"><input type="radio" name="pace" value="dynamic" checked><span>⚡ Dynamic Reel</span></label><label class="chip"><input type="radio" name="pace" value="documentary"><span>🎞 Documentary</span></label></div>
 <button class="primary" onclick="renderReel()">🎬 Generate Advanced Reel</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
 <section id="calendar" class="page"><div class="card"><span class="badge">2026 MAHARASHTRA</span><h2>सण आणि स्मरणदिन</h2><select id="mf" onchange="calendar()"><option value="">संपूर्ण वर्ष</option>${Array.from({length:12},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${new Date(2026,i,1).toLocaleString('mr-IN',{month:'long'})}</option>`).join('')}</select></div><div id="fg" class="festival-grid"></div></section>
-<section id="about" class="page"><div class="card"><span class="badge">₹0</span><h2>Why this stays free</h2><p class="muted">Video rendering happens locally inside Chrome. There is no paid AI API, cloud renderer or subscription. Longer reels use your phone's CPU/GPU, so keep Chrome open until rendering finishes.</p><button id="installBtn" class="primary" style="display:none">📲 Add app to Home Screen</button></div></section>
-</main><nav class="tabs"><button class="active" onclick="tab('studio',this)">🎬<br>Studio</button><button onclick="tab('designs',this)">◆<br>Designs</button><button onclick="tab('calendar',this)">📅<br>Calendar</button><button onclick="tab('about',this)">ⓘ<br>About</button></nav>`;
-document.getElementById('mediaInput').addEventListener('change',load);document.getElementById('music').addEventListener('change',e=>{musicFile=e.target.files[0]||null;previewMusicPlan()});calendar();upd();hookInstall();updateCompatibility();previewMusicPlan()}
+</main><nav class="tabs"><button class="active" onclick="tab('studio',this)">🎬<br>Studio</button><button onclick="tab('designs',this)">◆<br>Designs</button><button onclick="tab('calendar',this)">📅<br>Calendar</button></nav>`;
+document.getElementById('mediaInput').addEventListener('change',load);document.getElementById('music').addEventListener('change',e=>{musicFile=e.target.files[0]||null;previewMusicPlan()});calendar();upd();updateCompatibility();previewMusicPlan()}
 function sb(s,n,d){return `<button class="style ${s==='cinematic'?'sel':''}" onclick="setStyle('${s}',this)"><span class="sw ${s}"></span><b>${n}</b><small>${d}</small></button>`}
 function tab(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
 function v(id){return(document.getElementById(id)?.value||'').trim()}function ch(n){return document.querySelector(`input[name="${n}"]:checked`)?.value}
@@ -157,7 +162,7 @@ function primaryNames(){return [v('primaryPerson'),v('primaryPersonMr')].filter(
 function workContext(){return [v('primaryPerson'),v('primaryPersonMr'),v('topic'),v('place'),v('facts'),v('outcome')].filter(Boolean).join(' ')}
 function toggleFocus(i){if(!items[i])return;items[i].focus=!items[i].focus;rankByEditorial();draw()}
 function rankByEditorial(){items.sort((a,b)=>(b.ready?1:0)-(a.ready?1:0)||(b.focus?1:0)-(a.focus?1:0)||(b.relevance||0)-(a.relevance||0)||(b.score||0)-(a.score||0))}
-function waitLocalAI(timeout=16000){if(window.LocalAI)return Promise.resolve(window.LocalAI);return new Promise((resolve,reject)=>{let done=false;const ok=()=>{if(done)return;done=true;clearTimeout(t);resolve(window.LocalAI)};window.addEventListener('local-ai-ready',ok,{once:true});const t=setTimeout(()=>{if(done)return;done=true;reject(new Error('Local AI engine could not load. Check internet once, then retry.'))},timeout)})}
+function waitLocalAI(timeout=16000){if(window.LocalAI)return Promise.resolve(window.LocalAI);return new Promise((resolve,reject)=>{let done=false;const ok=()=>{if(done)return;done=true;clearTimeout(t);resolve(window.LocalAI)};window.addEventListener('local-ai-ready',ok,{once:true});const t=setTimeout(()=>{if(done)return;done=true;reject(new Error('Media intelligence engine could not load. Retry once.'))},timeout)})}
 async function aiFrames(item){
  const out=[],max=960;
  if(item.type==='image'){
@@ -188,8 +193,8 @@ async function runLocalAI(){
    item.ocr=ocr;item.faces=faceMax;item.relevance=Math.max((best&&best.relevance)||0,AI.relevance(ocr,context)||0);item.focal=(best&&best.focal)||null;item.aiScanned=true;if(nameInText)item.focus=true
   }
   rankByEditorial();draw();st.className='status ok';const focused=items.filter(x=>x.focus).length,withText=items.filter(x=>x.ocr).length;
-  st.textContent='Local AI scan complete. '+focused+' primary-subject item(s), '+withText+' item(s) with readable text. Reel ranking now prioritizes marked subject + work relevance.'
- }catch(err){st.className='status';st.textContent='AI scan error: '+((err&&err.message)||'Could not load local AI models')}
+  st.textContent='Media intelligence scan complete. '+focused+' primary-subject item(s), '+withText+' item(s) with readable text. Reel ranking now prioritizes marked subject + work relevance.'
+ }catch(err){st.className='status';st.textContent='AI scan error: '+((err&&err.message)||'Could not load media intelligence models')}
 }
 async function si(item){const im=new Image();im.src=item.url;if(im.decode)await im.decode();else await waitEvent(im,'load',7000);return sd(im)}
 async function sv(item){
@@ -201,12 +206,12 @@ async function sv(item){
 function sd(el){const c=document.getElementById('analysisCanvas'),q=c.getContext('2d',{willReadFrequently:true});q.drawImage(el,0,0,c.width,c.height);const d=q.getImageData(0,0,c.width,c.height).data,l=new Float32Array(c.width*c.height);let s=0,s2=0,n=0,e=0;for(let i=0,j=0;i<d.length;i+=4,j++){const y=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];l[j]=y;s+=y;s2+=y*y;n++}for(let y=1;y<c.height-1;y++)for(let x=1;x<c.width-1;x++){const i=y*c.width+x;e+=Math.abs(4*l[i]-l[i-1]-l[i+1]-l[i-c.width]-l[i+c.width])}const m=s/n,varr=s2/n-m*m,sharp=e/((c.width-2)*(c.height-2)),exp=Math.max(0,1-Math.abs(m-128)/128);return Math.min(100,sharp*1.65+Math.sqrt(Math.max(0,varr))*.55+exp*24)}
 function rr(c,x,y,w,h,r){c.beginPath();if(typeof c.roundRect==='function')c.roundRect(x,y,w,h,r);else{r=Math.min(r,w/2,h/2);c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y)}c.fill()}function cover(c,e,w,h,z=1,px=0,a=1,focal=null){const sw=e.videoWidth||e.naturalWidth,sh=e.videoHeight||e.naturalHeight;if(!sw||!sh)return;const s=Math.max(w/sw,h/sh)*z,dw=sw*s,dh=sh*s;let dx=(w-dw)/2+px,dy=(h-dh)/2;if(focal&&Number.isFinite(focal.x)&&Number.isFinite(focal.y)){dx+=w*.5-(dx+focal.x*dw);dy+=h*.45-(dy+focal.y*dh);dx=Math.max(w-dw,Math.min(0,dx));dy=Math.max(h-dh,Math.min(0,dy))}c.save();c.globalAlpha=a;c.drawImage(e,dx,dy,dw,dh);c.restore()}function wt(c,t,x,y,mw,lh,max){let line='',n=0;for(const w of(t||'').split(/\s+/)){const z=line?line+' '+w:w;if(c.measureText(z).width>mw&&line){c.fillText(line,x,y);y+=lh;n++;line=w;if(n>=max-1)break}else line=z}if(line&&n<max){c.fillText(line,x,y);y+=lh}return y}
 function overlay(c,w,h,sec,total){
- const p=pal(),topic=v('topic')||'माहिती',meta=[v('place'),v('date')].filter(Boolean).join('  •  '),facts=v('facts'),outcome=v('outcome');
+ const p=pal(),topic=v('topic')||'माहिती',meta=[v('place'),v('date')].filter(Boolean).join('  •  '),facts=v('facts'),outcome=v('outcome'),density=v('textDensity')||'balanced';
  const g=c.createLinearGradient(0,h*.35,0,h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(245,243,236,.9)':'rgba(0,0,0,.82)');c.fillStyle=g;c.fillRect(0,h*.28,w,h*.72);
  c.fillStyle=p.p;rr(c,w*.045,h*.035,w*.33,h*.04,h*.02);c.fillStyle=p.t;c.font='800 '+(w*.019)+'px sans-serif';c.fillText("DADA'S PR · माहिती",w*.066,h*.061);
  if(sec<1.85){
   c.fillStyle=p.a;c.fillRect(w*.065,h*.66,w*.16,h*.006);c.fillStyle=p.t;c.font='900 '+(w*.062)+'px sans-serif';let y=wt(c,topic,w*.065,h*.72,w*.86,w*.071,3);c.fillStyle=p.s;c.font='600 '+(w*.027)+'px sans-serif';if(meta)c.fillText(meta,w*.065,Math.min(h*.91,y+h*.02))
- }else if(facts&&(sec%8)>4.8&&(sec%8)<6.35){
+ }else if(density!=='minimal'&&facts&&(sec%8)>4.8&&(sec%8)<(density==='rich'?6.9:6.35)){
   c.fillStyle=p.p;rr(c,w*.05,h*.735,w*.88,h*.16,w*.02);c.fillStyle=p.a;c.fillRect(w*.05,h*.735,w*.012,h*.16);c.fillStyle=p.t;c.font='700 '+(w*.026)+'px sans-serif';wt(c,facts.slice(0,180),w*.085,h*.785,w*.79,w*.037,3)
  }else if(meta&&(sec%7)<2){
   c.fillStyle=p.p;rr(c,w*.05,h*.84,w*.73,h*.085,w*.018);c.fillStyle=p.a;c.fillRect(w*.05,h*.84,w*.011,h*.085);c.fillStyle=p.t;c.font='800 '+(w*.03)+'px sans-serif';c.fillText(v('place')||v('date'),w*.085,h*.878);if(v('place')&&v('date')){c.fillStyle=p.s;c.font='500 '+(w*.021)+'px sans-serif';c.fillText(v('date'),w*.085,h*.905)}
@@ -317,12 +322,38 @@ function colorFilter(){
  if(style==='heritage')return 'contrast(1.08) saturate(1.12) sepia(.06)';
  return 'contrast(1.03) saturate(.96) brightness(1.02)'
 }
+
+function motionStrength(){
+ const m=v('motionMode')||'auto';if(m==='subtle')return .55;if(m==='bold')return 1.35;
+ return ch('pace')==='dynamic'?1.05:.72
+}
+function transitionChoice(index){
+ const m=v('transitionMode')||'auto';if(m==='clean')return index%2===0?0:2;if(m==='dynamic')return [1,2,3,4][index%4];
+ return [0,1,2,0,3,4][index%6]
+}
+function drawTexture(q,w,h,t){
+ const mode=v('textureMode')||'cinema';if(mode==='clean')return;
+ q.save();
+ const grad=q.createRadialGradient(w*.5,h*.45,Math.min(w,h)*.2,w*.5,h*.5,Math.max(w,h)*.72);
+ grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(1,mode==='film'?'rgba(0,0,0,.24)':'rgba(0,0,0,.15)');
+ q.fillStyle=grad;q.fillRect(0,0,w,h);
+ if(mode==='film'){
+   q.globalAlpha=.032;for(let i=0;i<38;i++){const x=((i*97+t*13)%1000)/1000*w,y=((i*53+t*19)%1000)/1000*h,s=1+(i%3);q.fillStyle=i%2?'#fff':'#000';q.fillRect(x,y,s,s)}
+ }
+ q.restore()
+}
+function drawFlashAccent(q,w,h,local,index){
+ if(local>.11||index===0)return;
+ q.save();q.globalAlpha=(.11-local)*2.3;q.fillStyle=index%2===0?'#fff':'#d3a15a';q.fillRect(0,0,w,h);q.restore()
+}
 function drawEditorialShot(q,item,el,w,h,phase,index,alpha=1,transition=0){
  q.save();q.filter=colorFilter();q.globalAlpha=alpha;
- const still=item.type==='image',baseZoom=still?1.035:1.005,zoom=baseZoom+(still?.075:.018)*phase;
- const dir=index%2===0?1:-1,pan=(phase-.5)*w*.035*dir;
- if(transition===1)q.translate((1-alpha)*w*.11*dir,0);
- else if(transition===2)q.scale(1+(1-alpha)*.035,1+(1-alpha)*.035);
+ const still=item.type==='image',strength=motionStrength(),baseZoom=still?1.025:1.002,zoom=baseZoom+(still?.085:.022)*phase*strength;
+ const dir=index%2===0?1:-1,pan=(phase-.5)*w*.038*dir*strength;
+ if(transition===1)q.translate((1-alpha)*w*.13*dir,0);
+ else if(transition===2){const z=1+(1-alpha)*.05;q.translate(w*.5,h*.5);q.scale(z,z);q.translate(-w*.5,-h*.5)}
+ else if(transition===3){q.translate(0,(1-alpha)*h*.07*(index%2?1:-1));q.rotate((1-alpha)*.012*dir)}
+ else if(transition===4){const z=.97+alpha*.03;q.translate(w*.5,h*.5);q.scale(z,z);q.translate(-w*.5,-h*.5)}
  cover(q,el,w,h,zoom,pan,1,item.focus?item.focal:null);q.restore()
 }
 function audioLevel(analyser){
@@ -338,7 +369,7 @@ async function renderReel(){
  try{
   const usable=items.filter(x=>x.ready&&!x.error);
   if(!usable.length){rs.textContent='No usable photo/video is loaded. Select media above first.';return}
-  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='Update Chrome to use local reel rendering.';return}
+  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='Video rendering is not supported on this device.';return}
   const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),pace=ch('pace')||'dynamic',canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
   let wake=null;try{wake=await navigator.wakeLock?.request('screen')}catch{}
   const ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();const dest=ac.createMediaStreamDestination(),stream=canvas.captureStream(30);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
@@ -362,7 +393,7 @@ async function renderReel(){
   }
   if(!els.length){rs.textContent='Media could not be prepared for rendering.';try{await ac.close()}catch{};return}
   const durations=buildTimeline(els.length,requested,profile.bpm,pace),bounds=[];let acc=0;for(const d of durations){bounds.push({s:acc,e:acc+d});acc+=d}
-  const total=acc,tr=pace==='dynamic'?.28:.45,cfg=createRecorder(stream,portrait?6500000:7600000);if(!cfg){rs.textContent='Chrome could not start local recorder.';return}
+  const total=acc,tr=pace==='dynamic'?.28:.45,cfg=createRecorder(stream,portrait?6500000:7600000);if(!cfg){rs.textContent='Chrome could not start video recorder.';return}
   const rec=cfg.rec,mime=cfg.mime,chunks=[];let recorderError=null,active=-1,nextPrepared=-1;
   rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};const done=new Promise(r=>rec.onstop=r);rec.start(600);const start=performance.now();
   async function activate(i){
@@ -383,9 +414,9 @@ async function renderReel(){
    q.save();q.fillStyle='#090909';q.fillRect(0,0,canvas.width,canvas.height);
    drawEditorialShot(q,els[i].it,els[i].e,canvas.width,canvas.height,phase,i,1,0);
    if(nearEnd){
-    const a=Math.max(0,Math.min(1,(t-(b.e-tr))/tr)),kind=i%3===0?1:(i%3===1?2:0),nx=els[next];drawEditorialShot(q,nx.it,nx.e,canvas.width,canvas.height,0,next,a,kind)
+    const a=Math.max(0,Math.min(1,(t-(b.e-tr))/tr)),kind=transitionChoice(i),nx=els[next];drawEditorialShot(q,nx.it,nx.e,canvas.width,canvas.height,0,next,a,kind)
    }
-   q.restore();overlay(q,canvas.width,canvas.height,t,total);
+   q.restore();drawTexture(q,canvas.width,canvas.height,t);drawFlashAccent(q,canvas.width,canvas.height,local,i);overlay(q,canvas.width,canvas.height,t,total);
    const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';
    rs.textContent='Advanced edit '+Math.round(pct)+'%\\n'+profile.label+' · beat-paced cuts · subject/work alternation · dialogue ducking · color grade';requestAnimationFrame(frame)
   }
@@ -393,19 +424,15 @@ async function renderReel(){
   if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced.';return}
   renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';
   rs.textContent='Advanced reel complete · '+(renderBlob.size/1048576).toFixed(1)+' MB · '+ext.toUpperCase()+' · '+profile.label+(musicFile?' · music excerpt '+Math.floor(musicOffset)+'s':'');
-  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v43-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
+  document.getElementById('output').innerHTML='<video controls playsinline src="'+url+'"></video><a href="'+url+'" download="Dadas-PR-v44-'+Date.now()+'.'+ext+'">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel(\''+ext+'\')">Share Reel</button>'
  }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
 }
 async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
 function poster(){const ratio=ch('pr')||'4:5',c=document.getElementById('posterCanvas'),w=1080,h=ratio==='1:1'?1080:(ratio==='9:16'?1920:1350);c.width=w;c.height=h;const q=c.getContext('2d'),p=pal(),finish=()=>{const sh=q.createLinearGradient(0,h*.25,0,h);sh.addColorStop(0,'rgba(0,0,0,.04)');sh.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(247,244,236,.94)':'rgba(0,0,0,.87)');q.fillStyle=sh;q.fillRect(0,h*.2,w,h*.8);const m=72;q.fillStyle=p.a;q.fillRect(m,h*.53,155,8);q.fillStyle=p.t;q.font='900 68px sans-serif';let y=wt(q,v('topic')||'माहिती',m,h*.61,w-m*2,80,4);q.fillStyle=p.s;q.font='500 30px sans-serif';wt(q,v('facts'),m,y+45,w-m*2,48,7);q.fillStyle=p.t;q.font='700 28px sans-serif';q.fillText([v('place'),v('date')].filter(Boolean).join('  •  ')||'तथ्याधारित माहिती',m,h-90);c.toBlob(b=>{const u=URL.createObjectURL(b);document.getElementById('po').innerHTML=`<a href="${u}" download="Dadas-PR-Poster.png">⬇ Save Poster</a>`},'image/png')};if(firstImage){const im=new Image();im.onload=()=>{cover(q,im,w,h,1.03);finish()};im.src=firstImage}else{const g=q.createLinearGradient(0,0,w,h);g.addColorStop(0,p.a1);g.addColorStop(1,p.a2);q.fillStyle=g;q.fillRect(0,0,w,h);finish()}}
 function calendar(){const g=document.getElementById('fg');if(!g)return;const m=document.getElementById('mf')?.value||'';g.innerHTML=fest.filter(x=>!m||x[0].slice(5,7)===m).map(x=>`<article class="festival"><div class="date">${new Date(x[0]+'T12:00:00').toLocaleDateString('mr-IN',{day:'numeric',month:'long',year:'numeric'})}</div><h3>${x[2]} ${x[1]}</h3><small>कॅलेंडर नोंद</small></article>`).join('')}
-let deferredInstall=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;refreshInstallButton()});
-function refreshInstallButton(){const b=document.getElementById('installBtn');if(!b)return;if(deferredInstall){b.style.display='block';b.onclick=async()=>{try{await deferredInstall.prompt()}catch{}deferredInstall=null;b.style.display='none'}}}
-function hookInstall(){refreshInstallButton()}
 function updateCompatibility(){
- const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Local reel rendering needs a recent Chrome version.'}}
+ const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Video rendering is not supported on this device.'}}
 }
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=43').then(r=>r.update()).catch(()=>{}));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=44').then(r=>r.update()).catch(()=>{}));
 lock();
-</script><script type="module" src="./ai-engine.js?v=43"></script></body></html>
+</script><script type="module" src="./ai-engine.js?v=44"></script></body></html>
