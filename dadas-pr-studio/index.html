@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-<title>Dada's PR Studio ZERO</title>
+<title>Dada's PR Studio ZERO v4.1</title>
 <style>
 :root{--bg:#efede8;--card:#fff;--ink:#171717;--muted:#746f68;--line:#e2ddd5;--gold:#c99a52;--ok:#166534}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(circle at 15% 0,#fff7e8,transparent 32rem),linear-gradient(#f7f4ee,#ebe8e2);color:var(--ink)}
@@ -27,40 +27,188 @@ const fest=[
 function lock(){app.innerHTML='<main class="lock"><section class="card lockbox"><span class="badge">₹0 · WEBSITE</span><h1>Dada\'s PR Studio ZERO</h1><p class="muted">Chrome-ready · no paid API</p><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><button class="primary" onclick="unlock()">उघडा</button><p id="err" style="color:#a11b1b"></p></section></main>'}
 function unlock(){if(document.getElementById('pin').value==='2580')render();else document.getElementById('err').textContent='चुकीचा PIN'}
 function render(){app.innerHTML=`<main class="shell">
-<section class="hero"><div class="eyebrow">DADA'S PR · ZERO COST EDITORIAL ENGINE</div><h1>Chrome मध्येच smart reel तयार करा.</h1><p>Local media ranking · animated photos · real video compositing · editorial overlays · optional music · no server bill.</p></section>
+<section class="hero"><div class="eyebrow">DADA'S PR · ZERO COST EDITORIAL ENGINE · v4.1</div><h1>Chrome मध्येच smart reel तयार करा.</h1><p>Local media ranking · animated photos · real video compositing · editorial overlays · optional music · no server bill.</p></section>
 <section id="studio" class="page active">
 <div class="card"><span class="badge">VERIFIED BRIEF</span><div class="grid2"><label>विषय<input id="topic" oninput="upd()" placeholder="उदा. विकासकामाची पाहणी"></label><label>ठिकाण<input id="place" oninput="upd()"></label></div><div class="grid2"><label>दिनांक<input id="date" type="date" oninput="upd()"></label><label>पुढील पाऊल<input id="outcome"></label></div><label>पडताळलेली माहिती<textarea id="facts" rows="4" oninput="upd()"></textarea></label></div>
 <div class="card"><span class="badge">VISUAL DIRECTION</span><h2>Editorial look</h2><div class="styles">
 ${sb('cinematic','Cinematic','dramatic · premium')}${sb('documentary','Documentary','grounded · human')}${sb('newsroom','Newsroom','sharp · factual')}${sb('heritage','Heritage','Maharashtra · refined')}${sb('minimal','Minimal','clean · modern')}</div>
 <div id="preview" class="preview"><div class="copy"><div class="rule"></div><h2 id="pt">तुमचा विषय</h2><p id="pm">ठिकाण · दिनांक</p></div></div></div>
-<div class="card"><span class="badge">MEDIA INTELLIGENCE</span><h2>Photos / Videos</h2><input id="mediaInput" type="file" accept="image/*,video/*" multiple><div id="media" class="media"></div><div id="analysisStatus" class="status" hidden></div><button class="secondary" onclick="analyze()">🧠 Analyze & rank</button></div>
+<div class="card"><span class="badge">MEDIA INTELLIGENCE</span><h2>Photos / Videos</h2>
+<input id="mediaInput" type="file" accept="image/*,video/*,.mp4,.m4v,.mov,.webm,.3gp,.jpg,.jpeg,.png,.webp,.heic,.heif" multiple>
+<p id="mediaHint" class="muted tiny">No media selected yet. MP4/MOV/WebM and normal phone photos are supported when Chrome can decode their codec.</p>
+<div id="media" class="media"></div><div id="analysisStatus" class="status" hidden></div>
+<button class="secondary" onclick="analyze()">🧠 Analyze & rank</button><button class="secondary" onclick="resetMedia()">↺ Reset media</button></div>
 <div class="card"><span class="badge">REAL LOCAL RENDER</span><h2>Reel / Video</h2><div class="grid2"><div><label>Format</label><div class="chips"><label class="chip"><input type="radio" name="ratio" value="9:16" checked><span>📱 Reel 9:16</span></label><label class="chip"><input type="radio" name="ratio" value="16:9"><span>🎬 Video 16:9</span></label></div></div><div><label>Length</label><div class="chips"><label class="chip"><input type="radio" name="dur" value="15"><span>15 sec</span></label><label class="chip"><input type="radio" name="dur" value="30" checked><span>30 sec</span></label><label class="chip"><input type="radio" name="dur" value="45"><span>45 sec</span></label></div></div></div>
 <label>Background music (optional; use audio you have rights to)<input id="music" type="file" accept="audio/*"></label><button class="primary" onclick="renderReel()">🎬 Generate Reel on this phone</button><div class="progress"><div id="bar"></div></div><div id="rs" class="status" hidden></div><div id="output" class="output"></div></div></section>
 <section id="designs" class="page"><div class="card"><span class="badge">DESIGN LAB</span><h2>High-resolution social post</h2><div class="chips"><label class="chip"><input type="radio" name="pr" value="4:5" checked><span>Feed 4:5</span></label><label class="chip"><input type="radio" name="pr" value="1:1"><span>Square</span></label><label class="chip"><input type="radio" name="pr" value="9:16"><span>Story</span></label></div><button class="primary" onclick="poster()">🖼️ Generate Poster</button><div id="po" class="output"></div></div></section>
 <section id="calendar" class="page"><div class="card"><span class="badge">2026 MAHARASHTRA</span><h2>सण आणि स्मरणदिन</h2><select id="mf" onchange="calendar()"><option value="">संपूर्ण वर्ष</option>${Array.from({length:12},(_,i)=>`<option value="${String(i+1).padStart(2,'0')}">${new Date(2026,i,1).toLocaleString('mr-IN',{month:'long'})}</option>`).join('')}</select></div><div id="fg" class="festival-grid"></div></section>
 <section id="about" class="page"><div class="card"><span class="badge">₹0</span><h2>Why this stays free</h2><p class="muted">Video rendering happens locally inside Chrome. There is no paid AI API, cloud renderer or subscription. Longer reels use your phone's CPU/GPU, so keep Chrome open until rendering finishes.</p><button id="installBtn" class="primary" style="display:none">📲 Add app to Home Screen</button></div></section>
 </main><nav class="tabs"><button class="active" onclick="tab('studio',this)">🎬<br>Studio</button><button onclick="tab('designs',this)">◆<br>Designs</button><button onclick="tab('calendar',this)">📅<br>Calendar</button><button onclick="tab('about',this)">ⓘ<br>About</button></nav>`;
-document.getElementById('mediaInput').addEventListener('change',load);document.getElementById('music').addEventListener('change',e=>musicFile=e.target.files[0]||null);calendar();upd();hookInstall()}
+document.getElementById('mediaInput').addEventListener('change',load);document.getElementById('music').addEventListener('change',e=>musicFile=e.target.files[0]||null);calendar();upd();hookInstall();updateCompatibility()}
 function sb(s,n,d){return `<button class="style ${s==='cinematic'?'sel':''}" onclick="setStyle('${s}',this)"><span class="sw ${s}"></span><b>${n}</b><small>${d}</small></button>`}
 function tab(id,b){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
 function v(id){return(document.getElementById(id)?.value||'').trim()}function ch(n){return document.querySelector(`input[name="${n}"]:checked`)?.value}
 function pal(){if(style==='documentary')return{a:'#285644',p:'rgba(238,233,220,.91)',t:'#1b2822',s:'#48554e',a1:'#eee8da',a2:'#b8c6bb'};if(style==='newsroom')return{a:'#e2b25b',p:'rgba(5,23,46,.91)',t:'#fff',s:'#d7e1ed',a1:'#05172e',a2:'#173f69'};if(style==='heritage')return{a:'#e29539',p:'rgba(82,22,29,.91)',t:'#fff7e8',s:'#efd2ad',a1:'#52161d',a2:'#8a2c22'};if(style==='minimal')return{a:'#171717',p:'rgba(247,247,243,.94)',t:'#111',s:'#555',a1:'#f7f7f3',a2:'#deded8'};return{a:'#c99a52',p:'rgba(13,13,14,.88)',t:'#fff',s:'#ded7d0',a1:'#0e0e0f',a2:'#493126'}}
 function setStyle(s,b){style=s;document.querySelectorAll('.style').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');upd()}
 function upd(){const p=pal(),pr=document.getElementById('preview');if(!pr)return;pr.style.background=`linear-gradient(145deg,${p.a1},${p.a2})`;pr.style.color=p.t;pr.querySelector('.rule').style.background=p.a;document.getElementById('pt').textContent=v('topic')||'तुमचा विषय';document.getElementById('pm').textContent=[v('place'),v('date')].filter(Boolean).join(' · ')||'ठिकाण · दिनांक'}
-async function load(e){items.forEach(x=>URL.revokeObjectURL(x.url));items=[];firstImage='';for(const f of [...e.target.files]){const url=URL.createObjectURL(f),o={f,url,type:f.type.startsWith('video')?'video':'image',score:50,dur:0};if(o.type==='image'&&!firstImage)firstImage=url;if(o.type==='video')o.dur=await vd(url).catch(()=>0);items.push(o)}draw();analyze()}
-function vd(url){return new Promise((r,j)=>{const x=document.createElement('video');x.src=url;x.onloadedmetadata=()=>r(x.duration||0);x.onerror=j})}
-function draw(){document.getElementById('media').innerHTML=items.map((x,i)=>`<div class="mcard">${x.type==='video'?`<video src="${x.url}" muted playsinline></video>`:`<img src="${x.url}">`}<span class="rank">#${i+1}</span><span class="score">${Math.round(x.score)}</span></div>`).join('');const pr=document.getElementById('preview');if(pr){pr.querySelector('img')?.remove();if(firstImage){const im=document.createElement('img');im.src=firstImage;pr.prepend(im)}}}
-async function analyze(){if(!items.length)return;const st=document.getElementById('analysisStatus');st.hidden=false;for(let i=0;i<items.length;i++){st.textContent=`Analyzing ${i+1}/${items.length}…`;items[i].score=items[i].type==='image'?await si(items[i].url).catch(()=>45):await sv(items[i].url,items[i].dur).catch(()=>45)}items.sort((a,b)=>b.score-a.score);draw();st.className='status ok';st.textContent='Best-looking shots ranked first.'}
-async function si(url){const im=new Image();im.src=url;await im.decode();return sd(im)}async function sv(url,d){const x=document.createElement('video');x.src=url;x.muted=true;await new Promise((r,j)=>{x.onloadedmetadata=r;x.onerror=j});let best=0;for(const p of [.25,.5,.75]){x.currentTime=Math.max(.05,(d||x.duration||1)*p);await new Promise(r=>x.onseeked=r);best=Math.max(best,sd(x))}return best+Math.min(7,(d||0)/8)}
+function detectFileType(f){
+ const mime=(f.type||'').toLowerCase(),name=(f.name||'').toLowerCase();
+ if(mime.startsWith('video/')||/\.(mp4|m4v|mov|webm|3gp|mkv)$/i.test(name))return 'video';
+ if(mime.startsWith('image/')||/\.(jpe?g|png|webp|gif|heic|heif)$/i.test(name))return 'image';
+ return 'unknown'
+}
+function waitEvent(el,event,timeout=8000){
+ return new Promise((resolve,reject)=>{
+  let done=false;const finish=(ok,val)=>{if(done)return;done=true;clearTimeout(timer);el.removeEventListener(event,onOk);el.removeEventListener('error',onErr);ok?resolve(val):reject(val)};
+  const onOk=()=>finish(true),onErr=()=>finish(false,new Error('Media could not be decoded by Chrome'));
+  el.addEventListener(event,onOk,{once:true});el.addEventListener('error',onErr,{once:true});
+  const timer=setTimeout(()=>finish(false,new Error('Media loading timed out')),timeout)
+ })
+}
+function seekVideo(el,time,timeout=5000){
+ return new Promise((resolve,reject)=>{
+  let done=false;const finish=(ok,val)=>{if(done)return;done=true;clearTimeout(timer);el.removeEventListener('seeked',okFn);el.removeEventListener('error',errFn);ok?resolve(val):reject(val)};
+  const okFn=()=>finish(true),errFn=()=>finish(false,new Error('Video seek failed'));
+  el.addEventListener('seeked',okFn,{once:true});el.addEventListener('error',errFn,{once:true});
+  const timer=setTimeout(()=>finish(false,new Error('Video seek timed out')),timeout);
+  try{el.currentTime=Math.max(0,time)}catch(err){finish(false,err)}
+ })
+}
+function makeVideoThumb(video){
+ try{
+  const sw=video.videoWidth||720,sh=video.videoHeight||1280,max=480,scale=Math.min(1,max/Math.max(sw,sh)),cv=document.createElement('canvas');
+  cv.width=Math.max(2,Math.round(sw*scale));cv.height=Math.max(2,Math.round(sh*scale));
+  cv.getContext('2d').drawImage(video,0,0,cv.width,cv.height);return cv.toDataURL('image/jpeg',.78)
+ }catch{return ''}
+}
+async function inspectVideo(item){
+ const x=document.createElement('video');x.preload='metadata';x.muted=true;x.playsInline=true;x.src=item.url;
+ await waitEvent(x,'loadedmetadata',10000);item.dur=Number.isFinite(x.duration)?x.duration:0;item.w=x.videoWidth;item.h=x.videoHeight;
+ try{
+  if(item.dur>.15){await seekVideo(x,Math.min(Math.max(.05,item.dur*.08),Math.max(.05,item.dur-.12)),5000)}
+  item.thumb=makeVideoThumb(x);if(item.thumb&&!firstImage)firstImage=item.thumb
+ }catch{}
+ item.ready=true
+}
+async function inspectImage(item){
+ const im=new Image();im.src=item.url;
+ if(im.decode)await Promise.race([im.decode(),new Promise((_,j)=>setTimeout(()=>j(new Error('Image loading timed out')),8000))]);
+ else await waitEvent(im,'load',8000);
+ item.w=im.naturalWidth;item.h=im.naturalHeight;item.thumb=item.url;item.ready=true;if(!firstImage)firstImage=item.url
+}
+async function load(e){
+ const files=[...(e.target.files||[])];
+ if(!files.length)return;
+ items.forEach(x=>{try{URL.revokeObjectURL(x.url)}catch{}});items=[];firstImage='';renderBlob=null;
+ const accepted=files.slice(0,24);
+ items=accepted.map(f=>({f,url:URL.createObjectURL(f),type:detectFileType(f),score:50,dur:0,ready:false,error:'',thumb:''}));
+ draw();
+ const hint=document.getElementById('mediaHint'),st=document.getElementById('analysisStatus');st.hidden=false;st.className='status';
+ st.textContent=`Selected ${items.length} file(s). Checking Chrome compatibility…`;
+ await Promise.all(items.map(async item=>{
+  try{
+   if(item.type==='video')await inspectVideo(item);
+   else if(item.type==='image')await inspectImage(item);
+   else throw new Error('Unsupported file type')
+  }catch(err){item.error=(err&&err.message)||'Unsupported media';item.ready=false;item.score=0}
+ }));
+ draw();
+ const usable=items.filter(x=>x.ready&&!x.error).length,failed=items.length-usable;
+ if(hint)hint.textContent=`${usable} usable media selected${failed?` · ${failed} file(s) could not be decoded by Chrome`:''}.`;
+ st.className=usable?'status ok':'status';
+ st.textContent=usable?`Media loaded: ${usable}/${items.length}. Running local quality analysis…`:'Chrome could not decode the selected media. Try an MP4 (H.264) or another phone video.';
+ if(usable)await analyze(false)
+}
+function resetMedia(){
+ items.forEach(x=>{try{URL.revokeObjectURL(x.url)}catch{}});items=[];firstImage='';renderBlob=null;
+ const input=document.getElementById('mediaInput');if(input)input.value='';
+ const hint=document.getElementById('mediaHint');if(hint)hint.textContent='No media selected yet.';
+ const st=document.getElementById('analysisStatus');if(st){st.hidden=true;st.textContent=''}
+ document.getElementById('media').innerHTML='';
+ const pr=document.getElementById('preview');pr?.querySelector('img')?.remove()
+}
+function draw(){
+ const box=document.getElementById('media');if(!box)return;
+ box.innerHTML=items.map((x,i)=>{
+  const visual=x.thumb?`<img src="${x.thumb}" alt="">`:(x.type==='video'?`<video src="${x.url}" muted playsinline preload="metadata"></video>`:`<div style="display:grid;place-items:center;height:100%;font-size:28px">?</div>`);
+  const bad=x.error?`<div style="position:absolute;inset:auto 5px 5px 5px;background:#8b1e1ee8;color:#fff;padding:5px;border-radius:8px;font-size:9px">${escapeHtml(x.error)}</div>`:'';
+  return `<div class="mcard">${visual}<span class="rank">#${i+1}</span><span class="score">${x.error?'!':Math.round(x.score)}</span>${bad}</div>`
+ }).join('');
+ const pr=document.getElementById('preview');if(pr){pr.querySelector('img')?.remove();if(firstImage){const im=document.createElement('img');im.src=firstImage;pr.prepend(im)}}
+}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+async function analyze(showMessage=true){
+ const usable=items.filter(x=>x.ready&&!x.error);if(!usable.length){const st=document.getElementById('analysisStatus');if(st){st.hidden=false;st.className='status';st.textContent='No Chrome-compatible media is loaded.'}return}
+ const st=document.getElementById('analysisStatus');st.hidden=false;st.className='status';
+ for(let i=0;i<usable.length;i++){st.textContent=`Analyzing ${i+1}/${usable.length}…`;try{usable[i].score=usable[i].type==='image'?await si(usable[i]):await sv(usable[i])}catch{usable[i].score=45}}
+ items.sort((a,b)=>(b.ready?1:0)-(a.ready?1:0)||b.score-a.score);draw();st.className='status ok';st.textContent=`Analysis complete. ${usable.length} usable item(s); strongest shots ranked first.`
+}
+async function si(item){const im=new Image();im.src=item.url;if(im.decode)await im.decode();else await waitEvent(im,'load',7000);return sd(im)}
+async function sv(item){
+ const x=document.createElement('video');x.preload='auto';x.muted=true;x.playsInline=true;x.src=item.url;await waitEvent(x,'loadedmetadata',8000);
+ const d=item.dur||x.duration||1;let best=0,samples=0;
+ for(const p of [.18,.42,.68,.86]){try{await seekVideo(x,Math.min(Math.max(.03,d*p),Math.max(.03,d-.08)),4500);best=Math.max(best,sd(x));samples++}catch{}}
+ return (samples?best:45)+Math.min(7,d/8)
+}
 function sd(el){const c=document.getElementById('analysisCanvas'),q=c.getContext('2d',{willReadFrequently:true});q.drawImage(el,0,0,c.width,c.height);const d=q.getImageData(0,0,c.width,c.height).data,l=new Float32Array(c.width*c.height);let s=0,s2=0,n=0,e=0;for(let i=0,j=0;i<d.length;i+=4,j++){const y=.2126*d[i]+.7152*d[i+1]+.0722*d[i+2];l[j]=y;s+=y;s2+=y*y;n++}for(let y=1;y<c.height-1;y++)for(let x=1;x<c.width-1;x++){const i=y*c.width+x;e+=Math.abs(4*l[i]-l[i-1]-l[i+1]-l[i-c.width]-l[i+c.width])}const m=s/n,varr=s2/n-m*m,sharp=e/((c.width-2)*(c.height-2)),exp=Math.max(0,1-Math.abs(m-128)/128);return Math.min(100,sharp*1.65+Math.sqrt(Math.max(0,varr))*.55+exp*24)}
-function rr(c,x,y,w,h,r){c.beginPath();c.roundRect(x,y,w,h,r);c.fill()}function cover(c,e,w,h,z=1,px=0,a=1){const sw=e.videoWidth||e.naturalWidth,sh=e.videoHeight||e.naturalHeight;if(!sw||!sh)return;const s=Math.max(w/sw,h/sh)*z,dw=sw*s,dh=sh*s;c.save();c.globalAlpha=a;c.drawImage(e,(w-dw)/2+px,(h-dh)/2,dw,dh);c.restore()}function wt(c,t,x,y,mw,lh,max){let line='',n=0;for(const w of(t||'').split(/\s+/)){const z=line?line+' '+w:w;if(c.measureText(z).width>mw&&line){c.fillText(line,x,y);y+=lh;n++;line=w;if(n>=max-1)break}else line=z}if(line&&n<max){c.fillText(line,x,y);y+=lh}return y}
+function rr(c,x,y,w,h,r){c.beginPath();if(typeof c.roundRect==='function')c.roundRect(x,y,w,h,r);else{r=Math.min(r,w/2,h/2);c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y)}c.fill()}function cover(c,e,w,h,z=1,px=0,a=1){const sw=e.videoWidth||e.naturalWidth,sh=e.videoHeight||e.naturalHeight;if(!sw||!sh)return;const s=Math.max(w/sw,h/sh)*z,dw=sw*s,dh=sh*s;c.save();c.globalAlpha=a;c.drawImage(e,(w-dw)/2+px,(h-dh)/2,dw,dh);c.restore()}function wt(c,t,x,y,mw,lh,max){let line='',n=0;for(const w of(t||'').split(/\s+/)){const z=line?line+' '+w:w;if(c.measureText(z).width>mw&&line){c.fillText(line,x,y);y+=lh;n++;line=w;if(n>=max-1)break}else line=z}if(line&&n<max){c.fillText(line,x,y);y+=lh}return y}
 function overlay(c,w,h,sec,total){const p=pal(),topic=v('topic')||'माहिती',meta=[v('place'),v('date')].filter(Boolean).join('  •  ');const g=c.createLinearGradient(0,h*.35,0,h);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(245,243,236,.9)':'rgba(0,0,0,.82)');c.fillStyle=g;c.fillRect(0,h*.28,w,h*.72);c.fillStyle=p.p;rr(c,w*.045,h*.035,w*.33,h*.04,h*.02);c.fillStyle=p.t;c.font=`800 ${w*.019}px sans-serif`;c.fillText("DADA'S PR · माहिती",w*.066,h*.061);if(sec<3.1){c.fillStyle=p.a;c.fillRect(w*.065,h*.66,w*.16,h*.006);c.fillStyle=p.t;c.font=`900 ${w*.062}px sans-serif`;let y=wt(c,topic,w*.065,h*.72,w*.86,w*.071,3);c.fillStyle=p.s;c.font=`600 ${w*.027}px sans-serif`;if(meta)c.fillText(meta,w*.065,Math.min(h*.91,y+h*.02))}else if(meta&&(sec%7)<2){c.fillStyle=p.p;rr(c,w*.05,h*.84,w*.73,h*.085,w*.018);c.fillStyle=p.a;c.fillRect(w*.05,h*.84,w*.011,h*.085);c.fillStyle=p.t;c.font=`800 ${w*.03}px sans-serif`;c.fillText(v('place')||v('date'),w*.085,h*.878);if(v('place')&&v('date')){c.fillStyle=p.s;c.font=`500 ${w*.021}px sans-serif`;c.fillText(v('date'),w*.085,h*.905)}}if(sec>total-1.1){c.fillStyle=p.p;c.fillRect(0,h*.9,w,h*.1);c.fillStyle=p.a;c.fillRect(w*.05,h*.92,w*.13,h*.005);c.fillStyle=p.t;c.font=`700 ${w*.021}px sans-serif`;c.fillText(meta||'तथ्याधारित माहिती',w*.05,h*.958)}}
-async function el(item){if(item.type==='image'){const im=new Image();im.src=item.url;await im.decode();return im}return await new Promise((r,j)=>{const x=document.createElement('video');x.src=item.url;x.playsInline=true;x.preload='auto';x.onloadeddata=()=>r(x);x.onerror=j})}
-async function renderReel(){if(!items.length){alert('Photos/videos निवडा.');return}if(!v('topic')&&!v('facts')){alert('विषय किंवा पडताळलेली माहिती भरा.');return}const rs=document.getElementById('rs');rs.hidden=false;rs.className='status';rs.textContent='Preparing local render…';document.getElementById('output').innerHTML='';const portrait=(ch('ratio')||'9:16')==='9:16',total=+(ch('dur')||30),c=document.getElementById('renderCanvas');c.width=portrait?720:1280;c.height=portrait?1280:720;const q=c.getContext('2d'),mime=['video/mp4;codecs=avc1.42E01E','video/webm;codecs=vp9','video/webm'].find(x=>MediaRecorder.isTypeSupported(x))||'video/webm',stream=c.captureStream(30),ac=new(window.AudioContext||window.webkitAudioContext)(),dest=ac.createMediaStreamDestination();dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));let music=null;if(musicFile){music=new Audio(URL.createObjectURL(musicFile));music.loop=true;const src=ac.createMediaElementSource(music),gain=ac.createGain();gain.gain.value=.11;src.connect(gain).connect(dest);await music.play().catch(()=>{})}const chosen=items.slice(0,Math.min(items.length,Math.max(3,Math.ceil(total/3.2)))),els=[];for(const it of chosen){try{const e=await el(it);if(it.type==='video'){const src=ac.createMediaElementSource(e),gain=ac.createGain();gain.gain.value=.16;src.connect(gain).connect(dest)}els.push({it,e})}catch{}}if(!els.length)return;const seg=total/els.length,tr=Math.min(.6,seg*.2),chunks=[],rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:portrait?5200000:6200000});rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);const done=new Promise(r=>rec.onstop=r);rec.start(1000);const start=performance.now();let ci=-1;async function prep(i){const o=els[i];if(!o||o.it.type!=='video')return;if(ci!==i){els.forEach((x,j)=>{if(x.it.type==='video'&&j!==i)x.e.pause()});ci=i;const d=o.e.duration||o.it.dur||seg;try{o.e.currentTime=Math.max(0,Math.min(d-seg*.9,d*.25));await o.e.play()}catch{}}}
-async function frame(){const t=(performance.now()-start)/1000;if(t>=total){rec.stop();music?.pause();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}const i=Math.min(els.length-1,Math.floor(t/seg)),local=t-i*seg,next=Math.min(els.length-1,i+1);await prep(i);q.fillStyle='#111';q.fillRect(0,0,c.width,c.height);const cur=els[i],ph=local/seg,zoom=cur.it.type==='image'?1+.055*ph:1,pan=(ph-.5)*c.width*.025;cover(q,cur.e,c.width,c.height,zoom,pan);if(local>seg-tr&&next!==i){const a=(local-(seg-tr))/tr,nx=els[next];if(nx.it.type==='video'&&nx.e.paused){try{nx.e.currentTime=Math.max(0,(nx.e.duration||1)*.25);await nx.e.play()}catch{}}cover(q,nx.e,c.width,c.height,nx.it.type==='image'?1.03:1,-pan,a)}overlay(q,c.width,c.height,t,total);const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';rs.textContent=`Rendering on phone… ${Math.round(pct)}%\nKeep Chrome open.`;requestAnimationFrame(frame)}requestAnimationFrame(frame);await done;renderBlob=new Blob(chunks,{type:mime});const url=URL.createObjectURL(renderBlob),ext=mime.includes('mp4')?'mp4':'webm';rs.className='status ok';rs.textContent=`Render complete · ${(renderBlob.size/1048576).toFixed(1)} MB`;document.getElementById('output').innerHTML=`<video controls playsinline src="${url}"></video><a href="${url}" download="Dadas-PR-${style}.${ext}">⬇ Save Reel</a>`}
+async function el(item){if(item.type==='image'){const im=new Image();im.src=item.url;if(im.decode)await im.decode();else await waitEvent(im,'load',8000);return im}const x=document.createElement('video');x.src=item.url;x.playsInline=true;x.preload='auto';x.muted=true;x.loop=true;await Promise.race([waitEvent(x,'canplay',10000),waitEvent(x,'loadeddata',10000)]);return x}
+function createRecorder(stream,bps){
+ const types=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp8,opus','video/webm;codecs=vp8','video/webm'];
+ for(const mime of types){try{if(MediaRecorder.isTypeSupported(mime))return {rec:new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:bps}),mime}}catch{}}
+ try{return {rec:new MediaRecorder(stream,{videoBitsPerSecond:bps}),mime:''}}catch{return null}
+}
+async function renderReel(){
+ const rs=document.getElementById('rs');rs.hidden=false;rs.className='status';document.getElementById('output').innerHTML='';document.getElementById('bar').style.width='0%';
+ try{
+  const usable=items.filter(x=>x.ready&&!x.error);
+  if(!usable.length){rs.textContent='No usable photo/video is loaded. Select media above and wait until it says “Media loaded”.';return}
+  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){rs.textContent='This browser cannot render video locally. Update Chrome and try again.';return}
+  const portrait=(ch('ratio')||'9:16')==='9:16',requested=+(ch('dur')||30),canvas=document.getElementById('renderCanvas');canvas.width=portrait?720:1280;canvas.height=portrait?1280:720;const q=canvas.getContext('2d');
+  let wake=null;try{wake=await navigator.wakeLock?.request('screen')}catch{}
+  let ac=null,dest=null,music=null,stream=canvas.captureStream(30);
+  if(musicFile){
+   ac=new(window.AudioContext||window.webkitAudioContext)();await ac.resume();dest=ac.createMediaStreamDestination();dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
+   music=new Audio(URL.createObjectURL(musicFile));music.loop=true;music.preload='auto';const src=ac.createMediaElementSource(music),gain=ac.createGain();gain.gain.value=.12;src.connect(gain).connect(dest);await music.play().catch(()=>{})
+  }
+  const maxCount=Math.min(usable.length,Math.max(3,Math.ceil(requested/3.2))),chosen=usable.slice(0,maxCount),els=[];
+  rs.textContent=`Loading ${chosen.length} selected highlight(s)…`;
+  for(const it of chosen){try{els.push({it,e:await el(it)})}catch(err){it.error='Could not prepare for render'}}
+  if(!els.length){rs.textContent='The selected media could be previewed but could not be prepared for rendering. Try MP4/H.264 video.';wake?.release?.();return}
+  const total=requested,seg=total/els.length,tr=Math.min(.55,seg*.18),cfg=createRecorder(stream,portrait?5200000:6200000);
+  if(!cfg){rs.textContent='Chrome could not start a local video recorder on this phone.';wake?.release?.();return}
+  const {rec,mime}=cfg,chunks=[];let recorderError=null;
+  rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};rec.onerror=e=>{recorderError=e.error||new Error('Recorder error')};
+  const done=new Promise(resolve=>rec.onstop=resolve);rec.start(750);const start=performance.now();let ci=-1;
+  async function prep(i){
+   const o=els[i];if(!o||o.it.type!=='video')return;
+   if(ci!==i){els.forEach((x,j)=>{if(x.it.type==='video'&&j!==i)x.e.pause()});ci=i;const d=o.e.duration||o.it.dur||seg;try{o.e.currentTime=Math.max(0,Math.min(Math.max(0,d-.08),d>seg?d*.18:0));await o.e.play()}catch{}}
+  }
+  async function frame(){
+   const t=(performance.now()-start)/1000;
+   if(t>=total){try{rec.stop()}catch{}music?.pause();els.forEach(x=>x.it.type==='video'&&x.e.pause());document.getElementById('bar').style.width='100%';return}
+   const i=Math.min(els.length-1,Math.floor(t/seg)),local=t-i*seg,next=Math.min(els.length-1,i+1);await prep(i);
+   q.fillStyle='#111';q.fillRect(0,0,canvas.width,canvas.height);const cur=els[i],ph=local/seg,zoom=cur.it.type==='image'?1+.055*ph:1,pan=(ph-.5)*canvas.width*.024;cover(q,cur.e,canvas.width,canvas.height,zoom,pan);
+   if(local>seg-tr&&next!==i){const a=(local-(seg-tr))/tr,nx=els[next];if(nx.it.type==='video'&&nx.e.paused){try{nx.e.currentTime=0;await nx.e.play()}catch{}}cover(q,nx.e,canvas.width,canvas.height,nx.it.type==='image'?1.025:1,-pan,a)}
+   overlay(q,canvas.width,canvas.height,t,total);const pct=Math.min(99,t/total*100);document.getElementById('bar').style.width=pct+'%';rs.textContent=`Rendering locally… ${Math.round(pct)}%\nKeep Chrome open until finished.`;requestAnimationFrame(frame)
+  }
+  requestAnimationFrame(frame);await done;music?.pause();try{await ac?.close()}catch{}try{await wake?.release?.()}catch{}
+  if(recorderError||!chunks.length){rs.textContent='Rendering stopped before a usable file was produced. Update Chrome and retry with a shorter 15 sec reel.';return}
+  renderBlob=new Blob(chunks,{type:mime||rec.mimeType||'video/webm'});const url=URL.createObjectURL(renderBlob),type=(mime||rec.mimeType||'video/webm').toLowerCase(),ext=type.includes('mp4')?'mp4':'webm';rs.className='status ok';rs.textContent=`Render complete · ${(renderBlob.size/1048576).toFixed(1)} MB · ${ext.toUpperCase()}`;
+  document.getElementById('output').innerHTML=`<video controls playsinline src="${url}"></video><a href="${url}" download="Dadas-PR-${style}-${Date.now()}.${ext}">⬇ Save Reel to phone</a><button class="secondary" onclick="shareReel('${ext}')">Share Reel</button>`
+ }catch(err){rs.className='status';rs.textContent='Render error: '+((err&&err.message)||'Unknown browser error')}
+}
+async function shareReel(ext){if(!renderBlob)return;const file=new File([renderBlob],`Dadas-PR-Reel.${ext}`,{type:renderBlob.type});try{if(navigator.share&&navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:"Dada's PR Reel"});return}}catch{}alert('Use “Save Reel to phone”, then share it from Gallery or Files.')}
 function poster(){const ratio=ch('pr')||'4:5',c=document.getElementById('posterCanvas'),w=1080,h=ratio==='1:1'?1080:(ratio==='9:16'?1920:1350);c.width=w;c.height=h;const q=c.getContext('2d'),p=pal(),finish=()=>{const sh=q.createLinearGradient(0,h*.25,0,h);sh.addColorStop(0,'rgba(0,0,0,.04)');sh.addColorStop(1,(style==='minimal'||style==='documentary')?'rgba(247,244,236,.94)':'rgba(0,0,0,.87)');q.fillStyle=sh;q.fillRect(0,h*.2,w,h*.8);const m=72;q.fillStyle=p.a;q.fillRect(m,h*.53,155,8);q.fillStyle=p.t;q.font='900 68px sans-serif';let y=wt(q,v('topic')||'माहिती',m,h*.61,w-m*2,80,4);q.fillStyle=p.s;q.font='500 30px sans-serif';wt(q,v('facts'),m,y+45,w-m*2,48,7);q.fillStyle=p.t;q.font='700 28px sans-serif';q.fillText([v('place'),v('date')].filter(Boolean).join('  •  ')||'तथ्याधारित माहिती',m,h-90);c.toBlob(b=>{const u=URL.createObjectURL(b);document.getElementById('po').innerHTML=`<a href="${u}" download="Dadas-PR-Poster.png">⬇ Save Poster</a>`},'image/png')};if(firstImage){const im=new Image();im.onload=()=>{cover(q,im,w,h,1.03);finish()};im.src=firstImage}else{const g=q.createLinearGradient(0,0,w,h);g.addColorStop(0,p.a1);g.addColorStop(1,p.a2);q.fillStyle=g;q.fillRect(0,0,w,h);finish()}}
 function calendar(){const g=document.getElementById('fg');if(!g)return;const m=document.getElementById('mf')?.value||'';g.innerHTML=fest.filter(x=>!m||x[0].slice(5,7)===m).map(x=>`<article class="festival"><div class="date">${new Date(x[0]+'T12:00:00').toLocaleDateString('mr-IN',{day:'numeric',month:'long',year:'numeric'})}</div><h3>${x[2]} ${x[1]}</h3><small>कॅलेंडर नोंद</small></article>`).join('')}
-let deferredInstall=null;function hookInstall(){window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;const b=document.getElementById('installBtn');if(b){b.style.display='block';b.onclick=async()=>{await deferredInstall.prompt();deferredInstall=null;b.style.display='none'}}})}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+let deferredInstall=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;refreshInstallButton()});
+function refreshInstallButton(){const b=document.getElementById('installBtn');if(!b)return;if(deferredInstall){b.style.display='block';b.onclick=async()=>{try{await deferredInstall.prompt()}catch{}deferredInstall=null;b.style.display='none'}}}
+function hookInstall(){refreshInstallButton()}
+function updateCompatibility(){
+ const rs=document.getElementById('rs');if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){if(rs){rs.hidden=false;rs.textContent='Local reel rendering needs a recent Chrome version.'}}
+}
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=41').then(r=>r.update()).catch(()=>{}));
 lock();
 </script></body></html>
